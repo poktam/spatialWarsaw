@@ -1,0 +1,17 @@
+Package: bootdbscan
+Type: Package
+Date: 2023-07-25
+Title: To be done - package title
+Version: 0.1.2
+Author: Mateusz Kopyt [aut, cre, cph],
+    Katarzyna Kopczewska [aut, cph],
+    Ewa Dobrowolska [ctb, cph]
+Maintainer: Mateusz Kopyt <mkopyt@wne.uw.edu.pl>
+Description: TO BE DONE (package description) - More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+Imports: dbscan, DescTools, dplyr, ggplot2, sp, sf, stats, stargazer
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
