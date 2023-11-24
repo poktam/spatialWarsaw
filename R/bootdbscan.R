@@ -1,6 +1,6 @@
 # bootdbscan
 # można ew. dodać aliasy do nazwy funkcji bootdbscan (np. dużymi literami)
-
+# DO POPRAWY Z NOWYMI KODAMI
 
 #' Linijka nr 1 - function title
 #'
@@ -11,7 +11,7 @@
 #'
 #' @name bootdbscan
 #' @aliases bootdbscan BOOTDBSCAN
-#' @param crds do opisu
+#' @param data_sp do opisu
 #' @param sample_size do opisu
 #' @param times do opisu
 #' @param eps do opisu
@@ -27,10 +27,11 @@
 #' \item{minPts }{ value of the `minPts` parameter.}
 #'
 #' @export
-bootdbscan<-function(crds, sample_size, times, eps, minPts){
+bootdbscan<-function(data_sp, sample_size, times, eps, minPts){
 
   selector<-matrix(0, nrow=sample_size, ncol=times)
   result<-matrix(0, nrow=sample_size, ncol=times)
+  crds<-coordinates(data_sp)
 
   for(i in 1:times) selector[,i]<-sample(1:dim(crds)[1], sample_size, replace=FALSE) # sample points
 

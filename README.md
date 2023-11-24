@@ -1,2 +1,2 @@
-# bootdbscan
-Repository for bootdbscan project in R
+# spatialWarsaw
+Repository for spatialWarsaw project in R
