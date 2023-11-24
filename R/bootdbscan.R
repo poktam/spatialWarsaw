@@ -1,6 +1,6 @@
 # bootdbscan
 # można ew. dodać aliasy do nazwy funkcji bootdbscan (np. dużymi literami)
-# DO POPRAWY Z NOWYMI KODAMI
+# WRÓCIĆ DO WERSJI P. EWY DOBROWOLSKIEJ!
 
 #' Linijka nr 1 - function title
 #'
