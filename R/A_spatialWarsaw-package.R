@@ -10,6 +10,7 @@
 #' @docType package
 #' @name spatialWarsaw-package
 #'
+#' @importFrom benford.analysis benford
 #' @importFrom dbscan dbscan kNN
 #' @importFrom DescTools PseudoR2
 #' @importFrom dplyr summarise group_by

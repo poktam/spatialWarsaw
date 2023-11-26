@@ -1,3 +1,7 @@
+# spatialWarsaw 0.1.1
+
+* Initial version of package: bootdbscan(), testA(), testB(), ssr(), show_models()
+
 # spatialWarsaw 0.1.2
 
-* Initial version of package.
+* New functions added: SpatBenfordTest(), SpatBenfordPattern() Still development version

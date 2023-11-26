@@ -32,12 +32,11 @@ ssr<-function(formula, data.spsf, type, clusters, minPts=5, r_p=0.001, sep, boot
 
   data.df<-as.data.frame(data.spsf)
 
-  if("sp" %in% attr(class(data.spsf),"package")){ # find coordinates    !!!!! old: attr(class(data.spsf), "package")=="sp"
-    crds=sp::coordinates(data.spsf)} else if("sf" %in% class(data.spsf)){
-      crds=sf::st_coordinates(data.spsf)
-    } else {
-      stop("The class of data.spsf must be 'sp' or 'sf'.") # sp zachowane tymczasowo dla wstecznej zgodności
-    }
+  if("sf" %in% class(data.spsf)) {crds=sp::coordinates(data.spsf)}
+  else if("sf" %in% class(data.spsf)){crds=sf::st_coordinates(data.spsf)}
+  else {
+    stop("The class of data.spsf must be 'sp' or 'sf'.") # sp zachowane tymczasowo dla wstecznej zgodności
+  }
 
   if(type=="A" & bootstrap==0) { # group points
     output<-testA(crds, clusters, sep, r_p, eps_r, eps_np)$cluster }else if(type=="A" & bootstrap==1) {

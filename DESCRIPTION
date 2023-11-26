@@ -1,15 +1,16 @@
 Package: spatialWarsaw
 Type: Package
 Date: 2023-07-25
-Title: To be done - package title
+Title: Spatial analysis on point data including clustering measures and bootstrap methods. 
 Version: 0.1.2
 Author: Mateusz Kopyt [aut, cre, cph],
     Katarzyna Kopczewska [aut, cph],
     Ewa Dobrowolska [ctb, cph]
 Maintainer: Mateusz Kopyt <mkopyt@wne.uw.edu.pl>
-Description: TO BE DONE (package description) - More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-Imports: dbscan, DescTools, dplyr, ggplot2, sp, sf, stats, stargazer
+Description: A collection of tools for spatial analysis on point data including clustering measures 
+and the ability to bootstrap large datasets.
+    (Use four spaces when indenting paragraphs within the Description.)
+Imports: benford.analysis, dbscan, DescTools, dplyr, ggplot2, sp, sf, stats, stargazer
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
