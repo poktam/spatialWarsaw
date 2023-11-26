@@ -14,7 +14,7 @@
 #' @importFrom dbscan dbscan kNN
 #' @importFrom DescTools PseudoR2
 #' @importFrom dplyr summarise group_by
-#' @importFrom stats binomial glm
+#' @importFrom stats binomial glm dist
 #' @importFrom sp coordinates
 #' @importFrom sf st_coordinates
 #' @importFrom stargazer stargazer

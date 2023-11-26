@@ -1,14 +1,13 @@
 Package: spatialWarsaw
 Type: Package
 Date: 2023-07-25
-Title: Spatial analysis on point data including clustering measures and bootstrap methods. 
+Title: Spatial analysis on point data including clustering measures and bootstrap methods 
 Version: 0.1.2
 Author: Mateusz Kopyt [aut, cre, cph],
     Katarzyna Kopczewska [aut, cph],
     Ewa Dobrowolska [ctb, cph]
 Maintainer: Mateusz Kopyt <mkopyt@wne.uw.edu.pl>
-Description: A collection of tools for spatial analysis on point data including clustering measures 
-and the ability to bootstrap large datasets.
+Description: A collection of tools for spatial analysis on point data including clustering measures and the ability to bootstrap large datasets.
     (Use four spaces when indenting paragraphs within the Description.)
 Imports: benford.analysis, dbscan, DescTools, dplyr, ggplot2, sp, sf, stats, stargazer
 License: GPL (>= 2)

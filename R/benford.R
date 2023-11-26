@@ -35,7 +35,7 @@ SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
   # zbadać sample_size i ustawić ew. na wielkość zbioru danych
   sample_size <- as.integer(sample_size)
   if (sample_size > nrow(crds) || sample_size<1) {
-    sample_size<-nrows(crds)
+    sample_size<-nrow(crds)
     cat("Wrong sample size. Sample_size set to:",sample_size,"\n",sep="")
   }
 
@@ -51,7 +51,7 @@ SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
     cat("Unknown variable name or variable name not specified. 2D spatial distribution will be tested.","\n",sep="")
   } else {
     crds<-cbind(crds,data_sf[,m])
-    colnames(crds)[3]<-colnames(dane_sf)[m]
+    colnames(crds)[3]<-colnames(data_sf)[m]
     cat("3D spatial distribution will be tested.","\n",sep="")
   }
 
