@@ -22,15 +22,14 @@
 #'
 #' @export
 SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
-  # koordynaty w zależności od typu danych
-  #DODAĆ SPRAWDZENIE CZY SF W FORMIE POINTS!!!!
-  if(inherits(data_sf,"sf")) crds<-sf::st_coordinates(data_sf)
+  #Ew. do sprawdzenia czy warunek st_geometry_type(data_sf,FALSE)=="POINT") nie jest zbyt restrykcyjny
+  if((inherits(data_sf,"sf") && st_geometry_type(data_sf,FALSE)=="POINT")) crds<-sf::st_coordinates(data_sf)
   else if(inherits(data_sf,"data.frame",TRUE)==1){
     crds<-data_sf[,c(1,2)]
     colnames(crds)<-c("X_coord","Y_coord")
     }
   else {
-      stop("The class of data_sf must be 'sf' or 'data.frame' only.")
+      stop("The class of data_sf must only be 'sf' of geometry type 'POINTS' or 'data.frame'.")
   }
 
   # zbadać sample_size i ustawić ew. na wielkość zbioru danych
@@ -96,9 +95,12 @@ SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
 #'
 #' @export
 SpatBenfordPattern<-function(region_sf, sample_size=5000){
-  #DODAĆ SPRAWDZENIE CZY SF W FORMIE REGIONU!!!!
+  #sprawdzić czy warunek na typ jest ok?
   if(!inherits(region_sf,"sf")) {
-    stop("The class of region_sf must be 'sf' only.")
+    stop("The class of region_sf must only be 'sf'.")
+  } else if(!(st_geometry_type(region_sf,FALSE)=="MULTIPOLYGON" || st_geometry_type(region_sf,FALSE)=="POLYGON")){
+    stop("The type of region_sf must only be 'MULTIPOLYGON' or 'POLYGON'.")
+
   }
 
   ss_share<-c(0.810, 0.120, 0.070) # % of obs. clustered / regular /random

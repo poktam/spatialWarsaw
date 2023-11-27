@@ -10,7 +10,7 @@ SpatBenfordPattern(region_sf, sample_size = 5000)
 \arguments{
 \item{region_sf}{do opisu (obiekt sf ale jako region)}
 
-\item{sample_size}{Number of points to be generated based on the region. Default value 5000. We suggest that a value greater than ..... is not used for reasons of computational efficiency. (SPRAWDZIĆ)}
+\item{sample_size}{Number of points to be generated based on the region. Default value 5000. We suggest that a value greater than ..... is not used for reasons of computational efficiency. (SPRAWDZIĆ, UWAGA! st_sample czasem generuje mniej punktów)}
 }
 \value{
 \code{SpatBenfordPattern()} returns ... to be done.
