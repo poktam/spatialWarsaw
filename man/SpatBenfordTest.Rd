@@ -10,7 +10,7 @@ SpatBenfordTest(data_sf, sample_size, var_name = NULL)
 \arguments{
 \item{data_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
 
-\item{sample_size}{Sample size, must be less than or equal to the number of points in the dataset (\verb{data _sf} parameter). If \code{sample_size} is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)}
+\item{sample_size}{Sample size, must be less than or equal to the number of points in the dataset (\code{data_sf} parameter). If \code{sample_size} is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)}
 
 \item{var_name}{Name of column with additional variable. If empty, a 2d distribution is tested, if given, a 3d distribution.}
 }

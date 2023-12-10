@@ -15,7 +15,7 @@
 #' @aliases SpatBenfordTest spatbenfordtest
 #' @param data_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
 #' @param var_name Name of column with additional variable. If empty, a 2d distribution is tested, if given, a 3d distribution.
-#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`data _sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
+#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`data_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
 #' @examples #To be done!!!
 #'
 #' @return `SpatBenfordTest()` returns ... to be done.
