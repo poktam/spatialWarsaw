@@ -14,6 +14,7 @@
 #' @importFrom dbscan dbscan kNN kNNdist frNN
 #' @importFrom DescTools PseudoR2
 #' @importFrom dplyr summarise group_by
+#' @importFrom rlang .data
 #' @importFrom stats binomial glm dist rnorm kmeans
 #' @importFrom sp coordinates
 #' @importFrom sf st_as_sf st_bbox st_crs st_sample st_coordinates st_geometry_type st_voronoi st_cast st_union st_intersection st_area st_geometry st_transform
