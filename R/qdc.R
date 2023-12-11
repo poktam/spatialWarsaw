@@ -92,10 +92,13 @@ QDC<-function(data_sf, sample_size, nclust=3, k=10, eps=0.05){
 
 
   # visualization of clusters in 2D of spatial variables
-  ggplot(data.d, aes(x=.data$knndist1.scaled, y=.data$frnn1.scaled, color=.data$km.set1)) +  geom_point()+ theme(legend.position="none") # xy plot of spat.var
+  p1<-ggplot(data.d, aes_string(x="knndist1.scaled", y="frnn1.scaled", color="km.set1")) +  geom_point()+ theme(legend.position="none") # xy plot of spat.var
 
   # location of clusters in space
-  ggplot(data.d, aes(x=.data$X, y=.data$Y, color=.data$km.set1)) +  geom_point()+ theme(legend.position="none")
+  p2<-ggplot(data.d, aes_string(x="X", y="Y", color="km.set1")) +  geom_point()+ theme(legend.position="none")
+
+  print(p1)
+  print(p2)
 
   # LEPSZE NAZWY KOLUMN W OUTPUCIE
   # czy potrzeba zwracać listę parametrów i obiekt output czy tylko obiekt output wystarczy?
