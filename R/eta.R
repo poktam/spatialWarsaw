@@ -94,6 +94,7 @@ ETA<-function(points_sf, region_sf, sample_size){
   )
 
 }
-
+#' @export
+eta <- ETA
 
 
