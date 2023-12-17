@@ -63,7 +63,8 @@ SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
   plot(benford_result)
   return (benford_result)
 }
-
+#' @export
+spatbenfordtest <- SpatBenfordTest
 
 
 
@@ -128,3 +129,5 @@ SpatBenfordPattern<-function(region_sf, sample_size=5000){
   plot(bpp_sf, key.pos=1, main="Benford Pattern Spatial Points")
   return(bpp) # poprawić, żeby może na ekranie było jakieś summary/table a nie lista
 }
+#' @export
+spatbenfordpattern <- SpatBenfordPattern

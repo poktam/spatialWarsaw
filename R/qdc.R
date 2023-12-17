@@ -105,6 +105,7 @@ QDC<-function(data_sf, sample_size, nclust=3, k=10, eps=0.05){
   # poprawić, żeby może na ekranie było jakieś summary/table a nie lista
   return(data.d)
 }
-
+#' @export
+qdc <- QDC
 
 
