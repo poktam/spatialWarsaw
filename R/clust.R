@@ -1,12 +1,37 @@
-# dodać jakieś opisy
-# testA
-# sprawdzić czy testA oraz testB potrzebny poza pakietem (czy tylko funkcje wewnętrzne/pomocnicze) - ew. nazwy do zmiany
-#' A TU BĘDZIE CAŁA POMOC DO FUNKCJI testA - chyba, że je ukryjemy i nie będą dostępne z zewnątrz ;)
+#############################
+### Clust... i pochodne #####
+#############################
+### DO TOTALNEJ POPRAWY #####
+#############################
+
+# ClustConti()
+# sprawdzić czy ClustConti() oraz ClustDisjoint() potrzebny poza pakietem (czy tylko funkcje wewnętrzne/pomocnicze) - ew. nazwy do zmiany
+
+#' Linijka nr 1 - function title
+#'
+#' Linijka nr 2 - description
+#'
+#' Linijka nr 3 - A TU BĘDZIE CAŁA POMOC DO FUNKCJI ClustConti() - chyba, że je ukryjemy i nie będą dostępne z zewnątrz ;)
+#'
+#'
+#' @name ClustConti
+#' @param crds do opisu
+#' @param clusters do opisu
+#' @param sep do opisu
+#' @param r_p do opisu
+#' @param eps_r do opisu
+#' @param eps_np do opisu
+#' @param minPts0 do opisu
+#'
+#' @examples #To be done!!!
+#'
+#' @return `ClustConti()` returns ... to be done.
+#'
 #' @export
-testA<-function(crds, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts0=16){
+ClustConti<-function(crds, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts0=16){
   params = as.list(environment())[-1] # zwraca listę parametrów funkcji bez pierwszego - czyli środowisko wewnątrz funkcji
   minPts=minPts0
-  groups=testB(crds, minPts, sep, r_p, eps_r, eps_np)$cluster # run testB with initial parameters
+  groups=ClustDisjoint(crds, minPts, sep, r_p, eps_r, eps_np)$cluster # run testB with initial parameters
   minPts_prev<-minPts
   if(length(unique(groups))>clusters+1) minPts=2*minPts else minPts=round(minPts/2,0) # adjust minPts
   groups_prev<-groups
@@ -14,7 +39,7 @@ testA<-function(crds, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minP
   while(length(unique(groups))!=clusters+1 & minPts_prev!=minPts){ # repeat below until the desired number of clusters is obtained
     minPts=minPts+1
 
-    groups=testB(crds, minPts, sep, r_p, eps_r, eps_np)$cluster # run testB
+    groups=ClustDisjoint(crds, minPts, sep, r_p, eps_r, eps_np)$cluster # run testB
 
     if(length(unique(groups))>clusters+1 & length(unique(groups_prev))>clusters+1) { # adjust minPts
       minPts_prev=minPts
@@ -45,11 +70,33 @@ testA<-function(crds, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minP
 
 
 
-# testB:
-# sprawdzić czy testA oraz testB potrzebny poza pakietem (czy tylko funkcje wewnętrzne/pomocnicze) - ew. nazwy do zmiany
-#' A TU BĘDZIE CAŁA POMOC DO FUNKCJI testB - chyba, że je ukryjemy i nie będą dostępne z zewnątrz ;)
+# ClustDisjoint()
+# sprawdzić czy ClustConti() oraz ClustDisjoint() potrzebny poza pakietem (czy tylko funkcje wewnętrzne/pomocnicze) - ew. nazwy do zmiany
+
+#' Linijka nr 1 - function title
+#'
+#' Linijka nr 2 - description
+#'
+#' Linijka nr 3 - A TU BĘDZIE CAŁA POMOC DO FUNKCJI ClustDisjoint() - chyba, że je ukryjemy i nie będą dostępne z zewnątrz ;)
+#'
+#'
+#' @name ClustDisjoint
+#' @param crds do opisu
+#' @param sep do opisu
+#' @param r_p do opisu
+#' @param eps_r do opisu
+#' @param eps_np do opisu
+#' @param minPts do opisu
+#' @param bootstrap do opisu
+#' @param sample_size do opisu
+#' @param times do opisu
+#'
+#' @examples #To be done!!!
+#'
+#' @return `ClustDisjoint()` returns ... to be done.
+#'
 #' @export
-testB<-function(crds, minPts=5, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e-16, eps_np=10e-3,
+ClustDisjoint<-function(crds, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts=5,
                 bootstrap=FALSE, sample_size, times){
   params <- as.list(environment())[-1]
   output<-rep(length(sep)+1,nrow(crds))

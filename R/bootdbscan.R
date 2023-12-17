@@ -1,7 +1,7 @@
-# bootdbscan
-# można ew. dodać aliasy do nazwy funkcji bootdbscan (np. dużymi literami)
-
-
+####################
+### bootdbscan() ###
+####################
+#
 #' Linijka nr 1 - function title
 #'
 #' Linijka nr 2 - description

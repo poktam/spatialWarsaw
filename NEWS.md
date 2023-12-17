@@ -13,3 +13,8 @@
 # spatialWarsaw 0.1.4
 
 * New function added: QDC(). Still a development version
+
+# spatialWarsaw 0.1.5
+
+* Corrections in bootdbscan(). 
+* A couple of clean-ups in the code and in the naming conventions.  Still a development version

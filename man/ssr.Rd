@@ -52,6 +52,10 @@ show_models(ssr_model, plot = TRUE, ...)
 \item{eps_np}{do opisu}
 
 \item{...}{other paramethers (do opisu)}
+
+\item{ssr_model}{do opisu}
+
+\item{plot}{do opisu}
 }
 \description{
 Linijka nr 2 - description (razem do funkcji ssr i show_models)

@@ -1,4 +1,8 @@
-# ssr
+###########################
+### ssr i pochodne    #####
+###########################
+### DO TOTALNEJ POPRAWY ###
+###########################
 # MK: ustalić czy ssr ma być dostępna zewnątrz, ale chyba tak
 
 #' Linijka nr 1 - function title
@@ -9,7 +13,6 @@
 #'
 #'
 #' @name ssr
-#' @aliases ssr
 #' @param formula do opisu
 #' @param data.spsf do opisu
 #' @param type do opisu
@@ -39,10 +42,10 @@ ssr<-function(formula, data.spsf, type, clusters, minPts=5, r_p=0.001, sep, boot
   }
 
   if(type=="A" & bootstrap==0) { # group points
-    output<-testA(crds, clusters, sep, r_p, eps_r, eps_np)$cluster }else if(type=="A" & bootstrap==1) {
+    output<-ClustConti(crds, clusters, sep, r_p, eps_r, eps_np)$cluster }else if(type=="A" & bootstrap==1) {
       stop("Bootstraped DBSCAN cannot be applied to the A version of this model")}else if(type=="B" & bootstrap==0) {
-        output<-testB(crds, minPts, sep, r_p, eps_r, eps_np, bootstrap=FALSE, 0, 0)$cluster}else if(type=="B" & bootstrap==1) {
-          output<-testB(crds, minPts, sep, r_p, eps_r, eps_np, bootstrap=TRUE, sample_size, times)$cluster}
+        output<-ClustDisjoint(crds, minPts, sep, r_p, eps_r, eps_np, bootstrap=FALSE, 0, 0)$cluster}else if(type=="B" & bootstrap==1) {
+          output<-ClustDisjoint(crds, minPts, sep, r_p, eps_r, eps_np, bootstrap=TRUE, sample_size, times)$cluster}
 
   data_s<-split(data.df, output) # create subgroups
 
@@ -69,6 +72,8 @@ ssr<-function(formula, data.spsf, type, clusters, minPts=5, r_p=0.001, sep, boot
 # MK: z funkcją ggplot2::aes() może być problem - użycie aes w pakietach do sprawdzenia
 #' A TU MOŻE TROSZKĘ POMOCY DO FUNKCJI show_models jeśli dostępne na zewnątrz :)
 #' @rdname ssr
+#' @param ssr_model do opisu
+#' @param plot do opisu
 #' @export
 show_models<-function(ssr_model, plot=TRUE, ...){
   psR2<-lapply(ssr_model$models, function(x) DescTools::PseudoR2(x, which="all"))
