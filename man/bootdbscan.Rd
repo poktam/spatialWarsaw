@@ -5,10 +5,10 @@
 \alias{BOOTDBSCAN}
 \title{Linijka nr 1 - function title}
 \usage{
-bootdbscan(crds, sample_size, times, eps, minPts)
+bootdbscan(data_sf, sample_size, times, eps, minPts)
 }
 \arguments{
-\item{crds}{do opisu}
+\item{data_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
 
 \item{sample_size}{do opisu}
 
