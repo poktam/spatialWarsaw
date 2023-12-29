@@ -105,11 +105,11 @@ SpatBenfordPattern<-function(region_sf, sample_size=5000){
   }
 
   ss_share<-c(0.810, 0.120, 0.070) # % of obs. clustered / regular /random
-  bbox<-st_bbox(region_sf)
+  bb<-st_bbox(region_sf)
 
   # clustered skewed distribution
-  x<-rnorm(sample_size*ss_share[1], bbox[1]+0.25*(bbox[3]-bbox[1]), 0.08*(bbox[3]-bbox[1]))
-  y<-rnorm(sample_size*ss_share[1], bbox[2]+0.75*(bbox[4]-bbox[2]), 0.08*(bbox[4]-bbox[2]))
+  x<-rnorm(sample_size*ss_share[1], bb[1]+0.25*(bb[3]-bb[1]), 0.08*(bb[3]-bb[1]))
+  y<-rnorm(sample_size*ss_share[1], bb[2]+0.75*(bb[4]-bb[2]), 0.08*(bb[4]-bb[2]))
   bpp1<-data.frame(X=x, Y=y)
 
   bpp_sf2<-st_sample(region_sf, round(sample_size*ss_share[2],0), type="regular")

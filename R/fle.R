@@ -56,7 +56,7 @@ FLE<-function(points_sf, region_sf, nrows.raster=50, ncols.raster=50, w, r){
     stop("The class of points_sf must only be 'sf' of geometry type 'POINTS' or 'data.frame'.")
   }
 
-  # tylko jeden z dwóch można podać (sprawdzić) - może jeszcze, że oba nullami nie może być
+  # tylko jeden z dwóch można podać, jeden wymagany
   switch(
     check_exclusive(w, r),
     w = message("`w` was supplied."),
@@ -70,37 +70,34 @@ FLE<-function(points_sf, region_sf, nrows.raster=50, ncols.raster=50, w, r){
   crds$ones<-rep(1, times=nrow(crds))	# wektor jedynek
 
   # rastrowanie zmiennej
-  rast.var<-rasterize(as.matrix(crds[,1:2]), rst, value=crds$ones,  fun=sum) # z terra::
-  rast.var.vec<-as.vector(rast.var$sum)
-  rast.var.vec[is.na(rast.var.vec)==TRUE]<-0
-
-  rst2<-rst						# kopia obiektu (po co?)
-  terra::values(rst2)<-scale(rast.var.vec)		# normalizacja
+  rst.var<-rasterize(as.matrix(crds[,1:2]), rst, value=crds$ones,  fun=sum) # z terra:: # czy tu nie powinno być values=?
+  rst.var[is.na(rst.var)]<-0
+  rst.var<-scale(rst.var)
 
   # funkcja licząca entropię
   # to są przedziały do zmiennej standaryzowanej, zawsze działają
   breaks=c(-100, -5, -3, -2, -1, -0.5, 0, 0.5, 1, 2, 3, 5, 100)
 
-  ff<-function(y) {pi=table(cut(y, breaks=breaks))/sum(table(cut(y, breaks=breaks))); -sum(pi[pi>0]*log(pi[pi>0]))}
+  ent_fun<-function(y) {pi=table(cut(y, breaks=breaks))/sum(table(cut(y, breaks=breaks))); -sum(pi[pi>0]*log(pi[pi>0]))}
 
   # I wersja z w!!!
   # focal local entropy – w raster
   # wersja korzystająca z parametru w – squared window
   if (!missing(w)) {
-    gg<-focal(rst2, w, fun=ff)
-    plot(gg, main=paste0("Focal local entropy, w=", w))
+    focal_result<-focal(rst.var, w, fun=ent_fun)
+    plot(focal_result, main=paste0("Focal local entropy, w=", w))
     plot(st_geometry(region_sf), add=TRUE)
-    return (gg)
+    return (focal_result)
   } else {
     # II wersja z r!!!
     # wersja korzystająca z parametru r – radial window
-    w_terra <- focalMat(rst2, r, "circle") # z terra::
-    w_terra[w_terra > 0] <- 1 # replacing weights by 1 to get total
-    focal_terra<- focal(rst2, w=w_terra, fun = ff)  # z terra::
+    w_value <- focalMat(rst.var, r, "circle") # z terra::
+    w_value[w_value > 0] <- 1 # replacing weights by 1 to get total
+    focal_result<- focal(rst.var, w=w_value, fun = ent_fun)  # z terra::
 
-    plot(focal_terra, main=paste0("Focal local entropy, radial window r=", r))
+    plot(focal_result, main=paste0("Focal local entropy, radial window r=", r))
     plot(st_geometry(region_sf), add=TRUE)
-    return(focal_terra)
+    return(focal_result)
   }
 }
 #' @export
