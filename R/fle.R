@@ -59,8 +59,8 @@ FLE<-function(points_sf, region_sf, nrows.raster=50, ncols.raster=50, w, r){
   # tylko jeden z dwóch można podać (sprawdzić) - może jeszcze, że oba nullami nie może być
   switch(
     check_exclusive(w, r),
-    w = message("`x` was supplied."),
-    r = message("`y` was supplied.")
+    w = message("`w` was supplied."),
+    r = message("`r` was supplied.")
   )
 
   # czy dawać jeszcze jakieś dodatkowe warunki na nrows.raster, ncols.raster i może jakieś na w lub r? (DO DECYZJI)
@@ -75,7 +75,7 @@ FLE<-function(points_sf, region_sf, nrows.raster=50, ncols.raster=50, w, r){
   rast.var.vec[is.na(rast.var.vec)==TRUE]<-0
 
   rst2<-rst						# kopia obiektu (po co?)
-  values(rst2)<-scale(rast.var.vec)		# normalizacja
+  terra::values(rst2)<-scale(rast.var.vec)		# normalizacja
 
   # funkcja licząca entropię
   # to są przedziały do zmiennej standaryzowanej, zawsze działają
