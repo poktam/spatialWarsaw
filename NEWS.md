@@ -18,3 +18,7 @@
 
 * Corrections in bootdbscan(). 
 * A couple of clean-ups in the code and in the naming conventions.  Still a development version
+
+# spatialWarsaw 0.1.6
+
+* New function added: FLE(). Still a development version

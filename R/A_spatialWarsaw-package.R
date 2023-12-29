@@ -20,6 +20,8 @@
 #' @importFrom stargazer stargazer
 #' @importFrom ggplot2 ggplot geom_point aes aes_string ggtitle scale_color_viridis_d guides guide_legend theme_minimal theme element_text xlab ylab
 #' @importFrom graphics legend par points
+#' @importFrom rlang check_exclusive
+#' @importFrom terra rast rasterize focalMat focal values
 #'
 # ew. uzupełnić inne importy!!!; może trzeba się pozbyć pakietu sp?
 # SPRAWDZIĆ @importFrom vs Imports w DESCRIPTION i funkcjami użytymi
