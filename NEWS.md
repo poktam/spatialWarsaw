@@ -22,3 +22,7 @@
 # spatialWarsaw 0.1.6
 
 * New function added: FLE(). Still a development version
+
+# spatialWarsaw 0.1.7
+
+* New function added: rastClustGWR(). Still a development version
