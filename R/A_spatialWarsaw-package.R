@@ -23,7 +23,12 @@
 #' @importFrom rlang check_exclusive
 #' @importFrom terra rast rasterize focalMat focal values plot scale
 #' @importFrom GWmodel bw.gwr gwr.basic gw.dist
+#' @importFrom fossil adj.rand.index
+#' @importFrom grDevices heat.colors
+#'
 #'
 # ew. uzupełnić inne importy!!!; sp trzeba na razie zostawić, bo GWR models działają na sp
+# może dla plot.matrix spróbować: @importMethodsFrom package generic !!!! - pozbycie się Depend z DESCRIPTION
+#
 #'
 NULL
