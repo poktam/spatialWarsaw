@@ -154,7 +154,7 @@ bestW<-function(points_sf, eq, model_type="SDM", sample_size, knn){
   } else if (length(knn)<=1) {
     stop("knn should be a vector with a length greater than 1.")
   } else {
-    knn<-round(knn)
+    knn<-sort(round(knn))
   }
 
   # sample do testowania
@@ -295,3 +295,116 @@ bestW<-function(points_sf, eq, model_type="SDM", sample_size, knn){
 
   return(result)
 }
+
+#########################
+### corrSpatialLags() ###
+#########################
+#
+#
+#' Linijka nr 1 - function title
+#'
+#' Linijka nr 2 - description
+#'
+#' Linijka nr 3 - details
+#'
+#'
+#' @name corrSpatialLags
+#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' @param var_name Name of the column with the variable to be analysed.
+#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
+#' @param knn knn vector (!!!) for analysis
+#' @examples #To be done!!!
+#'
+#' @return `corrSpatialLags()` returns ... to be done.
+#'
+#' @export
+corrSpatialLags<-function(points_sf, var_name, sample_size, knn){
+  #Ew. do sprawdzenia czy warunek st_geometry_type(data_sf,FALSE)=="POINT") nie jest zbyt restrykcyjny
+  if((inherits(points_sf,"sf") && st_geometry_type(points_sf,FALSE)=="POINT")) {
+    crds<-as.data.frame(st_coordinates(points_sf))
+    colnames(crds)<-c("X_coord","Y_coord")
+    cat("Points_sf was detected as an object of class sf.\n", sep = "")
+  }  else if(inherits(points_sf,"data.frame",TRUE)==1){
+    crds<-points_sf[,c(1,2)]
+    colnames(crds)<-c("X_coord","Y_coord")
+    cat("Points_sf was detected as an object of class data.frame.\n", sep = "")
+  }  else {
+    stop("The class of data_sf must only be 'sf' of geometry type 'POINTS' or 'data.frame'.")
+  }
+
+  # zbadać sample_size i ustawić ew. na wielkość zbioru danych (może potem zmienić, żeby )
+  sample_size <- as.integer(sample_size)
+  if (sample_size > nrow(points_sf) || sample_size<1) {
+    sample_size<-nrow(points_sf)
+    cat("Wrong sample size. Sample_size set to:",sample_size,"\n",sep="")
+  }
+
+  # knn - warunek
+  if(!(is.numeric(knn))) {
+    stop("knn is to be a numerical vector.")
+  } else if (length(knn)<=1) {
+    stop("knn should be a vector with a length greater than 1.")
+  } else {
+    knn<-sort(round(knn))
+  }
+
+  # zbadać var_name - jeśli nie ma lub nie istnieje w danych, to pominąć, jeśli istnieje to wyciągnąć kolumnę
+  if (length(var_name)>1) {
+    var_name<-var_name[1]
+    cat("Parameter var_name longer than 1. The first element has been selected: ",var_name,"\n",sep="")
+  }
+
+  m <- match(gsub(" ", ".", var_name), colnames(points_sf))
+
+  if (is.na(m) || is.null(var_name)) {
+    stop("Unknown variable name or variable name not specified.")
+  }
+
+  # sample do testowania
+  selector<-sample(nrow(points_sf), sample_size, replace=FALSE)
+  points_sf_s<-points_sf[selector,]
+  crds_s<-crds[selector, ]
+  crds_s[,1]<-crds_s[,1]+rnorm(sample_size, 0, sd(crds_s[,1])/1000)
+  crds_s[,2]<-crds_s[,2]+rnorm(sample_size, 0, sd(crds_s[,2])/1000)
+
+  # macierze rezultatów - może zrobić dodatkową kolumnę ze zmienną i potem opóźnienia
+  lags.result<-matrix(NA, nrow=nrow(points_sf_s), ncol=length(knn))
+  colnames(lags.result)<-knn
+  cor.result<-matrix(0, nrow=length(knn), ncol=length(knn))
+  colnames(cor.result)<-knn
+  rownames(cor.result)<-knn
+
+  cat(length(knn), " spatial lags will be computed. ", "It can take a while.","\n",sep="")
+  for(i in 1:length(knn)){
+    knnW_temp<-nb2listw(make.sym.nb(knn2nb(knearneigh(as.matrix(crds_s), k=knn[i]))))
+    lags.result[,i]<-lag.listw(knnW_temp, as.data.frame(points_sf_s[,m])[,1])
+  }
+
+  cor.result<-matrix(0, nrow=length(knn), ncol=length(knn))
+  for(i in 1:length(knn)){
+    for(j in 1:length(knn)){
+      cor.result[i,j]<-ifelse(i<j, cor(lags.result[,i], lags.result[,j]), NA)
+    }
+  }
+
+  # theoretical (expected) correlation from general formula
+  t_cor.result<-matrix(0, nrow=length(knn), ncol=length(knn))
+  for(i in 1:length(knn)){
+    for(j in 1:length(knn)){
+      t_cor.result[i,j]<-ifelse(i<j,(i/j)^0.5, NA)
+    }
+  }
+
+  par(mar=c(5,5,5,5), mfrow=c(1,2))
+  plot(cor.result, xlab="knn", ylab="knn", cex.main=0.9,
+       main="Empirical correlation between spatial lags of selected variable", )
+  plot(t_cor.result, xlab="knn in W1", ylab="knn in W2",cex.main=0.9,
+       main="Expected (theoretical) correlation between spatial lags for different knn", )
+
+  list(
+    cor_result = cor.result,
+    lags_result = lags.result
+  )
+
+}
+

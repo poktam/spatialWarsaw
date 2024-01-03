@@ -15,7 +15,7 @@
 #' @importFrom dbscan dbscan kNN kNNdist frNN
 #' @importFrom DescTools PseudoR2
 #' @importFrom dplyr summarise group_by
-#' @importFrom stats binomial glm dist rnorm kmeans median AIC sd
+#' @importFrom stats binomial glm dist rnorm kmeans median AIC sd cor
 #' @importFrom sp coordinates
 #' @importFrom stargazer stargazer
 #' @importFrom ggplot2 ggplot geom_point aes aes_string ggtitle scale_color_viridis_d guides guide_legend theme_minimal theme element_text xlab ylab
@@ -25,7 +25,7 @@
 #' @importFrom GWmodel bw.gwr gwr.basic gw.dist
 #' @importFrom fossil adj.rand.index
 #' @importFrom grDevices heat.colors
-#' @importFrom spdep poly2nb nb2listw knearneigh make.sym.nb knn2nb
+#' @importFrom spdep poly2nb nb2listw knearneigh make.sym.nb knn2nb lag.listw
 #' @importFrom spatialreg lagsarlm errorsarlm sacsarlm
 #'
 #'
