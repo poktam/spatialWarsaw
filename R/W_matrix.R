@@ -1,5 +1,5 @@
 ###############
-### bestW() ###
+### tessW() ###
 ###############
 #
 #
@@ -10,16 +10,16 @@
 #' Linijka nr 3 - details
 #'
 #'
-#' @name bestW
+#' @name tessW
 #' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
 #' @param region_sf do opisu (obiekt sf ale jako region)
 #' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
 #' @examples #To be done!!!
 #'
-#' @return `bestW()` returns ... to be done.
+#' @return `tessW()` returns ... to be done.
 #'
 #' @export
-bestW<-function(points_sf, region_sf, sample_size){
+tessW<-function(points_sf, region_sf, sample_size){
   #sprawdzić czy warunek na typ jest ok?
   if(!inherits(region_sf,"sf")) {
     stop("The class of region_sf must only be 'sf'.\n")
@@ -79,8 +79,9 @@ bestW<-function(points_sf, region_sf, sample_size){
   crdsW.sf<-st_centroid(st_geometry(tess_result)) 	# centroidy / centroids
 
   # plot with points in blue
-  par(mar=c(4,4,4,4))
-  plot(st_geometry(tess_result), main="Degree of agglomeration \n entropy of tesselated point pattern")
+  par(mar=c(3,3,3,3))
+  plot(st_geometry(tess_result), main="Weighting matrix based on a sample of point data",
+       sub="Regions determined by the tessellation method.")
   plot(tess_result.nb, crdsW.sf, add=TRUE)
 
   return(tess_result.listw)
