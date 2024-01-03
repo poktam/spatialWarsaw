@@ -5,12 +5,13 @@ Title: Spatial analysis on point data including clustering measures and bootstra
 Version: 0.1.8
 Author: Mateusz Kopyt [aut, cre, cph],
     Katarzyna Kopczewska [aut, cph],
+    Maria Kubara [aut, cph],
     Ewa Dobrowolska [ctb, cph]
 Maintainer: Mateusz Kopyt <mkopyt@wne.uw.edu.pl>
 Description: A collection of tools for spatial analysis on point data including clustering measures and the ability to bootstrap large datasets.
     (Use four spaces when indenting paragraphs within the Description.)
 Imports: benford.analysis, dbscan, DescTools, dplyr, ggplot2, sp, spdep, sf, stats, stargazer, graphics, rlang, 
-    terra, GWmodel, fossil, grDevices
+    terra, GWmodel, fossil, grDevices, spatialreg
 Depends: plot.matrix
 License: GPL (>= 3)
 Encoding: UTF-8
