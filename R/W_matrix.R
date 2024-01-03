@@ -408,3 +408,114 @@ corrSpatialLags<-function(points_sf, var_name, sample_size, knn){
 
 }
 
+#########################
+### semiVarKnn() ###
+#########################
+#
+#
+#' Linijka nr 1 - function title
+#'
+#' Linijka nr 2 - description
+#'
+#' Linijka nr 3 - details
+#'
+#'
+#' @name semiVarKnn
+#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' @param var_name Name of the column with the variable to be analysed.
+#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
+#' @param max_knn Maximum number of knn used. Calculations will be done on vector 2:max_knn (!!!)
+#' @examples #To be done!!!
+#'
+#' @return `semiVarKnn()` returns ... to be done.
+#'
+#' @export
+semiVarKnn<-function(points_sf, var_name, sample_size, max_knn){
+  #Ew. do sprawdzenia czy warunek st_geometry_type(data_sf,FALSE)=="POINT") nie jest zbyt restrykcyjny
+  if((inherits(points_sf,"sf") && st_geometry_type(points_sf,FALSE)=="POINT")) {
+    crds<-as.data.frame(st_coordinates(points_sf))
+    colnames(crds)<-c("X_coord","Y_coord")
+    cat("Points_sf was detected as an object of class sf.\n", sep = "")
+  }  else if(inherits(points_sf,"data.frame",TRUE)==1){
+    crds<-points_sf[,c(1,2)]
+    colnames(crds)<-c("X_coord","Y_coord")
+    cat("Points_sf was detected as an object of class data.frame.\n", sep = "")
+  }  else {
+    stop("The class of data_sf must only be 'sf' of geometry type 'POINTS' or 'data.frame'.")
+  }
+
+  # zbadać sample_size i ustawić ew. na wielkość zbioru danych (może potem zmienić, żeby )
+  sample_size <- as.integer(sample_size)
+  if (sample_size > nrow(points_sf) || sample_size<1) {
+    sample_size<-nrow(points_sf)
+    cat("Wrong sample size. Sample_size set to:",sample_size,"\n",sep="")
+  }
+
+  # max_knn - warunek
+  if (length(max_knn)>1) {
+    max_knn<-max_knn[1]
+    cat("Parameter max_knn longer than 1. The first element has been selected: ",max_knn,"\n",sep="")
+  }
+
+  if(!(is.numeric(max_knn)) || (max_knn<2)) {
+    stop("knn has to be a numerical value and greater than 1.")
+  } else {
+    max_knn<-round(max_knn)
+  }
+
+  # zbadać var_name - jeśli nie ma lub nie istnieje w danych, to pominąć, jeśli istnieje to wyciągnąć kolumnę
+  if (length(var_name)>1) {
+    var_name<-var_name[1]
+    cat("Parameter var_name longer than 1. The first element has been selected: ",var_name,"\n",sep="")
+  }
+
+  m <- match(gsub(" ", ".", var_name), colnames(points_sf))
+
+  if (is.na(m) || is.null(var_name)) {
+    stop("Unknown variable name or variable name not specified.")
+  }
+
+  # sample do testowania
+  selector<-sample(nrow(points_sf), sample_size, replace=FALSE)
+  points_sf_s<-points_sf[selector,]
+  crds_s<-crds[selector, ]
+  var_s<-as.data.frame(points_sf_s[,m])[1]
+  crds_s[,1]<-crds_s[,1]+rnorm(sample_size, 0, sd(crds_s[,1])/1000)
+  crds_s[,2]<-crds_s[,2]+rnorm(sample_size, 0, sd(crds_s[,2])/1000)
+
+  gammaMat<-matrix(0,nrow=nrow(points_sf_s), ncol=nrow(points_sf_s))
+
+  # sporo to trwa - może jakoś zoptymalizować (sapply?)
+  for(i in 2:nrow(points_sf_s)) {
+    for(j in 1:(i-1)){
+      gamma_temp <- 0.5 * (var_s[j,]-var_s[i,])*(var_s[j,]-var_s[i,])
+      gammaMat[i,j] <- gamma_temp
+      gammaMat[j,i] <- gamma_temp
+    }
+  }
+
+  semiKnn <- rep(0,max_knn)
+
+  #iterate through knn
+  for (i in 2:max_knn) {
+    pkt.knn.mat <-nb2mat(knn2nb(knearneigh(crds_s, k=i)))
+    binary <- pkt.knn.mat*i
+
+    #binary??? - poniżej uprościć!!!!
+    gammaMatrix <- gammaMat * binary
+    nonEmpty <- sum(colSums(gammaMatrix != 0))
+    nonEmptyPairs <- nonEmpty/2
+    sumGamma <- sum(colSums(gammaMatrix))
+    semiKnn[i]<-sumGamma/nonEmptyPairs
+  }
+
+  # Plot - ver I (czy od knn=1 czy od knn=2?)
+  par(mar=c(4.5,4.5,3,3))
+  plot(2:max_knn, semiKnn[2:max_knn], type="l", xlab="knn", ylab="Variogram-like statistic", lwd=2, cex.lab=0.9, cex.main=1,
+       main="semiVariance results for incremental knn", ylim=c(floor(min(semiKnn[2:max_knn])),ceiling(max(semiKnn[2:max_knn]))))
+  points(2:max_knn, semiKnn[2:max_knn], pch=21, bg="lightblue", cex=1.5)
+  abline(h=(floor(min(semiKnn[2:max_knn])):ceiling(max(semiKnn[2:max_knn]))), lty=3)
+  abline(v=(2:max_knn), lty=3)
+
+  return(semiKnn)
+}

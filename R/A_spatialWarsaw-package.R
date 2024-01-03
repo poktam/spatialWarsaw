@@ -25,7 +25,7 @@
 #' @importFrom GWmodel bw.gwr gwr.basic gw.dist
 #' @importFrom fossil adj.rand.index
 #' @importFrom grDevices heat.colors
-#' @importFrom spdep poly2nb nb2listw knearneigh make.sym.nb knn2nb lag.listw
+#' @importFrom spdep poly2nb nb2listw knearneigh make.sym.nb knn2nb lag.listw nb2mat
 #' @importFrom spatialreg lagsarlm errorsarlm sacsarlm
 #'
 #'
