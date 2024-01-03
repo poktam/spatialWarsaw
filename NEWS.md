@@ -25,4 +25,8 @@
 
 # spatialWarsaw 0.1.7
 
-* New function added: rastClustGWR(). Still a development version
+* New function added: rastClustGWR() and STS(). Still a development version
+
+# spatialWarsaw 0.1.8
+
+* New function added: bestW(), semiVarKnn(), tessW() and corrSpatialLags(). Still a development version

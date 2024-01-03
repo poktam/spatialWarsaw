@@ -1,6 +1,6 @@
-#############
-### ETA() ###
-#############
+###############
+### bestW() ###
+###############
 #
 #
 #' Linijka nr 1 - function title
@@ -10,17 +10,16 @@
 #' Linijka nr 3 - details
 #'
 #'
-#' @name ETA
-#' @aliases ETA eta
+#' @name bestW
 #' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
 #' @param region_sf do opisu (obiekt sf ale jako region)
 #' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
 #' @examples #To be done!!!
 #'
-#' @return `ETA()` returns ... to be done.
+#' @return `bestW()` returns ... to be done.
 #'
 #' @export
-ETA<-function(points_sf, region_sf, sample_size){
+bestW<-function(points_sf, region_sf, sample_size){
   #sprawdzić czy warunek na typ jest ok?
   if(!inherits(region_sf,"sf")) {
     stop("The class of region_sf must only be 'sf'.\n")
@@ -39,7 +38,7 @@ ETA<-function(points_sf, region_sf, sample_size){
       # sprawdzić czy działa przekształcenie
       crds_sf<-st_transform(crds_sf,crs=st_crs(region_sf))
       cat("The coordinates for point_sf object of class type data.frame have been tranformed to a geographic coordinate",
-          "system / projection that matches the projection of the region_sf object: EPSG:",st_crs(region_sf)$epsg,".\n",sep="")
+        "system / projection that matches the projection of the region_sf object: EPSG:",st_crs(region_sf)$epsg,".\n",sep="")
     }
   } else if(inherits(points_sf,"data.frame",TRUE)==1){
     crds<-points_sf[,c(1,2)]
@@ -73,29 +72,19 @@ ETA<-function(points_sf, region_sf, sample_size){
   tess_result<-st_voronoi(crds_sfc_s_union, region_sfc)
   tess_result<-st_intersection(st_cast(tess_result), st_union(region_sfc))
 
-  tess_area<-st_area(tess_result)
-  tess_area_rel<-tess_area/sum(tess_area)
-  S_ent<-sum(-1*tess_area_rel*log(tess_area_rel)) # Shannon entropy
-  ent.ref<-log(1/length(tess_area))*(-1)
-  H_ent<-S_ent/ ent.ref # Relative H entropy
+  # macierz wag na bazie tesselowanych obszarów
+  tess_result.nb<- poly2nb(tess_result)				# class nb
+  tess_result.listw<-nb2listw(tess_result.nb, style="W")		# class listw
+
+  crdsW.sf<-st_centroid(st_geometry(tess_result)) 	# centroidy / centroids
 
   # plot with points in blue
   par(mar=c(4,4,4,4))
-  plot(st_geometry(tess_result), main="Degree of agglomeration \n entropy of tesselated point pattern",
-       sub="Relative H entropy =1 for spatially uniform distribution (no agglomeration)")
-  plot(crds_sfc_s, add=TRUE, bg="darkblue", pch=21)
-  legend("bottomleft", horiz=FALSE,
-         c(paste("Shannon entropy=", round(S_ent,2)), paste("Relative H entropy=", round(H_ent,2)), paste("Number of points =", round(length(tess_area),2))),
-         cex=0.75, bty="n")
+  plot(st_geometry(tess_result), main="Degree of agglomeration \n entropy of tesselated point pattern")
+  plot(tess_result.nb, crdsW.sf, add=TRUE)
 
-  list(
-    S_ent = as.numeric(S_ent),
-    H_ent = as.numeric(H_ent),
-    n_points = round(length(tess_area),2)
-  )
+  return(tess_result.listw)
 
 }
-#' @export
-eta <- ETA
 
 

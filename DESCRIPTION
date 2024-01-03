@@ -1,8 +1,8 @@
 Package: spatialWarsaw
 Type: Package
-Date: 2024-01-02
+Date: 2024-01-03
 Title: Spatial analysis on point data including clustering measures and bootstrap methods 
-Version: 0.1.7
+Version: 0.1.8
 Author: Mateusz Kopyt [aut, cre, cph],
     Katarzyna Kopczewska [aut, cph],
     Ewa Dobrowolska [ctb, cph]
