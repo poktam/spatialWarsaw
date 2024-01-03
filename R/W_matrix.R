@@ -79,9 +79,8 @@ tessW<-function(points_sf, region_sf, sample_size){
   crdsW.sf<-st_centroid(st_geometry(tess_result)) 	# centroidy / centroids
 
   # plot with points in blue
-  par(mar=c(3,3,3,3))
-  plot(st_geometry(tess_result), main="Weighting matrix based on a sample of point data",
-       sub="Regions determined by the tessellation method.")
+  par(mar=c(4,4,4,4))
+  plot(st_geometry(tess_result), main="Weighting matrix based on a sample of point data.\n Regions determined by the tessellation method.")
   plot(tess_result.nb, crdsW.sf, add=TRUE)
 
   return(tess_result.listw)
