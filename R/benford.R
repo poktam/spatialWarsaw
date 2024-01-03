@@ -41,7 +41,7 @@ SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
 
   # zbadać var_name - jeśli nie ma lub nie istnieje w danych, to pominąć, jeśli istnieje to wyciągnąć kolumnę
   if (length(var_name)>1) {
-    var_col<-var_name[1]
+    var_name<-var_name[1]
     cat("Parameter var_name longer than 1. The first element has been selected: ",var_name,"\n",sep="")
   }
 
