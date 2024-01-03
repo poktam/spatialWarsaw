@@ -25,6 +25,7 @@
 #' @importFrom GWmodel bw.gwr gwr.basic gw.dist
 #' @importFrom fossil adj.rand.index
 #' @importFrom grDevices heat.colors
+#' @importFrom spdep poly2nb nb2listw
 #'
 #'
 # ew. uzupełnić inne importy!!!; sp trzeba na razie zostawić, bo GWR models działają na sp
