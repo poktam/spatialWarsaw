@@ -498,15 +498,9 @@ semiVarKnn<-function(points_sf, var_name, sample_size, max_knn){
 
   #iterate through knn
   for (i in 2:max_knn) {
-    pkt.knn.mat <-nb2mat(knn2nb(knearneigh(crds_s, k=i)))
-    binary <- pkt.knn.mat*i
-
-    #binary??? - poniżej uprościć!!!!
-    gammaMatrix <- gammaMat * binary
-    nonEmpty <- sum(colSums(gammaMatrix != 0))
-    nonEmptyPairs <- nonEmpty/2
-    sumGamma <- sum(colSums(gammaMatrix))
-    semiKnn[i]<-sumGamma/nonEmptyPairs
+    knn.mat.binary <- nb2mat(knn2nb(knearneigh(crds_s, k=i)))*i
+    gammaMatrix <- gammaMat * knn.mat.binary
+    semiKnn[i]<-sum(colSums(gammaMatrix))/(sum(colSums(gammaMatrix != 0))/2)
   }
 
   # Plot - ver I (czy od knn=1 czy od knn=2?)
@@ -514,7 +508,7 @@ semiVarKnn<-function(points_sf, var_name, sample_size, max_knn){
   plot(2:max_knn, semiKnn[2:max_knn], type="l", xlab="knn", ylab="Variogram-like statistic", lwd=2, cex.lab=0.9, cex.main=1,
        main="semiVariance results for incremental knn", ylim=c(floor(min(semiKnn[2:max_knn])),ceiling(max(semiKnn[2:max_knn]))))
   points(2:max_knn, semiKnn[2:max_knn], pch=21, bg="lightblue", cex=1.5)
-  abline(h=(floor(min(semiKnn[2:max_knn])):ceiling(max(semiKnn[2:max_knn]))), lty=3)
+  # abline(h=(floor(min(semiKnn[2:max_knn])):ceiling(max(semiKnn[2:max_knn]))), lty=3)
   abline(v=(2:max_knn), lty=3)
 
   return(semiKnn)
