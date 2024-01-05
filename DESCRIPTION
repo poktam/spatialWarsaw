@@ -11,7 +11,7 @@ Maintainer: Mateusz Kopyt <mkopyt@wne.uw.edu.pl>
 Description: A collection of tools for spatial analysis on point data including clustering measures and the ability to bootstrap large datasets.
     (Use four spaces when indenting paragraphs within the Description.)
 Imports: benford.analysis, dbscan, DescTools, dplyr, ggplot2, sp, spdep, sf, stats, stargazer, graphics, rlang, 
-    terra, GWmodel, fossil, grDevices, spatialreg
+    terra, GWmodel, fossil, grDevices, spatialreg, gridExtra
 Depends: plot.matrix
 License: GPL (>= 3)
 Encoding: UTF-8

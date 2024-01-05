@@ -97,8 +97,10 @@ QDC<-function(data_sf, sample_size, nclust=3, k=10, eps=0.05){
   # location of clusters in space
   p2<-ggplot(data.d, aes_string(x="X", y="Y", color="km.set1")) +  geom_point()+ theme(legend.position="none")
 
-  print(p1)
-  print(p2)
+  grid.arrange(p1,p2, ncol = 2, nrow = 1)
+
+#  print(p1)
+#  print(p2)
 
   # LEPSZE NAZWY KOLUMN W OUTPUCIE
   # czy potrzeba zwracać listę parametrów i obiekt output czy tylko obiekt output wystarczy?

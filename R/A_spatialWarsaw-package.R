@@ -27,6 +27,7 @@
 #' @importFrom grDevices heat.colors
 #' @importFrom spdep poly2nb nb2listw knearneigh make.sym.nb knn2nb lag.listw nb2mat
 #' @importFrom spatialreg lagsarlm errorsarlm sacsarlm
+#' @importFrom gridExtra grid.arrange
 #'
 #'
 # ew. uzupełnić inne importy!!!; sp trzeba na razie zostawić, bo GWR models działają na sp
