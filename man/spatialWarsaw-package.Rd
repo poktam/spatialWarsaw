@@ -2,6 +2,7 @@
 % Please edit documentation in R/A_spatialWarsaw-package.R
 \docType{package}
 \name{spatialWarsaw-package}
+\alias{spatialWarsaw}
 \alias{spatialWarsaw-package}
 \title{spatialWarsaw: Spatial analysis on point data including clustering measures and bootstrap methods}
 \description{

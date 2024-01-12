@@ -30,3 +30,7 @@
 # spatialWarsaw 0.1.8
 
 * New function added: bestW(), semiVarKnn(), tessW() and corrSpatialLags(). Still a development version
+
+# spatialWarsaw 0.1.9
+
+* New function added: SPAG(). Still a development version
