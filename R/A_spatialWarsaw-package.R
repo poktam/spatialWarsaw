@@ -7,6 +7,8 @@
 #' @references
 #' To be done
 #'
+#' @name spatialWarsaw-package
+#'
 #' @aliases spatialWarsaw-package NULL
 #' @keywords internal
 "_PACKAGE"
