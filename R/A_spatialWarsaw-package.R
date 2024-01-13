@@ -7,8 +7,9 @@
 #' @references
 #' To be done
 #'
-#' @docType package
-#' @name spatialWarsaw-package
+#' @aliases spatialWarsaw-package NULL
+#' @keywords internal
+"_PACKAGE"
 #'
 #' @import sf
 #' @importFrom benford.analysis benford
