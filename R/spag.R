@@ -103,9 +103,7 @@ SPAG<-function(points_sf, size_var, region_sf){
 
   # theoretical part
   # equal location of selected points
-  # we use object ‘punkty’ with uniform distribution
-  # number of points is given wi ‘nn.real’
-
+  # we use object ‘points_sf_theo’ with uniform distribution
 
   points_sf_theo<-st_sample(region_sf, 5000, type="regular")
   st_crs(points_sf_theo)<-st_crs(region_sf)
@@ -114,6 +112,7 @@ SPAG<-function(points_sf, size_var, region_sf){
   theo_rad<-sqrt(area_region/(length(points_sf_theo)*pi))
 
   # distances for selected theoretical locations   random selection
+  # CZY 100 jako min. tu wystarczy??? Inaczej było w empirycznym???
   selector_theo<-sample(1:length(points_sf_theo), min(100, length(points_sf_theo)), replace=FALSE)
   points_sf_theo_rnd_crds<-st_coordinates(points_sf_theo[selector_theo])
   distance_theo<-dist(points_sf_theo_rnd_crds)
