@@ -65,8 +65,6 @@ SPAG<-function(points_sf, size_var, region_sf){
   colnames(points_sf_s)[1]<-"size"
   points_sf_s$size<-round(points_sf_s$size)
 
-
-  # lekki porządek poniżej do zrobienia (choć działa)
   sizes<-unique(round(as.data.frame(points_sf[,m])[,1]))
   firm_num<-as.data.frame(table(round(as.data.frame(points_sf[,m])[,1])))
   colnames(firm_num)[1]<-"size"
@@ -76,6 +74,7 @@ SPAG<-function(points_sf, size_var, region_sf){
   area_region<-st_area(region_sf) #denominator of nomin.coverage.sel
 
   f.char<-character()
+  f.all<-character()
   for(i in 1:nrow(firm_num)){
     f.char<-paste(f.char,paste("firm_num[",i,",2]*pi*firm_num[",i,",3]*r^2",sep=''),sep='+')
   }
@@ -94,7 +93,7 @@ SPAG<-function(points_sf, size_var, region_sf){
   # random matrix of distances
   # MOŻE 3000 UZALEŻNIĆ OD WIELKOŚCI OBSZARU - JAKOŚ PROPORCJONALNIE
   selector_rnd<-sample(1:nrow(points_sf), min(nrow(points_sf_s),3000), replace = FALSE)
-  points_sf_rnd_crds<-st_coordinates(points_sf_s[selector_s,]) # any random points from the sample
+  points_sf_rnd_crds<-st_coordinates(points_sf_s[selector_rnd,]) # any random points from the sample
   distance_rnd<-dist(points_sf_rnd_crds)
 
   # counters for analysed sector
@@ -129,11 +128,11 @@ SPAG<-function(points_sf, size_var, region_sf){
   i_coverage<-as.numeric(counter_coverage/nomin_coverage)
   i_distance<-as.numeric(counter_distance/nomin_distance)
   i_overlap<-as.numeric(counter_overlap/nomin_overlap)
-  SPAG_res<- i.coverage * i.distance * i.overlap
+  SPAG_res<- i_coverage * i_distance * i_overlap
 
   # MOŻE PROBLEM Z LEGENDĄ - sprawdzić
   par(mar=c(2,2,2,2)+0.1)
-  plot(st_geometry(WOJ_LUB))
+  plot(st_geometry(region_sf))
   plot(circles_vec_s, col="lightblue", add=TRUE)
   legend("bottomleft", legend=c(paste("i.coverage=",round(i_coverage,2)),
                                 paste("i.distance=",round(i_distance,2)),
