@@ -1,8 +1,8 @@
 Package: spatialWarsaw
 Type: Package
-Date: 2024-01-13
+Date: 2024-02-25
 Title: Spatial analysis on point data including clustering measures and bootstrap methods 
-Version: 0.1.9
+Version: 0.1.10
 Author: Mateusz Kopyt [aut, cre],
     Katarzyna Kopczewska [aut],
     Maria Kubara [aut],
@@ -11,7 +11,7 @@ Maintainer: Mateusz Kopyt <mkopyt@wne.uw.edu.pl>
 Description: A collection of tools for spatial analysis on point data including clustering measures and the ability to bootstrap large datasets.
     (Use four spaces when indenting paragraphs within the Description.)
 Imports: benford.analysis, dbscan, DescTools, dplyr, ggplot2, sp, spdep, sf, stats, stargazer, graphics, rlang, 
-    terra, GWmodel, fossil, grDevices, spatialreg, gridExtra
+    terra, GWmodel, fossil, grDevices, spatialreg, gridExtra, sampling, cluster
 Depends: plot.matrix
 License: GPL (>= 3)
 Encoding: UTF-8

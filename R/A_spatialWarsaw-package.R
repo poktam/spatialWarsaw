@@ -29,10 +29,12 @@
 #' @importFrom spdep poly2nb nb2listw knearneigh make.sym.nb knn2nb lag.listw nb2mat
 #' @importFrom spatialreg lagsarlm errorsarlm sacsarlm
 #' @importFrom gridExtra grid.arrange
+#' @importFrom sampling strata
+#' @importFrom cluster pam
 #'
 #'
 # ew. uzupełnić inne importy!!!; sp trzeba na razie zostawić, bo GWR models działają na sp
-# może dla plot.matrix spróbować: @importMethodsFrom package generic !!!! - pozbycie się Depend z DESCRIPTION
+# może dla plot.matrix spróbować: @importMethodsFrom package generic !!!! - pozbycie się Depends z DESCRIPTION
 #
 #'
 NULL
