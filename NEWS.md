@@ -34,3 +34,7 @@
 # spatialWarsaw 0.1.9
 
 * New function added: SPAG(). Still a development version
+
+# spatialWarsaw 0.1.10
+
+* New functions added: BootSpatReg(), ApproxSERoot2(), SpatPredTess() . Still a development version

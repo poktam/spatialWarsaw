@@ -32,7 +32,7 @@
 #'
 #'
 # ew. uzupełnić inne importy!!!; sp trzeba na razie zostawić, bo GWR models działają na sp
-# może dla plot.matrix spróbować: @importMethodsFrom package generic !!!! - pozbycie się Depend z DESCRIPTION
+# może dla plot.matrix spróbować: @importMethodsFrom package generic !!!! - pozbycie się Depends z DESCRIPTION
 #
 #'
 NULL
