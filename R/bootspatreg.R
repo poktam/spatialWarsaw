@@ -89,6 +89,7 @@ BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type="SDM", knn){
 
 
 
+
   # MOŻE PROBLEM Z LEGENDĄ - sprawdzić
   par(mar=c(2,2,2,2)+0.1)
   plot(st_geometry(region_sf))
