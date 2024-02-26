@@ -80,33 +80,120 @@ BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type="SDM", knn){
   }
   iter<-round(iter)
 
+  # cluster your data- xy geocoordinates - to get irregular shapes for sampling
+  # czy II parametr zostawić sample_size/100? - co przy b. dużych sample_size?
+  points_sf$cluster<-(kmeans(crds, sample_size/100))$cluster
+
+  # to avoid coords in the same place
+  crds[,1]<-crds[,1]+rnorm(nrow(crds), 0, sd(crds[,1])/1000)
+  crds[,2]<-crds[,2]+rnorm(nrow(crds), 0, sd(crds[,2])/1000)
+
+  # selector selects the rows of observations for every iteration
+  # and saves in matrix, later it will be used to recover,
+  # on which data the best model was estimated
+  # strata() from sampling:: samples obs.from groups (clusters)
+  # method="srswor" stands for simple random sampling without replacement (in given column)
+
+  selector<-matrix(NA, nrow=sample_size, ncol=iter)
+  for(i in 1:iter){
+    #  vec<-sample(nrow(points_sf), sample_size, replace=FALSE)
+    selector[,i]<-(strata(points_sf, "cluster", size=rep(100, times=sample_size/100), method="srswor"))$ID_unit
+  }
+
+  # objects to store results of iterations
+  # (length(var_names)-1) można zastąpić length(attr(terms(eq),"term.labels"))
+
+  n<-ifelse(model_type=="SDM", (length(var_names)-1)*2+1, (length(var_names)-1)+1)
+
+  coef_boot<-matrix(NA, nrow=iter, ncol=n)	# for coefficients
+  error_boot<-matrix(NA, nrow=iter, ncol=n) #for std errors
+  fitted_boot<-matrix(NA, nrow=sample_size, ncol=iter)	# for fitted values
+  y_boot<-matrix(NA, nrow=sample_size, ncol=iter) 	# original values of y
+
+  # AIC.ols, AIC.spatial, time.W, time.model, spatial.coef
+  quality_boot<-matrix(NA, nrow=iter, ncol=5)
+  colnames(quality_boot)<-c("AIC.ols", "AIC.spatial", "time.W", "time.model", "spatial.coef")
+
+  # main loop – estimation of all models (SEM, SAR, SDM) on the same subsets with time measurement
+
+  cat(iter, " ", model_type, " models will be computed. ",
+      "It can take a long while.","\n",sep="")
+
+  for(i in 1:iter){
+    dane_temp<-points_sf[selector[,i],]	# subset of data for given iteration
+
+    # W matrix
+    crds_temp<-as.matrix(crds[selector[,i], ])
+    start_time <- Sys.time()
+    knnW_temp<-nb2listw(make.sym.nb(knn2nb(knearneigh(as.matrix(crds_temp), k=knn))))
+    end_time <- Sys.time()
+    time_W<-difftime(end_time, start_time, units="secs")
+
+    # model estimation
+    if (model_type=="SEM") {
+      start_time <- Sys.time()
+      model_temp<-errorsarlm(eq, data=dane_temp, knnW_temp, method="LU")
+      end_time <- Sys.time()
+      time_model<- difftime(end_time, start_time, units="secs")
+
+    } else if (model_type=="SAR") {
+      start_time <- Sys.time()
+      model_temp<-lagsarlm(eq, data=dane_temp, knnW_temp, method="LU")
+      end_time <- Sys.time()
+      time_model<- difftime(end_time, start_time, units="secs")
+
+    } else if (model_type=="SDM") {
+      start_time <- Sys.time()
+      model_temp<-lagsarlm(eq, data=dane_temp, knnW_temp, method="LU", type="mixed")
+      end_time <- Sys.time()
+      time_model<- difftime(end_time, start_time, units="secs")
+    }
+
+    # saving the results into appropriate objects
+    # sprawdzić czy nie wystarczy coef_boot[i,]<-model_temp$coefficients itd.
+    coef_boot[i,1:length(model_temp$coefficients)]<-model_temp$coefficients
+    error_boot[i, 1:length(model_temp$coefficients)]<-model_temp$rest.se
+    fitted_boot[,i]<-model_temp$fitted.values
+    y_boot[,i]<-as.matrix(st_drop_geometry(dane_temp[,var_names[1]]))
+    quality_boot[i,1]<-model_temp$AIC_lm.model # AIC.ols
+    quality_boot[i,2]<-AIC(model_temp) # AIC.spatial
+    quality_boot[i,3]<-time_W
+    quality_boot[i,4]<-time_model
+    quality_boot[i,5]<-ifelse(is.null(model_temp$rho)==TRUE, model_temp$lambda, model_temp$rho)
+  }
 
 
+  # selection of the best model with PAM
+  clust_mod<-pam(cbind(coef_boot, quality_boot[,5]),1)
 
+  dane_best<-points_sf[selector[,clust_mod$id.med],] # data which were used in estimation of the best model
+  crds_best<-crds[selector[,clust_mod$id.med],]
+  RAMSE_best<-(sum((y_boot[ , clust_mod$id.med] - fitted_boot[ , clust_mod$id.med])^2)/sample_size)^(0.5)
+  knnW_best<-nb2listw(make.sym.nb(knn2nb(knearneigh(as.matrix(crds_best), k=knn))))
 
+  # best model estimation
+  if (model_type=="SEM") {
+    model_best<-errorsarlm(eq, data=dane_best, knnW_best, method="LU")
 
+  } else if (model_type=="SAR") {
+    model_best<-lagsarlm(eq, data=dane_best, knnW_best, method="LU")
 
+  } else if (model_type=="SDM") {
+    model_best<-lagsarlm(eq, data=dane_best, knnW_best, method="LU", type="mixed")
+  }
 
+  # SPRAWDZIĆ, czy kolumny mają się tak nazywać
+  colnames(coef_boot)<-names(model_best$coefficients)
+  colnames(error_boot)<-names(model_best$coefficients)
 
+  list(coef.boot = coef_boot,
+       error.boot = error_boot,
+       quality.boot = quality_boot,
+       dane.best = dane_best,
+       model.best = model_best,
+       RAMSE.best = RAMSE_best)
+  #może przygotować klasę do tego outputu?
 
-
-  # MOŻE PROBLEM Z LEGENDĄ - sprawdzić
-  par(mar=c(2,2,2,2)+0.1)
-  plot(st_geometry(region_sf))
-  plot(circles_vec_s, col="lightblue", add=TRUE)
-  legend("bottomleft", legend=c(paste("i.coverage=",round(i_coverage,2)),
-                                paste("i.distance=",round(i_distance,2)),
-                                paste("i.overlap=",round(i_overlap,2)),
-                                paste("SPAG=",round(SPAG_res,3)),
-                                paste("n obs.=",round(nrow(points_sf_s),2))), cex=0.85, bty="n")
-
-  title(main="SPAG measure for the analysed data", cex.main=0.9)
-
-  list(i.coverage = i_coverage,
-       i.distance = i_distance,
-       i.overlap = i_overlap,
-       SPAG = SPAG_res,
-       n.obs = nrow(points_sf_s))
 }
 
 #######################
