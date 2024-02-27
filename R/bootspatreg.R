@@ -210,15 +210,44 @@ BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type="SDM", knn){
 #'
 #' @name ApproxSERoot2
 #' @aliases ApproxSERoot2
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object. (OD RAZU DANE Z WYBRANEJ ZMIENNEJ NP. SEKTORA)
-#' @param size_var The name of the variable describing the size of the analysed objects (e.g. companies). (SPRAWDZIĆ opis)
-#' @param region_sf do opisu (obiekt sf ale jako region)
+#' @param model_spatial Spatial model object to analyse
 #' @examples #To be done!!!
 #'
 #' @return `ApproxSERoot2()` returns ... to be done.
 #'
 #' @export
-ApproxSERoot2<-function(points_sf, size_var, region_sf){
+ApproxSERoot2<-function(model_spatial){
+  if(!(inherits(model_spatial,"Sarlm"))) {
+    stop("The class of model_spatial must be 'Sarlm' only.")
+  }
+
+  #można rozszerzyć na wybraną w argumentach funkcji liczbę potęg 2.
+  mp<-length(model_spatial$y)*c(1, 2, 4, 8, 16, 32) # Sample size multiplied by successive powers of 2
+  result<-matrix(NA, nrow=length(model_spatial$coefficients), ncol=7)
+  colnames(result)<-c("coef", paste0("SE_",mp[1]), paste0("SE_",mp[2]), paste0("SE_",mp[3]), paste0("SE_",mp[4]), paste0("SE_",mp[5]), paste0("SE_",mp[6]))
+  rownames(result)<-names(model_spatial$coefficients)
+  result[,1]<-model_spatial$coefficients
+
+  # wykorzystać!!! (bez pętli)
+  # as.matrix(model_spatial$rest.se)%*%t(as.matrix(c(1, 1/(2^0.5)^1, 1/(2^0.5)^2, 1/(2^0.5)^3, 1/(2^0.5)^4, 1/(2^0.5)^5)))
+  for(i in 1:length(model_spatial$coefficients)){
+    er<-model_spatial$rest.se[i]
+    result[i, 2:7]<-c(er, er/(2^0.5)^1, er/(2^0.5)^2, er/(2^0.5)^3, er/(2^0.5)^4, er/(2^0.5)^5)
+  }
+
+  # plot (ew. doszlifować)
+  plot(mp, result[1,2:7], type="l", xlab="size of dataset", ylab="SE of beta coefficient",
+       ylim=c(min(result[,2:7]),max(result[,2:7])), col="red", lty=1, lwd=2)
+  text(mp[1]/2,result[1,2], "1", cex=0.8)
+
+  for(i in 2:length(model_spatial$coefficients)){
+    lines(mp, result[i, 2:7], lty=1, col="red", lwd=1)
+    text(mp[1]/2,result[i,2], i, cex=0.8)}
+
+  title(main="Extrapolated SE of model coefficients based on sqrt(2) rule")
+  legend("topright", paste0(1:length(model_spatial$coefficients), ":", names(model_spatial$coefficients) ), bty="n", cex=0.8)
+
+  result
 }
 
 #######################
