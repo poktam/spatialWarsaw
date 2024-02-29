@@ -189,7 +189,8 @@ BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type="SDM", knn){
   list(coef.boot = coef_boot,
        error.boot = error_boot,
        quality.boot = quality_boot,
-       dane.best = dane_best,
+       data.best = dane_best,
+       knnW.best = knnW_best,
        model.best = model_best,
        RAMSE.best = RAMSE_best)
   #może przygotować klasę do tego outputu?
@@ -264,14 +265,24 @@ ApproxSERoot2<-function(model_spatial){
 #'
 #' @name SpatPredTess
 #' @aliases SpatPredTess
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object. (OD RAZU DANE Z WYBRANEJ ZMIENNEJ NP. SEKTORA)
-#' @param size_var The name of the variable describing the size of the analysed objects (e.g. companies). (SPRAWDZIĆ opis)
+#' @param model_spatial Spatial model
+#' @param points_spatial_sf Data on which the model_spatial was estimated (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' @param knnW Spatial weighting matrix (`listw` class) used to estimate model_spatial
+#' @param points_new_sf New data for prediction. NOTE: The new data must have the same class and structure as
+#' the `points_spatial_sf` object. (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` and `points_spatial_sf` objects.
+#' @param size_new Number of new points added to the forecast
 #' @param region_sf do opisu (obiekt sf ale jako region)
 #' @examples #To be done!!!
 #'
 #' @return `SpatPredTess()` returns ... to be done.
 #'
 #' @export
-SpatPredTess<-function(points_sf, size_var, region_sf){
+SpatPredTess<-function(model_spatial, points_spatial_sf, knnW, points_new_sf, size_new, region_sf){
+  #SPRAWDZIĆ, CZY size_new parametr potrzebny
+  if(!(inherits(model_spatial,"Sarlm"))) {
+    stop("The class of model_spatial must be 'Sarlm' only.")
+  }
+
+
 }
 
