@@ -182,6 +182,8 @@ BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type="SDM", knn){
     model_best<-lagsarlm(eq, data=dane_best, knnW_best, method="LU", type="mixed")
   }
 
+  model_best$call$formula<-eq # wpisanie formuły do modelu
+
   # SPRAWDZIĆ, czy kolumny mają się tak nazywać
   colnames(coef_boot)<-names(model_best$coefficients)
   colnames(error_boot)<-names(model_best$coefficients)
@@ -266,23 +268,132 @@ ApproxSERoot2<-function(model_spatial){
 #' @name SpatPredTess
 #' @aliases SpatPredTess
 #' @param model_spatial Spatial model
-#' @param points_spatial_sf Data on which the model_spatial was estimated (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' @param points_spatial_sf Data on which the model_spatial was estimated (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
+#' When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
 #' @param knnW Spatial weighting matrix (`listw` class) used to estimate model_spatial
-#' @param points_new_sf New data for prediction. NOTE: The new data must have the same class and structure as
-#' the `points_spatial_sf` object. (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` and `points_spatial_sf` objects.
-#' @param size_new Number of new points added to the forecast
+#' @param points_new_sf New data for prediction (all used for a forecast). NOTE: The new data must have the same class and structure as
+#' the `points_spatial_sf` object. (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
+#' When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` and `points_spatial_sf` objects.
 #' @param region_sf do opisu (obiekt sf ale jako region)
 #' @examples #To be done!!!
 #'
 #' @return `SpatPredTess()` returns ... to be done.
 #'
 #' @export
-SpatPredTess<-function(model_spatial, points_spatial_sf, knnW, points_new_sf, size_new, region_sf){
-  #SPRAWDZIĆ, CZY size_new parametr potrzebny
+SpatPredTess<-function(model_spatial, points_spatial_sf, knnW, points_new_sf, region_sf){
   if(!(inherits(model_spatial,"Sarlm"))) {
     stop("The class of model_spatial must be 'Sarlm' only.")
   }
 
+  #sprawdzić czy warunek na typ jest ok?
+  if(!inherits(region_sf,"sf")) {
+    stop("The class of region_sf must only be 'sf'.\n")
+  } else if(!(st_geometry_type(region_sf,FALSE)=="MULTIPOLYGON" || st_geometry_type(region_sf,FALSE)=="POLYGON")){
+    stop("The type of region_sf must only be 'MULTIPOLYGON' or 'POLYGON'.")
+  }
 
+  # w przypadku gdy oba obiekty są typu sf uzgodnić ich system współrzędnych / projekcję(!!!)
+  #Ew. do sprawdzenia czy warunek st_geometry_type(points_spatial_sf,FALSE)=="POINT") nie jest zbyt restrykcyjny
+  if((inherits(points_spatial_sf,"sf") && st_geometry_type(points_spatial_sf,FALSE)=="POINT")) {
+    # to można uprościć (trochę niepotrzebne wyjęcie współrzędnych i ich przerobienie ponownie), ale na razie zostawimy
+    if (st_crs(points_spatial_sf)!=st_crs(region_sf)) {
+      # sprawdzić czy działa przekształcenie
+      points_spatial_sf<-st_transform(crds_spatial_sf,crs=st_crs(region_sf))
+      cat("The coordinates for point_spatial_sf object of class type data.frame have been tranformed to a geographic coordinate",
+          "system / projection that matches the projection of the region_sf object: EPSG:",st_crs(region_sf)$epsg,".\n",sep="")
+    }
+    crds_spatial<-as.data.frame(st_coordinates(points_spatial_sf))
+    colnames(crds_spatial)<-c("X_coord","Y_coord")
+    crds_spatial_sf<-st_as_sf(crds_spatial,coords = c("X_coord","Y_coord"), crs=st_crs(points_spatial_sf), agr="constant")
+  } else if(inherits(points_spatial_sf,"data.frame",TRUE)==1){
+    points_spatial_sf<-st_as_sf(points_spatial_sf,coords = c(1,2), crs=st_crs(region_sf), agr="constant")
+    crds_spatial<-as.data.frame(st_coordinates(points_spatial_sf))
+    colnames(crds_spatial)<-c("X_coord","Y_coord")
+    crds_spatial_sf<-st_as_sf(crds_spatial,coords = c("X_coord","Y_coord"), crs=st_crs(points_spatial_sf), agr="constant")
+    cat("The coordinates from the point_spatial_sf object of class type data.frame have been assigned ",
+        "a geographic coordinate system / projection that matches the projection of the region_sf object: EPSG:", st_crs(region_sf)$epsg,".\n",sep="")
+  } else {
+    stop("The class of points_spatial_sf must only be 'sf' of geometry type 'POINTS' or 'data.frame'.")
+  }
+
+  if((inherits(points_new_sf,"sf") && st_geometry_type(points_new_sf,FALSE)=="POINT")) {
+    # to można uprościć (trochę niepotrzebne wyjęcie współrzędnych i ich przerobienie ponownie), ale na razie zostawimy
+    if (st_crs(points_new_sf)!=st_crs(region_sf)) {
+      # sprawdzić czy działa przekształcenie
+      points_new_sf<-st_transform(crds_spatial_sf,crs=st_crs(region_sf))
+      cat("The coordinates for point_new_sf object of class type data.frame have been tranformed to a geographic coordinate",
+          "system / projection that matches the projection of the region_sf object: EPSG:",st_crs(region_sf)$epsg,".\n",sep="")
+    }
+    crds_new<-as.data.frame(st_coordinates(points_new_sf))
+    colnames(crds_new)<-c("X_coord","Y_coord")
+    crds_new_sf<-st_as_sf(crds_new,coords = c("X_coord","Y_coord"), crs=st_crs(points_new_sf), agr="constant")
+  } else if(inherits(points_new_sf,"data.frame",TRUE)==1){
+    points_new_sf<-st_as_sf(points_new_sf,coords = c(1,2), crs=st_crs(region_sf), agr="constant")
+    crds_new<-as.data.frame(st_coordinates(points_new_sf))
+    colnames(crds_new)<-c("X_coord","Y_coord")
+    crds_new_sf<-st_as_sf(crds_new,coords = c("X_coord","Y_coord"), crs=st_crs(points_new_sf), agr="constant")
+    cat("The coordinates from the point_spatial_sf object of class type data.frame have been assigned ",
+        "a geographic coordinate system / projection that matches the projection of the region_sf object: EPSG:", st_crs(region_sf)$epsg,".\n",sep="")
+  } else {
+    stop("The class of points_spatial_sf must only be 'sf' of geometry type 'POINTS' or 'data.frame'.")
+  }
+
+  if(!(inherits(knnW,"listw"))) {
+    stop("The class of knnW must be 'listw'.")
+  }
+
+  # SPRAWDZIĆ/DODAĆ sprawdzenie, czy struktura (nazwy kolumn) points_spatial_sf  odpowiadają points spatial new_sf.
+  if (!identical(colnames(points_spatial_sf),colnames(points_new_sf))) {
+    stop("Names of variables in points_spatial_sf and points_new_sf are not the same.")
+  }
+
+  size_new <- nrow(points_new_sf)
+
+  # For tesselation only
+  crds_tess_sf<-st_transform(crds_spatial_sf,crs=3857)
+  crds_tess_new_sf<-st_transform(crds_new_sf,crs=3857)
+  region_tess_sf<-st_transform(region_sf,crs=3857)
+
+  # tesselation (może uprościć)
+  crds_tess_sfc<-st_geometry(crds_tess_sf)
+  region_tess_sfc<-st_geometry(region_tess_sf)
+  crds_tess_sfc_union<-st_union(crds_tess_sfc)
+  tess_result<-st_voronoi(crds_tess_sfc_union, region_tess_sfc)
+  tess_result<-st_intersection(st_cast(tess_result), st_union(region_tess_sfc))
+
+  tess_result_sf<-st_sf(tess_result)
+  ppi<-st_intersects(crds_tess_new_sf, tess_result_sf) # prediction points indicator
+
+  var_dep<-all.vars(model_spatial$call$formula)[1]
+
+  forecasts_result<-matrix(NA, nrow=size_new, ncol=5)
+  colnames(forecasts_result)<-c("predicted y", "real y", "crds x", "crds y", "(predY-realY)^2")
+
+  # loop for forecasts for new points - separate match for each point
+  for(i in 1:size_new){
+    points_pred_sf<-points_spatial_sf
+    points_pred_sf[unlist(ppi[i]),] <- points_new_sf[i, ]
+    rownames(points_pred_sf)<-1:nrow(points_pred_sf)
+
+    # prediction for out-of-sample calibrated selected model
+    pred_temp<-predict(model_spatial, newdata=points_pred_sf, listw=knnW, legacy.mixed=TRUE)
+    forecasts_result[i,1]<- pred_temp[unlist(ppi[i])] # predicted y for a new point
+    forecasts_result[i,2]<- st_drop_geometry(points_new_sf[i, var_dep])[1,1]		# empirical y for a new point
+    forecasts_result[i,3:4]<- st_coordinates(points_new_sf[i, var_dep]) 		# x,y coordinates
+  }
+
+  forecasts_result[,5]<-(forecasts_result[,1]-forecasts_result[,2])^2
+  RAMSE_pred<-(mean(forecasts_result[,5]))^0.5
+
+  # plotting tessellation + points for predictions
+
+  par(mar=c(1,1,2,1))
+  plot(st_transform(tess_result,crs=st_crs(region_sf)), main="Points used in model and for prediction")	# tessellation plot
+  plot(st_geometry(crds_spatial_sf), bg="blue", pch=21, cex=0.5, add=TRUE)	# points from model
+  plot(st_geometry(crds_new_sf)[1:size_new], bg="red", cex=1.2 ,pch=21, add=TRUE) 	# out-of-sample points
+  legend("bottomleft", legend=c("Data used for model","Data for prediction"), pch=c(21,21), pt.bg=c("blue","red"), bty="n")
+
+  list(forecast.result = forecasts_result,
+       RAMSE.pred = RAMSE_pred)
 }
 

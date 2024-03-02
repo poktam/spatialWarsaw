@@ -16,7 +16,7 @@
 #' @importFrom dbscan dbscan kNN kNNdist frNN
 #' @importFrom DescTools PseudoR2
 #' @importFrom dplyr summarise group_by
-#' @importFrom stats binomial glm dist rnorm kmeans median AIC sd cor uniroot
+#' @importFrom stats binomial glm dist rnorm kmeans median AIC sd cor uniroot predict
 #' @importFrom sp coordinates
 #' @importFrom stargazer stargazer
 #' @importFrom ggplot2 ggplot geom_point aes aes_string ggtitle scale_color_viridis_d guides guide_legend theme_minimal theme element_text xlab ylab
