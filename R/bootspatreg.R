@@ -27,7 +27,7 @@
 #' @return `BootSpatReg()` returns ... to be done.
 #'
 #' @export
-BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type="SDM", knn){
+BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type, knn){
   #Ew. do sprawdzenia czy warunek st_geometry_type(data_sf,FALSE)=="POINT") nie jest zbyt restrykcyjny
   if((inherits(points_sf,"sf") && st_geometry_type(points_sf,FALSE)=="POINT")) {
     crds<-as.data.frame(st_coordinates(points_sf))
