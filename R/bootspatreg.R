@@ -19,7 +19,7 @@
 #' We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
 #' @param eq an object of class [stats::formula()] (or one that can be coerced to that class):
 #' a symbolic description of the model to be used.
-#' @param model_type one of: "SAR","SDM","SEM". Default set to "SDM"
+#' @param model_type one of: "SAR","SDM","SEM".
 #' @param knn chosen knn
 #'
 #' @examples #To be done!!!

@@ -18,7 +18,7 @@ We suggest that a value greater than 800 is not used for reasons of computationa
 \item{eq}{an object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class):
 a symbolic description of the model to be used.}
 
-\item{model_type}{one of: "SAR","SDM","SEM". Default set to "SDM"}
+\item{model_type}{one of: "SAR","SDM","SEM".}
 
 \item{knn}{chosen knn}
 }
