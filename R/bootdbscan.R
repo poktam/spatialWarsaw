@@ -110,5 +110,8 @@ print.bootdbscan <- function(x, ...) {
   cat("The clustering contains ", length(x$cluster[x$cluster == 1]), "cluster points and ", length(x$cluster[x$cluster == 0]), " noise points.\n")
   cat("Available fields: cluster, sample_size, times, eps, minPts\n")
 }
+
+#
+# sprawdzić czy nie dodać tutaj (i do metod) #'@rdname bootdbscan
 #' @export
 BOOTDBSCAN <- bootdbscan

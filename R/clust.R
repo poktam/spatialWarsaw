@@ -1,11 +1,10 @@
-#############################
-### Clust... i pochodne #####
-#############################
-### DO TOTALNEJ POPRAWY #####
-#############################
-
-# ClustConti()
-# sprawdzić czy ClustConti() oraz ClustDisjoint() potrzebny poza pakietem (czy tylko funkcje wewnętrzne/pomocnicze) - ew. nazwy do zmiany
+# sprawdzić czy ClustConti() oraz ClustDisjoint() potrzebny poza pakietem
+# (czy tylko funkcje wewnętrzne/pomocnicze) - ew. nazwy do zmiany
+#
+####################
+### ClustConti() ###
+####################
+#
 
 #' Linijka nr 1 - function title
 #'
@@ -69,8 +68,10 @@ ClustConti<-function(crds, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3,
 }
 
 
-
-# ClustDisjoint()
+#######################
+### ClustDisjoint() ###
+#######################
+#
 # sprawdzić czy ClustConti() oraz ClustDisjoint() potrzebny poza pakietem (czy tylko funkcje wewnętrzne/pomocnicze) - ew. nazwy do zmiany
 
 #' Linijka nr 1 - function title
