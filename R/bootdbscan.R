@@ -16,6 +16,7 @@
 #' @param times do opisu
 #' @param eps do opisu
 #' @param minPts do opisu
+#' @param plot czy ma generować wykres
 #' @examples #To be done!!!
 #'
 #' @return `bootdbscan()` returns an object of class `bootdbscan` with the following components:
@@ -27,13 +28,16 @@
 #' \item{minPts }{ value of the `minPts` parameter.}
 #'
 #' @export
-bootdbscan<-function(data_sf, sample_size, times, eps, minPts){
-  if((inherits(data_sf,"sf") && st_geometry_type(data_sf,FALSE)=="POINT")) crds<-sf::st_coordinates(data_sf)
-  else if(inherits(data_sf,"data.frame",TRUE)==1){
+bootdbscan<-function(data_sf, sample_size, times, eps, minPts, plot=TRUE){
+  if((inherits(data_sf,"sf") && st_geometry_type(data_sf,FALSE)=="POINT")) {
+    crds<-as.data.frame(st_coordinates(data_sf))
+    colnames(crds)<-c("X_coord","Y_coord")
+    cat("Data_sf was detected as an object of class sf.\n", sep = "")
+  }  else if(inherits(data_sf,"data.frame",TRUE)==1){
     crds<-data_sf[,c(1,2)]
-    colnames(crds)<-c("X","Y")
-  }
-  else {
+    colnames(crds)<-c("X_coord","Y_coord")
+    cat("Data_sf was detected as an object of class data.frame.\n", sep = "")
+  }  else {
     stop("The class of data_sf must only be 'sf' of geometry type 'POINTS' or 'data.frame'.")
   }
 
@@ -86,8 +90,10 @@ bootdbscan<-function(data_sf, sample_size, times, eps, minPts){
     no_cluster<-which(is.na(DBS$new_cluster))}
 
   # wykres do sprawdzenia czy o to chodziło, tytuł do sprawdzenia
+  if (plot){
   plot(crds,pch=".", main="Observations with core points (red)")
   points(crds[DBS$new_cluster==1,],pch=".",col="red")
+  }
 
   structure(
     list(
