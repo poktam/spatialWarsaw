@@ -5,7 +5,7 @@
 \alias{BOOTDBSCAN}
 \title{Linijka nr 1 - function title}
 \usage{
-bootdbscan(data_sf, sample_size, times, eps, minPts)
+bootdbscan(data_sf, sample_size, times, eps, minPts, plot = TRUE)
 }
 \arguments{
 \item{data_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
@@ -17,6 +17,8 @@ bootdbscan(data_sf, sample_size, times, eps, minPts)
 \item{eps}{do opisu}
 
 \item{minPts}{do opisu}
+
+\item{plot}{czy ma generować wykres}
 }
 \value{
 \code{bootdbscan()} returns an object of class \code{bootdbscan} with the following components:
