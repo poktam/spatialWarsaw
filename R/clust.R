@@ -137,7 +137,7 @@ ClustDisjoint<-function(data_sf, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e
     times<-round(times,0)
     if (times<=0) {
       times<-16
-      cat("Wrong number of clusters. Number of cluster set to the proposed value: 16.","\n",sep="")
+      cat("Incorrect times value. Times set to the proposed value: 16.","\n",sep="")
     }
   }
 
