@@ -117,7 +117,7 @@ ClustDisjoint<-function(data_sf, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e
   minPts<-round(minPts,0)
   if (minPts<=0) {
     minPts<-5
-    cat("Wrong minPts parameter. Set to the proposed value: 5.","\n",sep="")
+    cat("Incorrect minPts parameter. Set to the proposed value: 5.","\n",sep="")
   }
 
   if(bootstrap){
@@ -149,8 +149,9 @@ ClustDisjoint<-function(data_sf, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e
   # można będzie spróbować zmniejszyć kod w dużym if (poniżej), bo się powtarza
   if(bootstrap){
     for(i in 1:length(sep)) {
-
+      sink(nullfile())
       result_temp<-bootdbscan(data_sf=crds, sample_size=sample_size, times=times, eps=r, minPts=minPts, plot=FALSE)$cluster # run bootdbscan with initial parameters
+      sink()
       noisePercent<-length(result_temp[result_temp==0])/nrow(crds)
       r_prev=r
 
@@ -158,7 +159,9 @@ ClustDisjoint<-function(data_sf, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e
       nP_prev<-noisePercent
 
       while((abs(r-r_prev)>eps_r) & (abs(noisePercent-sep[i])>eps_np)){ # repeat below until the desired percentage of noise is obtained
+        sink(nullfile())
         result_temp<-bootdbscan(data_sf=crds, sample_size=sample_size, times=times, eps=r, minPts=minPts, plot=FALSE)$cluster # run bootdbscan
+        sink()
         noisePercent<-length(result_temp[result_temp==0])/nrow(crds)
 
         if(noisePercent>sep[i] & nP_prev>sep[i]) { # adjust theradius
