@@ -58,7 +58,7 @@ ClustConti<-function(crds, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3,
   # zastanowić się, czy klasa testing nie jest do usunięcia?
   structure(
     list(
-      type = "A",
+      type = "ClustConti",
       cluster = groups,
       parameters = params
     ),
@@ -82,43 +82,84 @@ ClustConti<-function(crds, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3,
 #'
 #'
 #' @name ClustDisjoint
-#' @param crds do opisu
+#' @param data_sf (obiekt sf lub data.frame zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
 #' @param sep do opisu
 #' @param r_p do opisu
 #' @param eps_r do opisu
 #' @param eps_np do opisu
 #' @param minPts do opisu
 #' @param bootstrap do opisu
-#' @param sample_size do opisu
-#' @param times do opisu
+#' @param sample_size do opisu (used only if bootstrap=TRUE)
+#' @param times do opisu  (used only if bootstrap=TRUE)
 #'
 #' @examples #To be done!!!
 #'
 #' @return `ClustDisjoint()` returns ... to be done.
 #'
 #' @export
-ClustDisjoint<-function(crds, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts=5,
-                bootstrap=FALSE, sample_size, times){
-  params <- as.list(environment())[-1]
-  output<-rep(length(sep)+1,nrow(crds))
-  sep<-sort(sep, decreasing=TRUE)
+ClustDisjoint<-function(data_sf, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts=5,
+                bootstrap=FALSE, sample_size=NULL, times=NULL){
+  params <- (as.list(environment()))[-1] # tu można poprawić, żeby w zależności od bootstrap dawało odpowiednie
 
-  r<-r_p
+  if((inherits(data_sf,"sf") && st_geometry_type(data_sf,FALSE)=="POINT")) {
+    crds<-as.data.frame(st_coordinates(data_sf))
+    colnames(crds)<-c("X_coord","Y_coord")
+    cat("Data_sf was detected as an object of class sf.\n", sep = "")
+  }  else if(inherits(data_sf,"data.frame",TRUE)==1){
+    crds<-data_sf[,c(1,2)]
+    colnames(crds)<-c("X_coord","Y_coord")
+    cat("Data_sf was detected as an object of class data.frame.\n", sep = "")
+  }  else {
+    stop("The class of data_sf must only be 'sf' of geometry type 'POINTS' or 'data.frame'.")
+  }
+
+  # zbadać minPts, czy nie ujemne - może inny warunek niż <=0
+  minPts<-round(minPts,0)
+  if (minPts<=0) {
+    minPts<-5
+    cat("Wrong minPts parameter. Set to the proposed value: 5.","\n",sep="")
+  }
 
   if(bootstrap){
 
+    if (is.null(sample_size) || is.null(times)) {
+      stop("For bootstrap=TRUE, both sample_size and times parameters must be set.")
+    }
+
+    # zbadać sample_size i ustawić ew. na wielkość zbioru danych
+    sample_size <- as.integer(sample_size)
+    if (sample_size > nrow(crds) || sample_size<1) {
+      sample_size<-nrow(crds)
+      cat("Wrong sample size. Sample_size set to:",sample_size,"\n",sep="")
+    }
+
+    # zbadać times, czy nie ujemne - może inny warunek niż <=0
+    times<-round(times,0)
+    if (times<=0) {
+      times<-16
+      cat("Wrong number of clusters. Number of cluster set to the proposed value: 16.","\n",sep="")
+    }
+  }
+
+  sep<-sort(sep, decreasing=TRUE)
+  output<-rep(length(sep)+1,nrow(crds))
+
+  r<-r_p
+
+  # można będzie spróbować zmniejszyć kod w dużym if (poniżej), bo się powtarza
+  if(bootstrap){
     for(i in 1:length(sep)) {
 
-      result0<-bootdbscan(crds, sample_size=sample_size, times=times, eps=r, minPts=minPts)$cluster # run bootdbscan with initial parameters
-      noisePercent<-length(result0[result0==0])/nrow(crds)
+      result_temp<-bootdbscan(data_sf=crds, sample_size=sample_size, times=times, eps=r, minPts=minPts, plot=FALSE)$cluster # run bootdbscan with initial parameters
+      noisePercent<-length(result_temp[result_temp==0])/nrow(crds)
       r_prev=r
 
       if(noisePercent>sep[i]) r=2*r else r=r/2 # adjust the radius
       nP_prev<-noisePercent
 
       while((abs(r-r_prev)>eps_r) & (abs(noisePercent-sep[i])>eps_np)){ # repeat below until the desired percentage of noise is obtained
-        result0<-bootdbscan(crds, sample_size=sample_size, times=times, eps=r, minPts=minPts)$cluster # run bootdbscan
-        noisePercent<-length(result0[result0==0])/nrow(crds)
+        result_temp<-bootdbscan(data_sf=crds, sample_size=sample_size, times=times, eps=r, minPts=minPts, plot=FALSE)$cluster # run bootdbscan
+        noisePercent<-length(result_temp[result_temp==0])/nrow(crds)
 
         if(noisePercent>sep[i] & nP_prev>sep[i]) { # adjust theradius
           r_prev=r
@@ -133,22 +174,22 @@ ClustDisjoint<-function(crds, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e-16
 
       }
 
-      output<-ifelse(output==length(sep)+1 & result0>0, i, output) # final result
+      output<-ifelse(output==length(sep)+1 & result_temp>0, i, output) # final result
     }
 
   }else {
 
     for(i in 1:length(sep)) {
-      result0<-dbscan(crds, r, minPts=minPts) # run dbscan
-      noisePercent<-length(result0$cluster[result0$cluster==0])/nrow(crds)
+      result_temp<-dbscan(crds, r, minPts=minPts) # run dbscan
+      noisePercent<-length(result_temp$cluster[result_temp$cluster==0])/nrow(crds)
       r_prev=r
 
       if(noisePercent>sep[i]) r=2*r else r=r/2 # adjust the radius
       nP_prev<-noisePercent
 
       while(abs(r-r_prev)>eps_r & abs(noisePercent-sep[i])>eps_np){ # repeat the following until the desired percentage of noise is obtained
-        result0<-dbscan(crds, r, minPts=minPts) # run dbscan
-        noisePercent<-length(result0$cluster[result0$cluster==0])/nrow(crds)
+        result_temp<-dbscan(crds, r, minPts=minPts) # run dbscan
+        noisePercent<-length(result_temp$cluster[result_temp$cluster==0])/nrow(crds)
 
         if(noisePercent>sep[i] & nP_prev>sep[i]) { # adjust the radius
           r_prev=r
@@ -162,14 +203,14 @@ ClustDisjoint<-function(crds, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e-16
         nP_prev<-noisePercent
       }
 
-      output<-ifelse(output==length(sep)+1 & result0$cluster>0, i, output)} # adjust the radius
+      output<-ifelse(output==length(sep)+1 & result_temp$cluster>0, i, output)} # adjust the radius
 
-    if(length(sep)==1) output<-result0$cluster}
+    if(length(sep)==1) output<-result_temp$cluster}
 
   # zastanowić się, czy klasa testing nie jest do usunięcia?
   structure(
     list(
-      type = "B",
+      type = "ClustDisjoint",
       cluster = output,
       parameters = params
     ),
@@ -183,7 +224,7 @@ ClustDisjoint<-function(crds, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e-16
 #' @export
 print.testing <- function(x) {
   cat("Type", x$type,"group assignments for", length(x$cluster), "objects.\n")
-  cat("\nSummary of assignments:\n")
+  cat("Summary of assignments:\n")
   print(summary(factor(x$cluster)))
   cat("\nAvailable fields: type, cluster, parameters\n")
 }

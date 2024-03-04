@@ -5,19 +5,19 @@
 \title{Linijka nr 1 - function title}
 \usage{
 ClustDisjoint(
-  crds,
+  data_sf,
   sep = c(0.8, 0.6, 0.4, 0.2),
   r_p = 0.001,
   eps_r = 1e-15,
   eps_np = 0.01,
   minPts = 5,
   bootstrap = FALSE,
-  sample_size,
-  times
+  sample_size = NULL,
+  times = NULL
 )
 }
 \arguments{
-\item{crds}{do opisu}
+\item{data_sf}{(obiekt sf lub data.frame zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
 
 \item{sep}{do opisu}
 
@@ -31,9 +31,9 @@ ClustDisjoint(
 
 \item{bootstrap}{do opisu}
 
-\item{sample_size}{do opisu}
+\item{sample_size}{do opisu (used only if bootstrap=TRUE)}
 
-\item{times}{do opisu}
+\item{times}{do opisu  (used only if bootstrap=TRUE)}
 }
 \value{
 \code{ClustDisjoint()} returns ... to be done.
