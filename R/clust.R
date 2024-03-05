@@ -27,7 +27,7 @@
 #' @return `ClustConti()` returns ... to be done.
 #'
 #' @export
-ClustConti<-function(data_sf, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts0=16){
+ClustConti<-function(data_sf, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts0=5){
   params <- as.list(environment())[-1]
 
   if((inherits(data_sf,"sf") && st_geometry_type(data_sf,FALSE)=="POINT")) {
@@ -52,8 +52,8 @@ ClustConti<-function(data_sf, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e
   # zbadać minPts0, czy nie ujemne - może inny warunek niż <=0
   minPts0<-round(minPts0,0)
   if (minPts0<=0) {
-    minPts0<-16
-    cat("Incorrect minPts0 parameter. Set to the proposed value: 16.","\n",sep="")
+    minPts0<-5
+    cat("Incorrect minPts0 parameter. Set to the proposed value: 5.","\n",sep="")
   }
 
   minPts<-minPts0
