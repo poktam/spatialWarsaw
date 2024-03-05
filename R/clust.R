@@ -87,7 +87,7 @@ ClustConti<-function(data_sf, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e
     output_prev<-output
 
   }
-  cat("Final value: minPts = ", minPts,"\n",sep="")
+  cat("\nFinal value: minPts = ", minPts,"\n",sep="")
   if(length(unique(output))!=clusters+1) warning(paste0("Failed to get ", clusters, " clusters. Try changing minPts0 value."))
 
   # zastanowić się, czy klasa testing nie jest do usunięcia?
@@ -258,7 +258,7 @@ ClustDisjoint<-function(data_sf, sep=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e
 }
 
 # Define the output format for print(testing)
-# MK: Może do usunięcia jak testA i testB tylko wewnętrzne?
+# MK: Może do usunięcia jak w ClustConti i ClustDisjoint  tylko wewnętrzne?
 #' @export
 print.testing <- function(x) {
   cat("Type", x$type,"group assignments for", length(x$cluster), "objects.\n")
