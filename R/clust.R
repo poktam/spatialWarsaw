@@ -14,7 +14,7 @@
 #'
 #'
 #' @name ClustConti
-#' @param crds do opisu
+#' @param data_sf (obiekt sf lub data.frame zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
 #' @param clusters do opisu
 #' @param sep do opisu
 #' @param r_p do opisu
@@ -27,39 +27,74 @@
 #' @return `ClustConti()` returns ... to be done.
 #'
 #' @export
-ClustConti<-function(crds, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts0=16){
-  params = as.list(environment())[-1] # zwraca listę parametrów funkcji bez pierwszego - czyli środowisko wewnątrz funkcji
-  minPts=minPts0
-  groups=ClustDisjoint(crds, minPts, sep, r_p, eps_r, eps_np)$cluster # run testB with initial parameters
-  minPts_prev<-minPts
-  if(length(unique(groups))>clusters+1) minPts=2*minPts else minPts=round(minPts/2,0) # adjust minPts
-  groups_prev<-groups
+ClustConti<-function(data_sf, clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts0=16){
+  params <- as.list(environment())[-1]
 
-  while(length(unique(groups))!=clusters+1 & minPts_prev!=minPts){ # repeat below until the desired number of clusters is obtained
+  if((inherits(data_sf,"sf") && st_geometry_type(data_sf,FALSE)=="POINT")) {
+    crds<-as.data.frame(st_coordinates(data_sf))
+    colnames(crds)<-c("X_coord","Y_coord")
+    cat("Data_sf was detected as an object of class sf.\n", sep = "")
+  }  else if(inherits(data_sf,"data.frame",TRUE)==1){
+    crds<-data_sf[,c(1,2)]
+    colnames(crds)<-c("X_coord","Y_coord")
+    cat("Data_sf was detected as an object of class data.frame.\n", sep = "")
+  }  else {
+    stop("The class of data_sf must only be 'sf' of geometry type 'POINTS' or 'data.frame'.")
+  }
+
+  # zbadać clusters, czy nie ujemne - może inny warunek niż <=0
+  clusters<-round(clusters,0)
+  if (clusters<=0) {
+    clusters<-4
+    cat("Incorrect clusters parameter. Set to the proposed value: 4.","\n",sep="")
+  }
+
+  # zbadać minPts0, czy nie ujemne - może inny warunek niż <=0
+  minPts0<-round(minPts0,0)
+  if (minPts0<=0) {
+    minPts0<-16
+    cat("Incorrect minPts0 parameter. Set to the proposed value: 16.","\n",sep="")
+  }
+
+  minPts<-minPts0
+  sink(nullfile()) #ew. spróbować z capture.output() i invisible()
+  output<-ClustDisjoint(data_sf=crds, sep=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np, minPts=minPts)$cluster # run ClustDisjoint with initial parameters
+  sink()
+  minPts_prev<-minPts
+
+  if(length(unique(output))>clusters+1) {
+    minPts=2*minPts
+  } else {
+    minPts=round(minPts/2,0)} # adjust minPts
+  output_prev<-output
+
+  while(length(unique(output))!=clusters+1 & minPts_prev!=minPts){ # repeat below until the desired number of clusters is obtained
     minPts=minPts+1
 
-    groups=ClustDisjoint(crds, minPts, sep, r_p, eps_r, eps_np)$cluster # run testB
+    sink(nullfile())
+    output<-ClustDisjoint(data_sf=crds, sep=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np, minPts=minPts)$cluster # run ClustDisjoint
+    sink()
 
-    if(length(unique(groups))>clusters+1 & length(unique(groups_prev))>clusters+1) { # adjust minPts
+    if(length(unique(output))>clusters+1 & length(unique(output_prev))>clusters+1) {
       minPts_prev=minPts
-      minPts=2*minPts } else if(length(unique(groups))<clusters+1 & length(unique(groups_prev))<clusters+1){
+      minPts=2*minPts } else if(length(unique(output))<clusters+1 & length(unique(output_prev))<clusters+1){
         minPts_prev=minPts
         minPts=round(minPts/2,0)} else {
           rr=minPts
           minPts=round((minPts+minPts_prev)/2,0)
-          minPts_prev=rr
+          minPts_prev=rr  # adjust minPts
         }
-    groups_prev<-groups
+    output_prev<-output
 
   }
-  message(paste0("minPts = ", minPts)) # Czy to zostawić?
-  if(length(unique(groups))!=clusters+1) warning(paste0("Failed to get ", clusters, " clusters. Try changing minPts0 value."))
+  cat("Final value: minPts = ", minPts,"\n",sep="")
+  if(length(unique(output))!=clusters+1) warning(paste0("Failed to get ", clusters, " clusters. Try changing minPts0 value."))
 
   # zastanowić się, czy klasa testing nie jest do usunięcia?
   structure(
     list(
       type = "ClustConti",
-      cluster = groups,
+      cluster = output,
       parameters = params
     ),
     class = "testing"

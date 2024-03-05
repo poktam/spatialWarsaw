@@ -5,7 +5,7 @@
 \title{Linijka nr 1 - function title}
 \usage{
 ClustConti(
-  crds,
+  data_sf,
   clusters,
   sep,
   r_p = 0.001,
@@ -15,7 +15,7 @@ ClustConti(
 )
 }
 \arguments{
-\item{crds}{do opisu}
+\item{data_sf}{(obiekt sf lub data.frame zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
 
 \item{clusters}{do opisu}
 
