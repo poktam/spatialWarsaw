@@ -11,7 +11,7 @@ ClustConti(
   r_p = 0.001,
   eps_r = 1e-15,
   eps_np = 0.01,
-  minPts0 = 16
+  minPts0 = 5
 )
 }
 \arguments{

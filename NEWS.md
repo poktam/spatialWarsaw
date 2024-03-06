@@ -41,4 +41,7 @@
 
 # spatialWarsaw 0.1.11
 
-* Substantial correction of functions: ClustConti(), ClustDisjoint(). Still a development version
+* Substantial correction of functions: ClustConti(), ClustDisjoint(). 
+* Substantial correction of functions: srr(), ssrShowModels() (previous name: show_models())
+* Still a development version
+

@@ -2,56 +2,58 @@
 % Please edit documentation in R/ssr.R
 \name{ssr}
 \alias{ssr}
-\alias{show_models}
+\alias{ssrShowModels}
 \title{Linijka nr 1 - function title}
 \usage{
 ssr(
-  formula,
-  data.spsf,
-  type,
+  data_sf,
+  type = "ClustConti",
   clusters,
-  minPts = 5,
-  r_p = 0.001,
   sep,
-  bootstrap = FALSE,
-  sample_size,
-  times,
-  family = stats::binomial(link = "logit"),
+  r_p = 0.001,
   eps_r = 1e-15,
   eps_np = 0.01,
+  minPts = 5,
+  bootstrap = FALSE,
+  sample_size = NULL,
+  times = NULL,
+  eq,
+  family = binomial,
   ...
 )
 
-show_models(ssr_model, plot = TRUE, ...)
+ssrShowModels(ssr_model, plot = TRUE, ...)
 }
 \arguments{
-\item{formula}{do opisu}
+\item{data_sf}{(obiekt 'sf' lub 'data.frame' zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
 
-\item{data.spsf}{do opisu}
-
-\item{type}{do opisu}
+\item{type}{do opisu: one of: "ClustConti","ClustDisjoint".}
 
 \item{clusters}{do opisu}
 
-\item{minPts}{do opisu}
-
-\item{r_p}{do opisu}
-
 \item{sep}{do opisu}
 
-\item{bootstrap}{do opisu}
-
-\item{sample_size}{do opisu}
-
-\item{times}{do opisu}
-
-\item{family}{do opisu}
+\item{r_p}{do opisu}
 
 \item{eps_r}{do opisu}
 
 \item{eps_np}{do opisu}
 
-\item{...}{other paramethers (do opisu)}
+\item{minPts}{do opisu}
+
+\item{bootstrap}{do opisu}
+
+\item{sample_size}{do opisu (used only if bootstrap=TRUE)}
+
+\item{times}{do opisu  (used only if bootstrap=TRUE)}
+
+\item{eq}{an object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class):
+a symbolic description of the model to be used.}
+
+\item{family}{a family object  consistent with \code{\link[stats:family]{stats::family()}}: a description of the error distribution
+and link function to be used in the model. The default value is binomial with logit link function.}
+
+\item{...}{other parameters (do opisu - chyba przekazywane do glm())}
 
 \item{ssr_model}{do opisu}
 
@@ -65,4 +67,5 @@ Linijka nr 3 - details (razem do funkcji ssr i show_models)
 }
 \examples{
 #To be done!!!
+
 }
