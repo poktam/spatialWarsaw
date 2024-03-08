@@ -1,6 +1,9 @@
 # spatialWarsaw
 Repository for spatialWarsaw project in R
+<<<<<<< HEAD
 
+=======
+>>>>>>> ffc220970d6ef2bf2b557beb0590e59905487d45
 (A more detailed description will be available soon)
 
 ## Installation
@@ -8,13 +11,21 @@ Repository for spatialWarsaw project in R
 To install the current development version directly from Github (this repository), the following command can be used:
 
 ``` r
+<<<<<<< HEAD
 # install.packages("devtools")
+=======
+# install.packages("devtools"")
+>>>>>>> ffc220970d6ef2bf2b557beb0590e59905487d45
 devtools::install_github ("poktam/spatialWarsaw")
 ```
 or
 
 ``` r
+<<<<<<< HEAD
 # install.packages("remotes")
+=======
+# install.packages("remotes"")
+>>>>>>> ffc220970d6ef2bf2b557beb0590e59905487d45
 remotes::install_github ("poktam/spatialWarsaw")
 ```
 
@@ -41,7 +52,11 @@ under the terms of the GNU General Public License, version 3, as published by
 the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful, but without any warranty; 
+<<<<<<< HEAD
 without even the implied warranty of merchantability or fitness for a particular purpose.
+=======
+without even the implied warranty of merchantability or fitness for a particular purpose.  
+>>>>>>> ffc220970d6ef2bf2b557beb0590e59905487d45
 See the [GPL-3 (GNU General Public License version 3)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 for more details.
 
