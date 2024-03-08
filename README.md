@@ -1,5 +1,5 @@
 # spatialWarsaw
-Repository for spatialWarsaw project in R
+Repository for spatialWarsaw project in R  
 (A more detailed description will be available soon)
 
 ## Installation
