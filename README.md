@@ -1,10 +1,11 @@
-# spatialWarsaw
+# spatialWarsaw R package
 Repository for spatialWarsaw project in R  
-(A more detailed description will be available soon)
+
+The functions collected in the spatialWarsaw package support spatial analysis on geolocated points. They use spatial machine learning, spatial statistics and spatial econometric approaches. You can detect density clusters (with `QDC`, `ClustCont`, `ClustDisjoint`, `bootdbscan` functions), measure global and local agglomeration of points (`SPAG`, `ETA`, `FLE` functions), construct the spatial weight matrix W from Voronoi polygons (`tessW` function), determine the best knn structure of W with AIC (`bestW` function), check the correlation between spatial lags with different knn (`corrSpatialLags` function), and study semi-variance by expanding knn (`semiVarKnn` function). You can test and generate spatial point patterns that follow Benford's law (with `SpatBenfordTest`, `SpatBenfordPattern`). In spatial econometrics, it can run switching regime models - regression in density subgroups (`ssr` function) and bootstrapped spatial regression (`BootSpatReg` function), generate out-of-sample predictions (`SpatPredTess` function), approximate standard errors for large samples (`ApproxSERoot2` function), and rasterise and cluster GWR coefficients (with `rastClustGWR` function) to check their spatiotemporal stability (`STS` function).
 
 ## Installation
 
-To install the current development version directly from Github (this repository), the following command can be used:
+To install the current development version directly from Github (this repository), the following commands can be used:
 
 ``` r
 # install.packages("devtools")
