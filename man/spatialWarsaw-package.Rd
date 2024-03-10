@@ -6,8 +6,7 @@
 \alias{spatialWarsaw-package}
 \title{spatialWarsaw: Spatial analysis on geolocalised point data including clustering measures and bootstrap methods}
 \description{
-A collection of tools for spatial analysis on geolocalised point data including clustering measures and
-the ability to bootstrap large datasets. The functions in this package use spatial machine learning, spatial statistics and spatial econometric approaches.
+A collection of tools for spatial analysis on geolocalised point data including clustering measures and the ability to bootstrap large datasets. The functions in this package use spatial machine learning, spatial statistics and spatial econometric approaches.
 }
 \references{
 To be done
@@ -21,6 +20,18 @@ Useful links:
 
 }
 \author{
-Katarzyna Kopczewska and Mateusz Kopyt
+\strong{Maintainer}: Mateusz Kopyt \email{mkopyt@wne.uw.edu.pl} (\href{https://orcid.org/0000-0001-5285-7792}{ORCID})
+
+Authors:
+\itemize{
+  \item Katarzyna Kopczewska \email{kkopczewska@wne.uw.edu.pl} (\href{https://orcid.org/0000-0003-1065-1790}{ORCID})
+  \item Maria Kubara \email{maria.kubara@uw.edu.pl} (\href{https://orcid.org/0000-0002-8768-8391}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Ewa Dobrowolska [contributor]
+}
+
 }
 \keyword{internal}

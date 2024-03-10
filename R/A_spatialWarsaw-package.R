@@ -1,13 +1,6 @@
-#' @title `r packageDescription("spatialWarsaw")$Package`: `r packageDescription("spatialWarsaw")$Title`
-#'
-#' @description `r sub("<[^>]+>", "", packageDescription("spatialWarsaw")$Description)`
-#'
-#' @author Katarzyna Kopczewska and Mateusz Kopyt
-#'
 #' @references
 #' To be done
 #'
-#' @aliases spatialWarsaw-package NULL
 #' @keywords internal
 "_PACKAGE"
 #'
