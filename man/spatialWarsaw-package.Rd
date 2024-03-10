@@ -4,13 +4,21 @@
 \name{spatialWarsaw-package}
 \alias{spatialWarsaw}
 \alias{spatialWarsaw-package}
-\title{spatialWarsaw: Spatial analysis on point data including clustering measures and bootstrap methods}
+\title{spatialWarsaw: Spatial analysis on geolocalised point data including clustering measures and bootstrap methods}
 \description{
-A collection of tools for spatial analysis on point data including clustering measures and the ability to bootstrap large datasets.
-(Use four spaces when indenting paragraphs within the Description.)
+A collection of tools for spatial analysis on geolocalised point data including clustering measures and
+the ability to bootstrap large datasets. The functions in this package use spatial machine learning, spatial statistics and spatial econometric approaches.
 }
 \references{
 To be done
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/poktam/spatialWarsaw}
+  \item Report bugs at \url{https://github.com/poktam/spatialWarsaw/issues}
+}
+
 }
 \author{
 Katarzyna Kopczewska and Mateusz Kopyt
