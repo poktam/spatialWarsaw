@@ -1,19 +1,22 @@
 Package: spatialWarsaw
 Type: Package
 Date: 2024-03-06
-Title: Spatial analysis on point data including clustering measures and bootstrap methods 
+Title: Spatial analysis on geolocalised point data including clustering measures and bootstrap methods 
 Version: 0.1.11
-Author: Mateusz Kopyt [aut, cre],
-    Katarzyna Kopczewska [aut],
-    Maria Kubara [aut],
-    Ewa Dobrowolska [ctb]
+Authors@R: c(
+    person("Mateusz", "Kopyt", email = "mkopyt@wne.uw.edu.pl", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5285-7792")),
+    person("Katarzyna", "Kopczewska", email = "kkopczewska@wne.uw.edu.pl", role = "aut", comment = c(ORCID = "0000-0003-1065-1790")),
+    person("Maria", "Kubara", email = "maria.kubara@uw.edu.pl", role = "aut", comment = c(ORCID = "0000-0002-8768-8391")),
+    person("Ewa", "Dobrowolska", role = "ctb"))
 Maintainer: Mateusz Kopyt <mkopyt@wne.uw.edu.pl>
-Description: A collection of tools for spatial analysis on point data including clustering measures and the ability to bootstrap large datasets.
-    (Use four spaces when indenting paragraphs within the Description.)
+Description: A collection of tools for spatial analysis on geolocalised point data including clustering measures and 
+    the ability to bootstrap large datasets. The functions in this package use spatial machine learning, spatial statistics and spatial econometric approaches.
+License: GPL (>= 3)
+URL: https://github.com/poktam/spatialWarsaw
+BugReports: https://github.com/poktam/spatialWarsaw/issues    
 Imports: benford.analysis, dbscan, DescTools, dplyr, ggplot2, sp, spdep, sf, stats, stargazer, graphics, rlang, 
     terra, GWmodel, fossil, grDevices, spatialreg, gridExtra, sampling, cluster
 Depends: plot.matrix
-License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.1

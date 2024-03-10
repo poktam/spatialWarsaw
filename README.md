@@ -18,7 +18,6 @@ or
 remotes::install_github ("poktam/spatialWarsaw")
 ```
 
-
 To load the package and check the version:
 
 ``` r
@@ -45,4 +44,4 @@ without even the implied warranty of merchantability or fitness for a particular
 See the [GPL-3 (GNU General Public License version 3)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 for more details.
 
-A copy of the GNU General Public License, version 3, is available also at <https://www.r-project.org/Licenses/GPL-3>
+A copy of the GNU General Public License, version 3, is available also in this package repository and at <https://www.r-project.org/Licenses/GPL-3>.
