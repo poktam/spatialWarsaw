@@ -11,7 +11,6 @@
 #'
 #'
 #' @name ETA
-#' @aliases ETA eta
 #' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
 #' @param region_sf do opisu (obiekt sf ale jako region)
 #' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
@@ -95,6 +94,8 @@ ETA<-function(points_sf, region_sf, sample_size){
   )
 
 }
+
+#' @rdname ETA
 #' @export
 eta <- ETA
 

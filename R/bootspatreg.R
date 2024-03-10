@@ -11,7 +11,6 @@
 #'
 #'
 #' @name BootSpatReg
-#' @aliases BootSpatReg
 #' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
 #' @param iter Number of iterations
 #' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter).
@@ -212,7 +211,6 @@ BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type, knn){
 #'
 #'
 #' @name ApproxSERoot2
-#' @aliases ApproxSERoot2
 #' @param model_spatial Spatial model object to analyse
 #' @examples #To be done!!!
 #'
@@ -266,7 +264,6 @@ ApproxSERoot2<-function(model_spatial){
 #'
 #'
 #' @name SpatPredTess
-#' @aliases SpatPredTess
 #' @param model_spatial Spatial model
 #' @param points_spatial_sf Data on which the model_spatial was estimated (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
 #' When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.

@@ -12,7 +12,6 @@
 #'
 #'
 #' @name SpatBenfordTest
-#' @aliases SpatBenfordTest spatbenfordtest
 #' @param data_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
 #' @param var_name Name of column with additional variable. If empty, a 2d distribution is tested, if given, a 3d distribution.
 #' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`data_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
@@ -63,6 +62,8 @@ SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
   plot(benford_result)
   return (benford_result)
 }
+
+#' @rdname SpatBenfordTest
 #' @export
 spatbenfordtest <- SpatBenfordTest
 
@@ -86,7 +87,6 @@ spatbenfordtest <- SpatBenfordTest
 #'
 #'
 #' @name SpatBenfordPattern
-#' @aliases SpatBenfordPattern spatbenfordpattern
 #' @param region_sf do opisu (obiekt sf ale jako region)
 #' @param sample_size Number of points to be generated based on the region. Default value 5000. We suggest that a value greater than ..... is not used for reasons of computational efficiency. (SPRAWDZIĆ, UWAGA! st_sample czasem generuje mniej punktów)
 #' @references #To be done - ważne tutaj bo sztywne parametry w kodzie
@@ -129,5 +129,7 @@ SpatBenfordPattern<-function(region_sf, sample_size=5000){
   plot(bpp_sf, key.pos=1, main="Benford Pattern Spatial Points")
   return(bpp) # poprawić, żeby może na ekranie było jakieś summary/table a nie lista
 }
+
+#' @rdname SpatBenfordPattern
 #' @export
 spatbenfordpattern <- SpatBenfordPattern

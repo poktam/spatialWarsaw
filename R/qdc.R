@@ -11,7 +11,6 @@
 #'
 #'
 #' @name QDC
-#' @aliases QDC qdc
 #' @param data_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
 #' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`data_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset.
 #' @param nclust Number of clusters to find. Must be >=2. For nclust=3 additional cluster labels will be included in the output object.
@@ -107,6 +106,8 @@ QDC<-function(data_sf, sample_size, nclust=3, k=10, eps=0.05){
   # poprawić, żeby może na ekranie było jakieś summary/table a nie lista
   return(data.d)
 }
+
+#' @rdname QDC
 #' @export
 qdc <- QDC
 

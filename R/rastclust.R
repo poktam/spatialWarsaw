@@ -105,7 +105,6 @@ rastClustGWR<-function(points_sf, eq, region_sf, nrows.raster=50, ncols.raster=5
 #'
 #'
 #' @name STS
-#' @aliases STS sts
 #' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
 #' When using a simple data.frame, make sure that the coordinates of the points are in the same
 #' coordinate system / projection as the `region_sf` object. NOTE! Data must be from a single period!
@@ -240,7 +239,8 @@ STS<-function(points_sf, eq, time_var, region_sf, nrows.raster=50, ncols.raster=
   return(tab.ri.coef)
 
 }
-#'
+
+#' @rdname STS
 #' @export
 sts <- STS
 

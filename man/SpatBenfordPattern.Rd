@@ -6,6 +6,8 @@
 \title{Linijka nr 1 - function title}
 \usage{
 SpatBenfordPattern(region_sf, sample_size = 5000)
+
+spatbenfordpattern(region_sf, sample_size = 5000)
 }
 \arguments{
 \item{region_sf}{do opisu (obiekt sf ale jako region)}

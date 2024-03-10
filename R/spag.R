@@ -11,7 +11,6 @@
 #'
 #'
 #' @name SPAG
-#' @aliases SPAG spag
 #' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object. (OD RAZU DANE Z WYBRANEJ ZMIENNEJ NP. SEKTORA)
 #' @param size_var The name of the variable describing the size of the analysed objects (e.g. companies). (SPRAWDZIĆ opis)
 #' @param region_sf do opisu (obiekt sf ale jako region)
@@ -147,6 +146,8 @@ SPAG<-function(points_sf, size_var, region_sf){
        SPAG = SPAG_res,
        n.obs = nrow(points_sf_s))
 }
+
+#' @rdname SPAG
 #' @export
 spag <- SPAG
 

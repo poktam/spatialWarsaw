@@ -10,7 +10,6 @@
 #'
 #'
 #' @name bootdbscan
-#' @aliases bootdbscan BOOTDBSCAN
 #' @param data_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
 #' @param sample_size do opisu
 #' @param times do opisu
@@ -117,7 +116,6 @@ print.bootdbscan <- function(x, ...) {
   cat("Available fields: cluster, sample_size, times, eps, minPts\n")
 }
 
-#
-# sprawdzić czy nie dodać tutaj (i do metod) #'@rdname bootdbscan
+#' @rdname bootdbscan
 #' @export
 BOOTDBSCAN <- bootdbscan

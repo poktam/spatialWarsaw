@@ -16,6 +16,18 @@ STS(
   bw,
   adaptive = FALSE
 )
+
+sts(
+  points_sf,
+  eq,
+  time_var,
+  region_sf,
+  nrows.raster = 50,
+  ncols.raster = 50,
+  nc,
+  bw,
+  adaptive = FALSE
+)
 }
 \arguments{
 \item{points_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).

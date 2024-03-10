@@ -11,7 +11,6 @@
 #'
 #'
 #' @name FLE
-#' @aliases FLE fle
 #' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
 #' @param region_sf do opisu (obiekt sf ale jako region)
 #' @param nrows.raster raster row dimensions, default 50
@@ -100,5 +99,7 @@ FLE<-function(points_sf, region_sf, nrows.raster=50, ncols.raster=50, w, r){
     return(focal_result)
   }
 }
+
+#' @rdname FLE
 #' @export
 fle <- FLE

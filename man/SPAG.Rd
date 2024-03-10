@@ -6,6 +6,8 @@
 \title{Linijka nr 1 - function title}
 \usage{
 SPAG(points_sf, size_var, region_sf)
+
+spag(points_sf, size_var, region_sf)
 }
 \arguments{
 \item{points_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object. (OD RAZU DANE Z WYBRANEJ ZMIENNEJ NP. SEKTORA)}

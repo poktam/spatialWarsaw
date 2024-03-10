@@ -6,6 +6,8 @@
 \title{Linijka nr 1 - function title}
 \usage{
 SpatBenfordTest(data_sf, sample_size, var_name = NULL)
+
+spatbenfordtest(data_sf, sample_size, var_name = NULL)
 }
 \arguments{
 \item{data_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}

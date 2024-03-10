@@ -6,6 +6,8 @@
 \title{Linijka nr 1 - function title}
 \usage{
 QDC(data_sf, sample_size, nclust = 3, k = 10, eps = 0.05)
+
+qdc(data_sf, sample_size, nclust = 3, k = 10, eps = 0.05)
 }
 \arguments{
 \item{data_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
