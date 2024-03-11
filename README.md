@@ -27,7 +27,7 @@ packageVersion ("spatialWarsaw")
 ```
 
 ## Authors and Contributors
-The package was created thanks to the work of former and current members and collaborators of the [Spatial Warsaw Team](https://spatial.wne.uw.edu.pl/) affiliated to the Faculty of Economic Sciences of the University of Warsaw.
+The package was created thanks to the work of members and collaborators of the [Spatial Warsaw Team](https://spatial.wne.uw.edu.pl/) affiliated to the Faculty of Economic Sciences of the University of Warsaw.
 
 - Katarzyna Kopczewska
 - Mateusz Kopyt
