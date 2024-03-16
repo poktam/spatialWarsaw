@@ -3,20 +3,48 @@
 #############
 #
 #
-#' Linijka nr 1 - function title
+#' @title Entropy and Tesselation for Agglomeration (ETA)
 #'
-#' Linijka nr 2 - description
+#' @description
+#' For geolocated point patterns, the degree of agglomeration is calculated. It is expressed as the relative Shannon
+#' entropy of the relative areas of tesselation tiles derived as Voronoi polygons. ETA (Entropy and Tesselation
+#' for Agglomeration) takes values between 0 and 1. Values close to 1 reflect highly dispersed geolocated points
+#' and spatially uniform distribution. The lower the value of ETA, the stronger the agglomeration.
 #'
-#' Linijka nr 3 - details
+#' @details
+#' The function calculates the relative areas of Voronoi polygons (ri) that sum to 1 such that sum(ri)=1.
+#' The relative areas (ri) are an input to the Shannon entropy function H, where H=-sum(ri*log(ri)).
+#' The maximum entropy Hmax is derived as Hmax=-1/n for n tiles. The relative entropy is calculated as H/Hmax
+#' and interpreted as ETA.
 #'
+#' In the case of spatially uniform distribution (regular location of points), ETA=1. The more points are
+#' agglomerated, the lower the ETA. Points agglomerated in a single location should have ETA~0.
+#'
+#' A number of points may be reduced at the tesselation stage if duplicate locations are identified in the dataset.
 #'
 #' @name ETA
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
-#' @param region_sf do opisu (obiekt sf ale jako region)
-#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
-#' @examples #To be done!!!
+#' @param points_sf Object in sf of the data.frame class - in the case of a data.frame object, the first and second columns must contain X and Y coordinates.
+#' For data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' @param region_sf Polygon in the sf class that defines the boundary for points_sf.
+#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter).
+#' If `sample_size` is equal to points_sf size, all points are used to construct Voronoi polygons.
+#' If `sample_size` is less than the sample size, the functions will perform random sampling.
+#' If `sample_size` is greater, it is automatically set to the number of points in the dataset.
+#' The number of points affects the speed of Voronoi polygon computation.
 #'
-#' @return `ETA()` returns ... to be done.
+#' @return `ETA()` returns a list object and a plot. The list contains three elements:
+#' \item{S_ent}{Empirical entropy of the tessellated point pattern.}
+#' \item{H_ent}{ETA, degree of agglomeration.}
+#' \item{n_points}{Number of points included in calculations.}
+#' The plot illustrates the points used in the analysis and the boundary region,
+#' Voronoi tesselation and displays values from the list.
+#'
+#' @references
+#' Kopczewska K., 2021, Entropy as measure of agglomeration. Interactions of business locations and housing transactions
+#' in Warsaw metropolitan area. \[In] Handbook on "Entropy, Complexity, and Spatial Dynamics: The Rebirth of Theory?",
+#' Edward Elgar (editors: Aura Reggiani, Laurie Schintler, Danny Czamanski, Roberto Patuelli)
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 ETA<-function(points_sf, region_sf, sample_size){
