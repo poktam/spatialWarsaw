@@ -17,7 +17,7 @@
 #' from the `benford.analysis` package. Euclidean distances between points are calculated using the `dist()` function.
 #'
 #' @name SpatBenfordTest
-#' @param data_sf Object in sf of the data.frame class - in the case of a data.frame object, the first and second columns must contain X and Y coordinates.
+#' @param data_sf Object in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
 #' @param sample_size Number of points to be used in the analysis. It must be less than or equal to the number of points in the dataset.
 #' Huge datasets can cause computational problems when testing for Benford's law conformity due to the nxn size matrix of mutual distances.
 #' @param var_name Column name with additional numeric variable. If empty, a 2d distribution of Euclidean distances is tested, if given, a 3d distribution is tested.

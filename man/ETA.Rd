@@ -10,9 +10,6 @@ ETA(points_sf, region_sf, sample_size)
 eta(points_sf, region_sf, sample_size)
 }
 \arguments{
-\item{points_sf}{Object in sf of the data.frame class - in the case of a data.frame object, the first and second columns must contain X and Y coordinates.
-For data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.}
-
 \item{region_sf}{Polygon in the sf class that defines the boundary for points_sf.}
 
 \item{sample_size}{Sample size, must be less than or equal to the number of points in the dataset (\code{points_sf} parameter).
@@ -20,6 +17,9 @@ If \code{sample_size} is equal to points_sf size, all points are used to constru
 If \code{sample_size} is less than the sample size, the functions will perform random sampling.
 If \code{sample_size} is greater, it is automatically set to the number of points in the dataset.
 The number of points affects the speed of Voronoi polygon computation.}
+
+\item{points_sf#'}{@param points_sf Object in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.
+For \code{data.frame}, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.}
 }
 \value{
 \code{ETA()} returns a list object and a plot. The list contains three elements:

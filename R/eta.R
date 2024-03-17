@@ -23,8 +23,8 @@
 #' A number of points may be reduced at the tesselation stage if duplicate locations are identified in the dataset.
 #'
 #' @name ETA
-#' @param points_sf Object in sf of the data.frame class - in the case of a data.frame object, the first and second columns must contain X and Y coordinates.
-#' For data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' @param points_sf#' @param points_sf Object in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' For `data.frame`, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
 #' @param region_sf Polygon in the sf class that defines the boundary for points_sf.
 #' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter).
 #' If `sample_size` is equal to points_sf size, all points are used to construct Voronoi polygons.

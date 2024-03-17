@@ -3,14 +3,14 @@
 \name{SpatBenfordTest}
 \alias{SpatBenfordTest}
 \alias{spatbenfordtest}
-\title{Benford's law spatial dot pattern conformity test}
+\title{Benford's law spatial point pattern conformity test}
 \usage{
 SpatBenfordTest(data_sf, sample_size, var_name = NULL)
 
 spatbenfordtest(data_sf, sample_size, var_name = NULL)
 }
 \arguments{
-\item{data_sf}{Object in sf of the data.frame class - in the case of a data.frame object, the first and second columns must contain X and Y coordinates.}
+\item{data_sf}{Object in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.}
 
 \item{sample_size}{Number of points to be used in the analysis. It must be less than or equal to the number of points in the dataset.
 Huge datasets can cause computational problems when testing for Benford's law conformity due to the nxn size matrix of mutual distances.}
