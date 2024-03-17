@@ -3,30 +3,45 @@
 \name{SpatBenfordPattern}
 \alias{SpatBenfordPattern}
 \alias{spatbenfordpattern}
-\title{Linijka nr 1 - function title}
+\title{Spatial point pattern generation following Benford's law}
 \usage{
 SpatBenfordPattern(region_sf, sample_size = 5000)
 
 spatbenfordpattern(region_sf, sample_size = 5000)
 }
 \arguments{
-\item{region_sf}{do opisu (obiekt sf ale jako region)}
+\item{region_sf}{Polygon in the \code{sf} class that defines the boundary for the points to be generated.}
 
-\item{sample_size}{Number of points to be generated based on the region. Default value 5000. We suggest that a value greater than ..... is not used for reasons of computational efficiency. (SPRAWDZIĆ, UWAGA! st_sample czasem generuje mniej punktów)}
+\item{sample_size}{Number of points to generate inside the boundary. The default value is 5000 and can be changed.
+Larger datasets may cause computational problems when testing for Benford's law conformity.
+\code{St_sample()}, which is used to generate point patterns, may generate fewer points than specified.}
 }
 \value{
-\code{SpatBenfordPattern()} returns ... to be done.
+\code{SpatBenfordPattern()} returns a \code{data.frame} class object that contains X and Y coordinates in the first
+two columns and labels on the original distribution of each point in the third column. It also shows the visualisation
+of a generated mixture of point patterns.
 }
 \description{
-Linijka nr 2 - description
+Spatial point patterns can conform to Benford's law if the mutual distances between points conform to Benford's law.
+This happens in the case of a mixture of regular, random and clustered point patterns composed in stable proportions.
+The function generates such a point pattern with labels on the original point pattern of each point.
 }
 \details{
-Linijka nr 3 - details
+A natural point pattern (Kopczewska & Kopczewski, 2022) conforming to Benford's law requires a stable proportion
+of source point patterns: 81\% of clustered shifted pattern, 12\% of regular pattern and 7\% of random point pattern.
+These proportions have been incorporated into the \code{SpatBenfordPattern()} function. A clustered shifted point pattern
+is generated as X and Y coordinates from a normal distribution centred at 0.25 of the spatial range
+of longitude and latitude. A clustered point pattern centred within the region makes this mixture non-conforming to Benford's law.
+This natural point pattern can be tested for Benford's law conformity using \code{SpatBenfordTest()}.
 }
 \examples{
 #To be done!!!
 
 }
 \references{
-#To be done - ważne tutaj bo sztywne parametry w kodzie
+Kopczewska K, Kopczewski T (2022) Natural spatial pattern—When mutual socio-geo distances between cities follow Benford’s law.
+PLoS ONE 17(10): e0276450. https://doi.org/10.1371/journal.pone.0276450
+}
+\seealso{
+\code{\link[=SpatBenfordPattern]{SpatBenfordPattern()}}
 }

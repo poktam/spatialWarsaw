@@ -4,20 +4,27 @@
 #
 # SPRAWDZIĆ CZY NIE OPRZEĆ NA PAKIECIE benford (nowszy) zamiast benford.analysis
 #
-#' Linijka nr 1 - function title
+#' @title Benford's law spatial point pattern conformity test
 #'
-#' Linijka nr 2 - description
+#' @description
+#' Spatial point patterns can conform to Benford's law if the mutual distances between points conform to Benford's law.
+#' This occurs in the case of a mixture of regular, random and clustered point patterns composed in stable proportions.
+#' The function calculates the mutual Euclidean distances between all points in the dataset and tests whether
+#' this distribution conforms to Benford's law.
 #'
-#' Linijka nr 3 - details
-#'
+#' @details
+#' The function returns the Benford's law conformity test of geolocated spatial points using the `benford()` function
+#' from the `benford.analysis` package. Euclidean distances between points are calculated using the `dist()` function.
 #'
 #' @name SpatBenfordTest
-#' @param data_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
-#' @param var_name Name of column with additional variable. If empty, a 2d distribution is tested, if given, a 3d distribution.
-#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`data_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
-#' @examples #To be done!!!
+#' @param data_sf Object in sf of the data.frame class - in the case of a data.frame object, the first and second columns must contain X and Y coordinates.
+#' @param sample_size Number of points to be used in the analysis. It must be less than or equal to the number of points in the dataset.
+#' Huge datasets can cause computational problems when testing for Benford's law conformity due to the nxn size matrix of mutual distances.
+#' @param var_name Column name with additional numeric variable. If empty, a 2d distribution of Euclidean distances is tested, if given, a 3d distribution is tested.
 #'
-#' @return `SpatBenfordTest()` returns ... to be done.
+#' @return `SpatBenfordTest()` returns the test for Benford's law conformity.
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
@@ -68,31 +75,45 @@ SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
 spatbenfordtest <- SpatBenfordTest
 
 
-
 ###############################
-### SpatBenfordPattern() ###
+### SpatBenfordPattern()    ###
 ###############################
-# R code for SpatBenfordPattern()
-# generating spatial Benford-like 2D distribution
-################################
 #
 # SPRAWDZIĆ CZY NIE OPRZEĆ NA PAKIECIE benford (nowszy) zamiast benford.analysis
 # DODAĆ TESTOWANIE WYNIKU ZA POMOCĄ SPATBENFORDPATTERN()
 #
-#' Linijka nr 1 - function title
+#' @title Spatial point pattern generation following Benford's law
 #'
-#' Linijka nr 2 - description
+#' @description
+#' Spatial point patterns can conform to Benford's law if the mutual distances between points conform to Benford's law.
+#' This happens in the case of a mixture of regular, random and clustered point patterns composed in stable proportions.
+#' The function generates such a point pattern with labels on the original point pattern of each point.
 #'
-#' Linijka nr 3 - details
-#'
+#' @details
+#' A natural point pattern (Kopczewska & Kopczewski, 2022) conforming to Benford's law requires a stable proportion
+#' of source point patterns: 81% of clustered shifted pattern, 12% of regular pattern and 7% of random point pattern.
+#' These proportions have been incorporated into the `SpatBenfordPattern()` function. A clustered shifted point pattern
+#' is generated as X and Y coordinates from a normal distribution centred at 0.25 of the spatial range
+#' of longitude and latitude. A clustered point pattern centred within the region makes this mixture non-conforming to Benford's law.
+#' This natural point pattern can be tested for Benford's law conformity using `SpatBenfordTest()`.
 #'
 #' @name SpatBenfordPattern
-#' @param region_sf do opisu (obiekt sf ale jako region)
-#' @param sample_size Number of points to be generated based on the region. Default value 5000. We suggest that a value greater than ..... is not used for reasons of computational efficiency. (SPRAWDZIĆ, UWAGA! st_sample czasem generuje mniej punktów)
-#' @references #To be done - ważne tutaj bo sztywne parametry w kodzie
-#' @examples #To be done!!!
+#' @param region_sf Polygon in the `sf` class that defines the boundary for the points to be generated.
+#' @param sample_size Number of points to generate inside the boundary. The default value is 5000 and can be changed.
+#' Larger datasets may cause computational problems when testing for Benford's law conformity.
+#' `St_sample()`, which is used to generate point patterns, may generate fewer points than specified.
 #'
-#' @return `SpatBenfordPattern()` returns ... to be done.
+#' @return `SpatBenfordPattern()` returns a `data.frame` class object that contains X and Y coordinates in the first
+#' two columns and labels on the original distribution of each point in the third column. It also shows the visualisation
+#' of a generated mixture of point patterns.
+#'
+#' @references
+#' Kopczewska K, Kopczewski T (2022) Natural spatial pattern—When mutual socio-geo distances between cities follow Benford’s law.
+#' PLoS ONE 17(10): e0276450. https://doi.org/10.1371/journal.pone.0276450
+#'
+#' @seealso [SpatBenfordPattern()]
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 SpatBenfordPattern<-function(region_sf, sample_size=5000){

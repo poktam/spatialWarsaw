@@ -3,27 +3,32 @@
 \name{SpatBenfordTest}
 \alias{SpatBenfordTest}
 \alias{spatbenfordtest}
-\title{Linijka nr 1 - function title}
+\title{Benford's law spatial dot pattern conformity test}
 \usage{
 SpatBenfordTest(data_sf, sample_size, var_name = NULL)
 
 spatbenfordtest(data_sf, sample_size, var_name = NULL)
 }
 \arguments{
-\item{data_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
+\item{data_sf}{Object in sf of the data.frame class - in the case of a data.frame object, the first and second columns must contain X and Y coordinates.}
 
-\item{sample_size}{Sample size, must be less than or equal to the number of points in the dataset (\code{data_sf} parameter). If \code{sample_size} is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)}
+\item{sample_size}{Number of points to be used in the analysis. It must be less than or equal to the number of points in the dataset.
+Huge datasets can cause computational problems when testing for Benford's law conformity due to the nxn size matrix of mutual distances.}
 
-\item{var_name}{Name of column with additional variable. If empty, a 2d distribution is tested, if given, a 3d distribution.}
+\item{var_name}{Column name with additional numeric variable. If empty, a 2d distribution of Euclidean distances is tested, if given, a 3d distribution is tested.}
 }
 \value{
-\code{SpatBenfordTest()} returns ... to be done.
+\code{SpatBenfordTest()} returns the test for Benford's law conformity.
 }
 \description{
-Linijka nr 2 - description
+Spatial point patterns can conform to Benford's law if the mutual distances between points conform to Benford's law.
+This occurs in the case of a mixture of regular, random and clustered point patterns composed in stable proportions.
+The function calculates the mutual Euclidean distances between all points in the dataset and tests whether
+this distribution conforms to Benford's law.
 }
 \details{
-Linijka nr 3 - details
+The function returns the Benford's law conformity test of geolocated spatial points using the \code{benford()} function
+from the \code{benford.analysis} package. Euclidean distances between points are calculated using the \code{dist()} function.
 }
 \examples{
 #To be done!!!
