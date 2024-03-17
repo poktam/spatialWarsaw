@@ -3,24 +3,39 @@
 #############
 #
 #
-#' Linijka nr 1 - function title
+#' @title Focal Local Entropy for rasterised data to analyse the density of points
 #'
-#' Linijka nr 2 - description
+#' @description
+#' The function analyses the density of geolocated points by counting the number of points in raster cells
+#' and calculating local entropy using neighbouring cells. The counts in the grid cells are normalised
+#' and the entropy is calculated for the discretised variable using fixed intervals. The focal mechanism performs
+#' the calculations for each grid cell and its neighbours. The nearest neighbours can be given as a number
+#' (an odd value e.g. 3,5,7,9) or a radius.
 #'
-#' Linijka nr 3 - details
+#' @details
+#' The function grids the area and counts the number of observations in each grid cell. The counts of the observations are normalised.
+#' The focal mechanism selects the neighbourhood for each cell and creates a vector of normalised counts for the analysed cell
+#' and its neighbours. The values are discretised into fixed intervals `(breaks=c(-100, -5, -3, -2, -1, -0.5, 0, 0.5, 1, 2, 3, 5, 100))`
+#' and the proportion (percentage of observations) in each interval is calculated. These proportions are used as input to the entropy function.
+#' The local entropy is calculated for each grid cell and displayed in the raster.
 #'
+#' The choice of w or r makes a small difference to the result. For w=9, a cell and all its direct neighbours (first row, contiguity)
+#' are considered. When setting r, remember that the distance to the centroids of neighbouring cells is closer
+#' for east/west/north/south cells and longer for east-north, east-south, west-north and west-south cells.
+#' Too short r can exclude the second group from the neighbours list.
 #'
 #' @name FLE
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
-#' @param region_sf do opisu (obiekt sf ale jako region)
-#' @param nrows.raster raster row dimensions, default 50
-#' @param ncols.raster raster column dimensions, default 50
-#' @param w size of squared moving window (choose 3,5,7,9 etc), w and r parameters are mutually exclusive
-#' @param r radius of circular ring, w and r parameters are mutually exclusive
+#' @param points_sf Object in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' For `data.frame`, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' @param region_sf The boundary of the area where the `points_sf` are located, `sf` class object.
+#' @param nrows.raster Number of rows in the raster, default 50.
+#' @param ncols.raster Number of columns in the raster, default 50.
+#' @param w The size of the square moving window (choose an odd value such as 3,5,7,9 etc.); the w and r parameters are mutually exclusive - specify either w or r.
+#' @param r The radius of a circular ring in a scale of geo-coordinates; the w and r parameters are mutually exclusive - specify either w or r.
+#'
+#' @return `FLE()` returns the `terra` class object and its visualisation.
 #'
 #' @examples #To be done!!!
-#'
-#' @return `FLE()` returns ... to be done.
 #'
 #' @export
 FLE<-function(points_sf, region_sf, nrows.raster=50, ncols.raster=50, w, r){
@@ -74,7 +89,7 @@ FLE<-function(points_sf, region_sf, nrows.raster=50, ncols.raster=50, w, r){
   rst.var<-scale(rst.var)
 
   # funkcja licząca entropię
-  # to są przedziały do zmiennej standaryzowanej, zawsze działają
+  # to są przedziały do zmiennej standaryzowanej
   breaks=c(-100, -5, -3, -2, -1, -0.5, 0, 0.5, 1, 2, 3, 5, 100)
 
   ent_fun<-function(y) {pi=table(cut(y, breaks=breaks))/sum(table(cut(y, breaks=breaks))); -sum(pi[pi>0]*log(pi[pi>0]))}

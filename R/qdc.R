@@ -3,22 +3,55 @@
 #############
 #
 #
-#' Linijka nr 1 - function title
+#' @title Quick Density Clustering (QDC): identifying clusters of different densities for geolocated points
 #'
-#' Linijka nr 2 - description
+#' @description
+#' Quick Density Clustering (QDC) uses two spatial variables - the total distance to k nearest neighbours
+#' and the number of neighbours within a fixed radius (`eps`). Both spatial variables are normalised
+#' and clustered using the K-means algorithm. Clusters separate points with different local densities.
+#' The function allows sampling to speed up the calculations.
 #'
-#' Linijka nr 3 - details
+#' @details
+#' This algorithm is an alternative to DBSCAN. It has no problem with parameterisation, especially in the case of sampling -
+#' it gives a robust solution. It uses K-means, but unlike most algorithms - it does not cluster spatial coordinates,
+#' but pre-prepared normalised spatial variables: total distance to k nearest neighbours and number of neighbours
+#' within a fixed radius (`eps`). Its logic is simple: densely located points have a low total distance to `knn` points,
+#' while the number of points within a given radius is high. Sparsely located points, on the other hand, have a high total distance
+#' to `knn` points, while the number of nearest neighbours within a given radius is low. Both variables are self-scaling
+#' after normalisation and easily show what is high or low. K-means clustering naturally separates groups with similar values
+#' of both spatial variables. There is a non-linear relationship between the two spatial variables, visible in the output Figure 1.
+#' K-means clustering easily finds thresholds of both variables that separate clusters.
 #'
+#' The algorithm is robust to sampling. Limiting the size of the data set speeds up the computation. The parameter `sample_size` allows to find
+#' the best relation between quality and computation time.
 #'
 #' @name QDC
-#' @param data_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
-#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`data_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset.
-#' @param nclust Number of clusters to find. Must be >=2. For nclust=3 additional cluster labels will be included in the output object.
-#' @param k Number of nearest neighbors used for the distance calculation. Default value set to 10.
-#' @param eps do opisu
-#' @examples #To be done!!!
+#' @param data_sf Object in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`data_sf` parameter).
+#' If `sample_size` is larger, it is automatically set to the number of points in the dataset.
+#' @param nclust Number of clusters to find. Must be >=2. For nclust=3 additional cluster labels are included in the output object.
+#' @param k Number of nearest neighbours used to calculate the total distance. The default value is k=10.
+#' @param eps Radius for counting neighbours, fixed value for all observations. The default value is eps=0.05.
+#' This is approximately 5 km for points in the WGS84 projection.
 #'
-#' @return `QDC()` returns ... to be done.
+#' @return `QDC()` returns two visualisations:
+#' * Scatter plot of both spatial variables coloured as clusters
+#' * Location of spatial points coloured according to cluster membership.
+#'
+#' `QDC()` returns also a data.frame object containing the following columns:
+#' \item{X}{original X coordinates}
+#' \item{Y}{original Y coordinates}
+#' \item{knndist1}{total distance to k nearest neighbours}
+#' \item{frnn1}{number of nearest neighbours with fixed radius}
+#' \item{knndist1.scaled}{spatial variable knndist1 after normalisation}
+#' \item{frnn1.scaled}{spatial variable frnn1 after normalisation}
+#' \item{km.set1}{cluster ID of the observation, from the K-means algorithm}
+#' \item{outcome.set1}{cluster labels, only if k=3}
+#'
+#' @references
+#' Kopczewska K., (under review), QDC: Quick Density Clustering of Geo-located Data
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 QDC<-function(data_sf, sample_size, nclust=3, k=10, eps=0.05){
