@@ -3,20 +3,46 @@
 ##############
 #
 #
-#' Linijka nr 1 - function title
+#' @title Spatial Agglomeration Index
 #'
-#' Linijka nr 2 - description
+#' @description
+#' SPAG (Spatial Agglomeration Index) measures the degree of agglomeration of point data in a given area in terms of the size of the points.
+#' It is based on overlapping circles created for each point. First, the algorithm optimises the radii of the circles -
+#' the area of each circle is proportional to the size of the point, while the total area of all circles is equal to the area of the territory.
+#' Second, the algorithm calculates the union - the area covered by overlapping circles. Third, it calculates the SPAG index and its components.
+#' The coverage index is the proportion of analysed points in the total sample. The distance index is the average distance between observed points
+#' divided by the average distance between points in the regular distribution. The overlap index is the ratio of the area covered by the union of
+#' circles to the total area. SPAG is the product of all three sub-indices. SPAG values are scaled between 0 and 1. High values (ca. SPAG>0.6)
+#' represent a regular distribution, while low values of SPAG (ca. SPAG<0.1) represent strong agglomeration.
 #'
-#' Linijka nr 3 - details
+#' @details
+#' The size of the points is important for optimising the radii of the circles. The smallest size is used as a reference and each point is given
+#' the proportional size (how many times larger) for calculations.
 #'
+#' All points in the points_sf object should be within the region_sf object. SPAG analyses the agglomeration of points in the region.
+#' The size of the region is important for the result - if `region_sf` is much larger than a spatial range of point data,
+#' SPAG detects agglomeration.
 #'
 #' @name SPAG
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object. (OD RAZU DANE Z WYBRANEJ ZMIENNEJ NP. SEKTORA)
-#' @param size_var The name of the variable describing the size of the analysed objects (e.g. companies). (SPRAWDZIĆ opis)
-#' @param region_sf do opisu (obiekt sf ale jako region)
-#' @examples #To be done!!!
+#' @param points_sf Object in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' For `data.frame`, make sure that the coordinates of the points are initially in the same coordinate system / projection as the `region_sf` object.
+#' All data within the object are analysed. Object in spherical projection is converted to planar projection for calculations.
+#' @param size_var The name of the variable describing the size of the analysed objects (e.g. companies), given as text, e.g. "size".
+#' @param region_sf The boundary of the area in which the `points_sf` are located, in `sf` class. Data in spherical projections are converted to planar projections for calculations.
 #'
-#' @return `SPAG()` returns ... to be done.
+#' @return `SPAG()` returns a list object and a plot. The list contains five elements:
+#' \item{i.coverage}{the proportion of data analysed, in function of the default 1. More details can be found in the paper by Kopczewska et al. (2019).}
+#' \item{i.distance}{the ratio of the average empirical distance between points and the theoretical average distance between points in the regular (uniform) distribution.
+#' When points are regularly distributed, `i.distance` is approximately 1. When all points are in a single location, `i.distance` is approximately 0.}
+#' \item{i.overlap}{is the area covered by overlapping circles divided by the area of the region. If the points are regularly distributed, `i.overlap` is approximately 1.
+#' If all the points are in a single location, `i.overlap` is approximately 0.}
+#' \item{SPAG}{the spatial agglomeration index as a product of sub-indices: `i.coverage` \* `i.distance` \* `i.overlap`.}
+#' \item{n.obs}{the number of points included in calculations.}
+#'
+#' @references
+#' Kopczewska, K., Churski, P., Ochojski, A., & Polko, A. (2019). SPAG: Index of spatial agglomeration. Papers in Regional Science, 98(6), 2391-2424.
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 SPAG<-function(points_sf, size_var, region_sf){
