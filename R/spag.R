@@ -36,7 +36,7 @@
 #' When points are regularly distributed, `i.distance` is approximately 1. When all points are in a single location, `i.distance` is approximately 0.}
 #' \item{i.overlap}{is the area covered by overlapping circles divided by the area of the region. If the points are regularly distributed, `i.overlap` is approximately 1.
 #' If all the points are in a single location, `i.overlap` is approximately 0.}
-#' \item{SPAG}{the spatial agglomeration index as a product of sub-indices: `i.coverage` \* `i.distance` \* `i.overlap`.}
+#' \item{SPAG}{the spatial agglomeration index as a product of sub-indices: `i.coverage * i.distance * i.overlap`.}
 #' \item{n.obs}{the number of points included in calculations.}
 #'
 #' @references
