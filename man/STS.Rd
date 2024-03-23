@@ -3,7 +3,7 @@
 \name{STS}
 \alias{STS}
 \alias{sts}
-\title{Linijka nr 1 - function title}
+\title{Spatio-temporal stability of clusters of Geographically Weighted Regression (GWR) coefficients}
 \usage{
 STS(
   points_sf,
@@ -30,37 +30,55 @@ sts(
 )
 }
 \arguments{
-\item{points_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
-When using a simple data.frame, make sure that the coordinates of the points are in the same
-coordinate system / projection as the \code{region_sf} object. NOTE! Data must be from a single period!}
+\item{points_sf}{Geo-located points in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.
+For \code{data.frame}, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.
+Data must be from a few periods.}
 
-\item{eq}{an object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class):
-a symbolic description of the model to be used.}
+\item{eq}{An object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.}
 
-\item{time_var}{Name of the variable categorising the observations over time in the points_sf object.}
+\item{time_var}{Name of the variable that categorises the observations over time in the points_sf object.}
 
-\item{region_sf}{do opisu (obiekt sf ale jako region)}
+\item{region_sf}{Polygon in the \code{sf} class that defines the boundary for \code{points_sf}.}
 
-\item{nrows.raster}{raster row dimensions, default 50}
+\item{nrows.raster}{Raster row dimension, default 50.}
 
-\item{ncols.raster}{raster column dimensions, default 50}
+\item{ncols.raster}{Raster column dimension, default 50.}
 
-\item{nc}{number of clusters}
+\item{nc}{Number of clusters in k-means.}
 
-\item{bw}{do opisU: !!! ZOSTAWIŁEM bw W PARAMETRACH JAK W POPRZEDNIEJ FUNKCJI - JAK NIE BĘDZIE, TO BĘDZIEMY LICZYĆ DLA I OKRESU}
+\item{bw}{GWR model bandwidth, if missing (default) bandwidth is calculated for the first period and applied to other periods. It can be specified as a vector of bw for each individual period.}
 
-\item{adaptive}{is adaptive (do opisu), default=FALSE}
+\item{adaptive}{Specification of the kernel in the GWR function, by default \code{adaptive=FALSE}, can be \code{TRUE} (used in case of highly uneven point density).}
 }
 \value{
-\code{STS()} returns ... to be done.
+\code{STS()} returns the coloured matrix of the Rand Index using \code{\link[plot.matrix:plot.matrix]{plot.matrix::plot.matrix()}} function and the matrix of Rand Index.
 }
 \description{
-Linijka nr 2 - description
+This is a multi-step algorithm for spatio-temporal point data. First, it estimates the GWR model for each
+period (e.g. year). Second, it uses k-means to cluster the model coefficients into k clusters in each period.
+Third, it rasterises the data and calculates the median of the cluster IDs for each period within the grid cell.
+Fourth, it compares the partitioning of the grid cells with the rand index and outputs the coloured matrix of
+period-to-period comparisons.
 }
 \details{
-Linijka nr 3 - details
+The STS() function operates on the \code{\link[GWmodel:gwr.basic]{GWmodel::gwr.basic()}} function to compute Geographically Weighted Regression models,
+\code{\link[stats:kmeans]{stats::kmeans()}} to cluster the GWR coefficients, \code{\link[terra:rasterize]{terra::rasterize()}} to count the medians of the cluster IDs in the grid cells
+and \code{\link[fossil:rand.index]{fossil::adj.rand.index()}} to compute the rand index.
+
+This algorithm for testing the spatio-temporal stability of clusters of GWR coefficients was developed
+by Kopczewska & Ćwiakowski (2021). The main output is the period-to-period matrix with values of the Rand Index (RI).
+The higher the RI values, the greater the similarity of the cluster location in both periods.
+}
+\note{
+\code{STS()} is related to \code{\link[=rastClustGWR]{rastClustGWR()}} which clusters the GWR coefficients from a single period and displays them in a raster.
+\code{STS()} works as a looped \code{\link[=rastClustGWR]{rastClustGWR()}} over time and additionally calculates the Rand Index for each pair of periods.
 }
 \examples{
 #To be done!!!
 
+}
+\references{
+Kopczewska, K., & Ćwiakowski, P. (2021). Spatio-temporal stability of housing submarkets. Tracking spatial location of clusters of
+geographically weighted regression estimates of price determinants. Land Use Policy, 103, 105292.
+https://www.sciencedirect.com/science/article/pii/S0264837721000156
 }

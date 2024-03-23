@@ -96,31 +96,49 @@ rastClustGWR<-function(points_sf, eq, region_sf, nrows.raster=50, ncols.raster=5
 ### STS() ###
 #############
 #
-#
-#' Linijka nr 1 - function title
+#' @title Spatio-temporal stability of clusters of Geographically Weighted Regression (GWR) coefficients
 #'
-#' Linijka nr 2 - description
+#' @description
+#' This is a multi-step algorithm for spatio-temporal point data. First, it estimates the GWR model for each
+#' period (e.g. year). Second, it uses k-means to cluster the model coefficients into k clusters in each period.
+#' Third, it rasterises the data and calculates the median of the cluster IDs for each period within the grid cell.
+#' Fourth, it compares the partitioning of the grid cells with the rand index and outputs the coloured matrix of
+#' period-to-period comparisons.
 #'
-#' Linijka nr 3 - details
+#' @details
+#' The STS() function operates on the [GWmodel::gwr.basic()] function to compute Geographically Weighted Regression models,
+#' [stats::kmeans()] to cluster the GWR coefficients, [terra::rasterize()] to count the medians of the cluster IDs in the grid cells
+#' and [fossil::adj.rand.index()] to compute the rand index.
 #'
+#' This algorithm for testing the spatio-temporal stability of clusters of GWR coefficients was developed
+#' by Kopczewska & Ćwiakowski (2021). The main output is the period-to-period matrix with values of the Rand Index (RI).
+#' The higher the RI values, the greater the similarity of the cluster location in both periods.
 #'
 #' @name STS
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
-#' When using a simple data.frame, make sure that the coordinates of the points are in the same
-#' coordinate system / projection as the `region_sf` object. NOTE! Data must be from a single period!
-#' @param eq an object of class [stats::formula()] (or one that can be coerced to that class):
-#' a symbolic description of the model to be used.
-#' @param time_var Name of the variable categorising the observations over time in the points_sf object.
-#' @param region_sf do opisu (obiekt sf ale jako region)
-#' @param nrows.raster raster row dimensions, default 50
-#' @param ncols.raster raster column dimensions, default 50
-#' @param nc number of clusters
-#' @param bw do opisU: !!! ZOSTAWIŁEM bw W PARAMETRACH JAK W POPRZEDNIEJ FUNKCJI - JAK NIE BĘDZIE, TO BĘDZIEMY LICZYĆ DLA I OKRESU
-#' @param adaptive is adaptive (do opisu), default=FALSE
+#' @param points_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' For `data.frame`, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' Data must be from a few periods.
+#' @param eq An object of class [stats::formula()] (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.
+#' @param time_var Name of the variable that categorises the observations over time in the points_sf object.
+#' @param region_sf Polygon in the `sf` class that defines the boundary for `points_sf`.
+#' @param nrows.raster Raster row dimension, default 50.
+#' @param ncols.raster Raster column dimension, default 50.
+#' @param nc Number of clusters in k-means.
+#' @param bw GWR model bandwidth, if missing (default) bandwidth is calculated for the first period and applied to other periods. It can be specified as a vector of bw for each individual period.
+#' @param adaptive Specification of the kernel in the GWR function, by default `adaptive=FALSE`, can be `TRUE` (used in case of highly uneven point density).
+#'
+#' @return `STS()` returns the coloured matrix of the Rand Index using [plot.matrix::plot.matrix()] function and the matrix of Rand Index.
+#'
+#' @references
+#' Kopczewska, K., & Ćwiakowski, P. (2021). Spatio-temporal stability of housing submarkets. Tracking spatial location of clusters of
+#' geographically weighted regression estimates of price determinants. Land Use Policy, 103, 105292.
+#' https://www.sciencedirect.com/science/article/pii/S0264837721000156
+#'
+#' @note
+#' `STS()` is related to [rastClustGWR()] which clusters the GWR coefficients from a single period and displays them in a raster.
+#' `STS()` works as a looped [rastClustGWR()] over time and additionally calculates the Rand Index for each pair of periods.
 #'
 #' @examples #To be done!!!
-#'
-#' @return `STS()` returns ... to be done.
 #'
 #' @export
 STS<-function(points_sf, eq, time_var, region_sf, nrows.raster=50, ncols.raster=50, nc, bw, adaptive=FALSE){
