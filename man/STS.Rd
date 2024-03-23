@@ -61,7 +61,7 @@ Fourth, it compares the partitioning of the grid cells with the rand index and o
 period-to-period comparisons.
 }
 \details{
-The STS() function operates on the \code{\link[GWmodel:gwr.basic]{GWmodel::gwr.basic()}} function to compute Geographically Weighted Regression models,
+The \code{STS()} function operates on the \code{\link[GWmodel:gwr.basic]{GWmodel::gwr.basic()}} function to compute Geographically Weighted Regression models,
 \code{\link[stats:kmeans]{stats::kmeans()}} to cluster the GWR coefficients, \code{\link[terra:rasterize]{terra::rasterize()}} to count the medians of the cluster IDs in the grid cells
 and \code{\link[fossil:rand.index]{fossil::adj.rand.index()}} to compute the rand index.
 

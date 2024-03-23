@@ -2,7 +2,7 @@
 % Please edit documentation in R/rastclust.R
 \name{rastClustGWR}
 \alias{rastClustGWR}
-\title{Linijka nr 1 - function title}
+\title{Rasterisation of clustered Geographically Weighted Regression (GWR) coefficients}
 \usage{
 rastClustGWR(
   points_sf,
@@ -16,35 +16,48 @@ rastClustGWR(
 )
 }
 \arguments{
-\item{points_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
-When using a simple data.frame, make sure that the coordinates of the points are in the same
-coordinate system / projection as the \code{region_sf} object. NOTE! Data must be from a single period!}
+\item{points_sf}{Geo-located points in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.
+For \code{data.frame}, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.
+Data must be for a single period.}
 
-\item{eq}{an object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class):
-a symbolic description of the model to be used.}
+\item{eq}{An object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.}
 
-\item{region_sf}{do opisu (obiekt sf ale jako region)}
+\item{region_sf}{Polygon in the \code{sf} class that defines the boundary for \code{points_sf}.}
 
-\item{nrows.raster}{raster row dimensions, default 50}
+\item{nrows.raster}{Raster row dimension, default 50.}
 
-\item{ncols.raster}{raster column dimensions, default 50}
+\item{ncols.raster}{Raster column dimension, default 50.}
 
-\item{nc}{number of clusters}
+\item{nc}{Number of clusters in k-means.}
 
-\item{bw}{do opisu}
+\item{bw}{GWR model bandwidth, if missing, it is calculated using the \code{\link[GWmodel:bw.gwr]{GWmodel::bw.gwr()}} function (may be time-consuming); its value can be specified by the user.}
 
-\item{adaptive}{is adaptive (do opisu), default=FALSE}
+\item{adaptive}{Specification of the kernel in the GWR function, by default \code{adaptive=FALSE}, can be \code{TRUE} (used in case of highly uneven point density).}
 }
 \value{
-\code{rastClustGWR()} returns ... to be done.
+\code{rastClustGWR()} returns the raster (with the number of rows and columns specified in the function call) that calculates the median of the k-means cluster ID -
+it clusters the GWR coefficients. The function returns both the \code{terra} class object and its visualisation.
 }
 \description{
-Linijka nr 2 - description
+This is a multi-step algorithm for single period spatial point data. First, it estimates the GWR model.
+Second, it uses k-means to cluster the model coefficients into k clusters. Third, it rasterises the data and computes
+the median of the cluster IDs within the grid cell.
 }
 \details{
-Linijka nr 3 - details
+The \code{rastClustGWR()} function operates on the \code{\link[GWmodel:gwr.basic]{GWmodel::gwr.basic()}} function to compute Geographically Weighted Regression models,
+\code{\link[stats:kmeans]{stats::kmeans()}} to cluster GWR coefficients, and \code{\link[terra:rasterize]{terra::rasterize()}} to count the medians of the cluster IDs in grid cells. All operations
+are for single period data. The result, visualisation of grids coloured by cluster IDs, helps to detect heterogeneity in the relationships
+modelled with GWR. Rasterisation helps to specify a common spatial reference for point data.
+
+This algorithm is extended in \code{\link[=STS]{STS()}} function, which tests the spatio-temporal stability of clusters of GWR coefficients
+(developed by Kopczewska & Ćwiakowski, 2021).
 }
 \examples{
 #To be done!!!
 
+}
+\references{
+Kopczewska, K., & Ćwiakowski, P. (2021). Spatio-temporal stability of housing submarkets. Tracking spatial location of clusters of
+geographically weighted regression estimates of price determinants. Land Use Policy, 103, 105292.
+https://www.sciencedirect.com/science/article/pii/S0264837721000156
 }

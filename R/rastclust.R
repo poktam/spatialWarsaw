@@ -2,30 +2,44 @@
 ### rastClustGWR() ###
 ######################
 #
-#
-#' Linijka nr 1 - function title
+#' @title Rasterisation of clustered Geographically Weighted Regression (GWR) coefficients
 #'
-#' Linijka nr 2 - description
+#' @description
+#' This is a multi-step algorithm for single period spatial point data. First, it estimates the GWR model.
+#' Second, it uses k-means to cluster the model coefficients into k clusters. Third, it rasterises the data and computes
+#' the median of the cluster IDs within the grid cell.
 #'
-#' Linijka nr 3 - details
+#' @details
+#' The `rastClustGWR()` function operates on the [GWmodel::gwr.basic()] function to compute Geographically Weighted Regression models,
+#' [stats::kmeans()] to cluster GWR coefficients, and [terra::rasterize()] to count the medians of the cluster IDs in grid cells. All operations
+#' are for single period data. The result, visualisation of grids coloured by cluster IDs, helps to detect heterogeneity in the relationships
+#' modelled with GWR. Rasterisation helps to specify a common spatial reference for point data.
 #'
+#' This algorithm is extended in [STS()] function, which tests the spatio-temporal stability of clusters of GWR coefficients
+#' (developed by Kopczewska & Ćwiakowski, 2021).
 #'
 #' @name rastClustGWR
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
-#' When using a simple data.frame, make sure that the coordinates of the points are in the same
-#' coordinate system / projection as the `region_sf` object. NOTE! Data must be from a single period!
-#' @param eq an object of class [stats::formula()] (or one that can be coerced to that class):
-#' a symbolic description of the model to be used.
-#' @param region_sf do opisu (obiekt sf ale jako region)
-#' @param nrows.raster raster row dimensions, default 50
-#' @param ncols.raster raster column dimensions, default 50
-#' @param nc number of clusters
-#' @param bw do opisu
-#' @param adaptive is adaptive (do opisu), default=FALSE
+#' @param points_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' For `data.frame`, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' Data must be for a single period.
+#' @param eq An object of class [stats::formula()] (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.
+#' @param region_sf Polygon in the `sf` class that defines the boundary for `points_sf`.
+#' @param nrows.raster Raster row dimension, default 50.
+#' @param ncols.raster Raster column dimension, default 50.
+#' @param nc Number of clusters in k-means.
+#' @param bw GWR model bandwidth, if missing, it is calculated using the [GWmodel::bw.gwr()] function (may be time-consuming); its value can be specified by the user.
+#' @param adaptive Specification of the kernel in the GWR function, by default `adaptive=FALSE`, can be `TRUE` (used in case of highly uneven point density).
+#'
+#' @return `rastClustGWR()` returns the raster (with the number of rows and columns specified in the function call) that calculates the median of the k-means cluster ID -
+#' it clusters the GWR coefficients. The function returns both the `terra` class object and its visualisation.
+#'
+#' @references
+#' Kopczewska, K., & Ćwiakowski, P. (2021). Spatio-temporal stability of housing submarkets. Tracking spatial location of clusters of
+#' geographically weighted regression estimates of price determinants. Land Use Policy, 103, 105292.
+#' https://www.sciencedirect.com/science/article/pii/S0264837721000156
+#'
 #'
 #' @examples #To be done!!!
-#'
-#' @return `rastClustGWR()` returns ... to be done.
 #'
 #' @export
 rastClustGWR<-function(points_sf, eq, region_sf, nrows.raster=50, ncols.raster=50, nc, bw, adaptive=FALSE){
@@ -106,7 +120,7 @@ rastClustGWR<-function(points_sf, eq, region_sf, nrows.raster=50, ncols.raster=5
 #' period-to-period comparisons.
 #'
 #' @details
-#' The STS() function operates on the [GWmodel::gwr.basic()] function to compute Geographically Weighted Regression models,
+#' The `STS()` function operates on the [GWmodel::gwr.basic()] function to compute Geographically Weighted Regression models,
 #' [stats::kmeans()] to cluster the GWR coefficients, [terra::rasterize()] to count the medians of the cluster IDs in the grid cells
 #' and [fossil::adj.rand.index()] to compute the rand index.
 #'
