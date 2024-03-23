@@ -31,11 +31,11 @@ BOOTDBSCAN(data_sf, sample_size, times, eps, minPts, plot = TRUE)
 \item{minPts }{ value of the \code{minPts} parameter.}
 }
 \description{
-The function samples observations and performs DBSCAN (based on \code{\link[dbscan:dbscan]{dbscan::dbscan()}}) clustering on subsamples. Clusters are denoted binary (1/0) as cluster/noise. Results are aggregated
+The function samples observations and performs DBSCAN clustering (based on \code{\link[dbscan:dbscan]{dbscan::dbscan()}}) on subsamples. Clusters are denoted binary (1/0) as cluster/noise. Results are aggregated
 by observations and majority voting is used to flag an observation as cluster or noise.
 }
 \details{
-The function runs in a loop DBSCAN algorithm using subsamples smaller than a full sample. Clusters are binary coded (cluster/noise) and aggregated by observation ID.
+The function runs in a loop DBSCAN algorithm (based on \code{\link[dbscan:dbscan]{dbscan::dbscan()}}) using subsamples smaller than a full sample. Clusters are binary coded (cluster/noise) and aggregated by observation ID.
 For each row (observation), a majority vote indicates whether a point is classified as cluster or noise. As a rule of thumb, \verb{sample_size*times=150\%} to \verb{200\%} of the original
 number of observations. Points that were never selected for subsampling are classified as cluster/noise using the k nearest neighbours algorithm - they are given
 the same flag as their first nearest neighbour.
