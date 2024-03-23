@@ -2,12 +2,12 @@
 % Please edit documentation in R/clust.R
 \name{ClustConti}
 \alias{ClustConti}
-\title{Linijka nr 1 - function title}
+\title{Division of geolocalised points into spatially continuous clusters using DBSCAN}
 \usage{
 ClustConti(
   data_sf,
   clusters,
-  sep,
+  noise,
   r_p = 0.001,
   eps_r = 1e-15,
   eps_np = 0.01,
@@ -15,30 +15,47 @@ ClustConti(
 )
 }
 \arguments{
-\item{data_sf}{(obiekt sf lub data.frame zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
+\item{data_sf}{Object in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.}
 
-\item{clusters}{do opisu}
+\item{clusters}{Number of density clusters to generate; function automatically adds an extra cluster for noise data (low density cluster).}
 
-\item{sep}{do opisu}
+\item{noise}{Proportion of noise data that should result from DBSCAN clustering, can be between 0 (no noise) and 1 (all noise).}
 
-\item{r_p}{do opisu}
+\item{r_p}{DBSCAN optimisation parameter for radius, default value 0.001.}
 
-\item{eps_r}{do opisu}
+\item{eps_r}{DBSCAN parameter - the initial size of the radius in coordinate units, default value 1e-15.}
 
-\item{eps_np}{do opisu}
+\item{eps_np}{DSBCAN optimisation parameter for radius, default value 0.01.}
 
-\item{minPts0}{do opisu}
+\item{minPts0}{DBSCAN parameter - expected number of points within a radius to be considered as being dense, default value 5.}
 }
 \value{
-\code{ClustConti()} returns ... to be done.
+\code{ClustConti()} returns a list object:
+\item{type}{Simply the name of the wrapper function used: "ClustConti".}
+\item{cluster}{Vector of cluster assignments, 1:n are high density clusters, 0 is noise (low density cluster of remaining points).}
+\item{parameters}{A list of 6 parameters used in clustering - two user-defined (\code{clusters} and \code{noise}) and four that can also be set
+by default (\code{r_p}, \code{eps_r}, \code{eps_np}, \code{minPts0}).}
 }
 \description{
-Linijka nr 2 - description
+This is a wrapper function for the DBSCAN algorithm. For a given number of n clusters, it generates the division into n+1 high-density groups
+(n clusters + noise group) that guarantees the noise ratio specified by the user.
 }
 \details{
-Linijka nr 3 - A TU BĘDZIE CAŁA POMOC DO FUNKCJI ClustConti() - chyba, że je ukryjemy i nie będą dostępne z zewnątrz ;)
+The function performs modified DBSCAN clustering, with user-specified restrictions on the number of clusters and noise ratio. It produces spatially
+continuous clusters of geolocated points. The resulting clusters may have different internal densities and sizes. This method assumes that the area
+and its spatial structure are known (as visible agglomeration points), which allows an appropriate number of clusters to be set. For example,
+for urbanisation data, each cluster will cover the whole city with suburbs.
+
+The method adjusts the basic parameters of DBSCAN: minPts and eps, in iterations, to obtain user-defined parameters of the final partitioning:
+ratio of noise and number of clusters.
+
+The output of this algorithm is identical to typical DBSCAN, but the input parameters are different (number of clusters and percentage of noise,
+instead of the number of points within the radius minPts and radius eps) - this is to get control over the relative point density and the number of clusters.
 }
 \examples{
 #To be done!!!
 
+}
+\seealso{
+\code{\link[=ClustDisjoint]{ClustDisjoint()}}, \code{\link[=ssr]{ssr()}}
 }

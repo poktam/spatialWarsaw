@@ -2,11 +2,11 @@
 % Please edit documentation in R/clust.R
 \name{ClustDisjoint}
 \alias{ClustDisjoint}
-\title{Linijka nr 1 - function title}
+\title{Division of geolocalised points into spatially disjoint clusters using DBSCAN}
 \usage{
 ClustDisjoint(
   data_sf,
-  sep = c(0.8, 0.6, 0.4, 0.2),
+  noise = c(0.8, 0.6, 0.4, 0.2),
   r_p = 0.001,
   eps_r = 1e-15,
   eps_np = 0.01,
@@ -17,34 +17,59 @@ ClustDisjoint(
 )
 }
 \arguments{
-\item{data_sf}{(obiekt sf lub data.frame zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
+\item{data_sf}{Object in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.}
 
-\item{sep}{do opisu}
+\item{noise}{A vector of n-1 elements for n clusters, sorted in descending order; proportion of noise data in each interval, e.g. c(0.8, 0.6, 0.4, 0.2)
+for n=5 clusters of similar internal density.}
 
-\item{r_p}{do opisu}
+\item{r_p}{DBSCAN optimisation parameter for radius, default value 0.001.}
 
-\item{eps_r}{do opisu}
+\item{eps_r}{DBSCAN parameter - the initial size of the radius in coordinate units, default value 1e-15.}
 
-\item{eps_np}{do opisu}
+\item{eps_np}{DSBCAN optimisation parameter for radius, default value 0.01.}
 
-\item{minPts}{do opisu}
+\item{minPts}{DBSCAN parameter - expected number of points within a radius to be considered as being dense, devault value 5}
 
-\item{bootstrap}{do opisu}
+\item{bootstrap}{Logical; \code{FALSE} for standard approach, \code{TRUE} for bootstrap approach (more in the help for \code{\link[=bootdbscan]{bootdbscan()}}),
+suitable for big data sets.}
 
-\item{sample_size}{do opisu (used only if bootstrap=TRUE)}
+\item{sample_size}{The number of observations used in each bootstrap iteration should be less than the total number of observations,
+used only if \code{bootstrap=TRUE}.}
 
-\item{times}{do opisu  (used only if bootstrap=TRUE)}
+\item{times}{The number of iterations in the bootstrap, we recommend that \verb{sample_size*times = 150\%} or \verb{200\%} of the original number of observations,
+used only when \code{bootstrap=TRUE}.}
 }
 \value{
-\code{ClustDisjoint()} returns ... to be done.
+\code{ClustDisjoint()} returns a list object:
+\item{type}{Simply the name of the wrapper function used: "ClustDisjoint".}
+\item{cluster}{Vector of cluster assignments, 1:n-1 are high density clusters, n is noise (low density cluster of remaining points).}
+\item{parameters}{A list of 8 parameters used in clustering - \code{noise}, \code{r_p}, \code{eps_r}, \code{eps_np}, \code{minPts}, \code{bootstrap},\code{sample_size}, \code{times}.}
 }
 \description{
-Linijka nr 2 - description
+This is a wrapper function for the DBSCAN algorithm. For a given number of n clusters (given as n-1 interval noise thresholds),
+it generates the division into n spatially disjoint density groups that guarantee the similar density of points within each cluster.
+It also works in the bootstrap version.
 }
 \details{
-Linijka nr 3 - A TU BĘDZIE CAŁA POMOC DO FUNKCJI ClustDisjoint() - chyba, że je ukryjemy i nie będą dostępne z zewnątrz ;)
+The function performs modified DBSCAN clustering, which generates \code{n} spatially disjoint clusters of similar density from geolocated points
+\itemize{
+\item the result is like concentric density rings around cities. The resulting clusters have similar internal densities and similar sizes.
+The clustering depends on two user-specified parameters: \code{minPts} - the required number of points within the radius (argument typically used
+in DBSCAN clustering), and \code{noise} - a vector of \code{n-1} density thresholds sorted in descending order: \verb{noise=(𝑠1, 𝑠2, ..., 𝑠(n-1)}) such
+that \verb{s1>𝑠2>...>𝑠(n-1)}, specifying the desired density levels in \code{n} groups, measured as a percentage of points classified as noise
+in each iteration of the algorithm. The number of clusters is implicitly specified - for \code{n} clusters, the user specifies \code{n-1} thresholds.
+}
+
+The algorithm iteratively labels points as clustered or noise - in the first step it finds the most dense locations so that \verb{(1-s1)\%} of points
+are classified as core, \code{minPts} is fixed and radius eps is adjusted. In the second step, it considers all points again and repeats the clustering
+into core or noise groups, with the same rules and with a lower noise threshold \code{s2} - it classifies points into group 1 (from step 1),
+group 2 (from step 2) or as noise. Clustering stops when there are \code{n-1} groups of core points and the \code{Nth} group of noise (including \verb{𝑠(n-1)\%} of points).
+The solution is highly dependent on the number of \code{minPts}, the rule of thumb to set \code{minPts=1/100} of the points works well.
 }
 \examples{
 #To be done!!!
 
+}
+\seealso{
+\code{\link[=ClustConti]{ClustConti()}}, \code{\link[=ssr]{ssr()}}
 }
