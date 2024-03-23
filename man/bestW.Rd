@@ -22,9 +22,8 @@ to the number of points in the dataset.}
 \code{bestW()} returns a spatial weight matrix that minimises the AIC of the models for the given equation.
 It defines the best number of knn. It displays two line plots with AIC and spatial parameter (rho or lambda),
 both depending on the user-defined knn.
-\itemize{
-\item \strong{Will be available soon} *: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
-}
+
+\emph{\strong{Will be available soon}}: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
 }
 \description{
 Function calculates a set of candidate spatial econometric models on point data. The K nearest neighbours included in the

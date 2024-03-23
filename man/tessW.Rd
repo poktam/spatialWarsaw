@@ -17,9 +17,8 @@ to the number of points in the dataset.}
 }
 \value{
 \code{tessW()} returns the contiguity matrix and a visualisation of the contiguity links between the points/tiles.
-\itemize{
-\item \strong{Will be available soon} *: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
-}
+
+\emph{\strong{Will be available soon}}: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
 }
 \description{
 The function constructs the alternative spatial weight matrix W for point data. It first performs the Voronoi tesselation

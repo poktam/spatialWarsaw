@@ -22,7 +22,7 @@
 #'
 #' @return `tessW()` returns the contiguity matrix and a visualisation of the contiguity links between the points/tiles.
 #'
-#' * **Will be available soon** *: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
+#' ***Will be available soon***: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
 #'
 #' @examples #To be done!!!
 #'
@@ -130,7 +130,7 @@ tessW<-function(points_sf, region_sf, sample_size){
 #' It defines the best number of knn. It displays two line plots with AIC and spatial parameter (rho or lambda),
 #' both depending on the user-defined knn.
 #'
-#' * **Will be available soon** *: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
+#' ***Will be available soon***: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
 #'
 #' @references
 #' Kubara, M., & Kopczewska, K. (2023). Akaike information criterion in choosing the optimal k-nearest neighbours of the spatial weight matrix.
