@@ -128,8 +128,8 @@ ClustConti<-function(data_sf, clusters, noise, r_p=0.001, eps_r=10e-16, eps_np=1
 #' It also works in the bootstrap version.
 #'
 #' @details
-#' The function performs modified DBSCAN clustering, which generates `n` spatially disjoint clusters of similar density from geolocated points
-#' - the result is like concentric density rings around cities. The resulting clusters have similar internal densities and similar sizes.
+#' The function performs modified DBSCAN clustering, which generates `n` spatially disjoint clusters of similar density from geolocated
+#' points - the result is like concentric density rings around cities. The resulting clusters have similar internal densities and similar sizes.
 #' The clustering depends on two user-specified parameters: `minPts` - the required number of points within the radius (argument typically used
 #' in DBSCAN clustering), and `noise` - a vector of `n-1` density thresholds sorted in descending order: `noise=(𝑠1, 𝑠2, ..., 𝑠(n-1)`) such
 #' that `s1>𝑠2>...>𝑠(n-1)`, specifying the desired density levels in `n` groups, measured as a percentage of points classified as noise

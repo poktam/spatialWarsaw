@@ -51,14 +51,12 @@ it generates the division into n spatially disjoint density groups that guarante
 It also works in the bootstrap version.
 }
 \details{
-The function performs modified DBSCAN clustering, which generates \code{n} spatially disjoint clusters of similar density from geolocated points
-\itemize{
-\item the result is like concentric density rings around cities. The resulting clusters have similar internal densities and similar sizes.
+The function performs modified DBSCAN clustering, which generates \code{n} spatially disjoint clusters of similar density from geolocated
+points - the result is like concentric density rings around cities. The resulting clusters have similar internal densities and similar sizes.
 The clustering depends on two user-specified parameters: \code{minPts} - the required number of points within the radius (argument typically used
 in DBSCAN clustering), and \code{noise} - a vector of \code{n-1} density thresholds sorted in descending order: \verb{noise=(𝑠1, 𝑠2, ..., 𝑠(n-1)}) such
 that \verb{s1>𝑠2>...>𝑠(n-1)}, specifying the desired density levels in \code{n} groups, measured as a percentage of points classified as noise
 in each iteration of the algorithm. The number of clusters is implicitly specified - for \code{n} clusters, the user specifies \code{n-1} thresholds.
-}
 
 The algorithm iteratively labels points as clustered or noise - in the first step it finds the most dense locations so that \verb{(1-s1)\%} of points
 are classified as core, \code{minPts} is fixed and radius eps is adjusted. In the second step, it considers all points again and repeats the clustering
