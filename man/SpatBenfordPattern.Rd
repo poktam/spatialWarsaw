@@ -43,5 +43,5 @@ Kopczewska K, Kopczewski T (2022) Natural spatial pattern—When mutual socio-ge
 PLoS ONE 17(10): e0276450. https://doi.org/10.1371/journal.pone.0276450
 }
 \seealso{
-\code{\link[=SpatBenfordPattern]{SpatBenfordPattern()}}
+\code{\link[=SpatBenfordTest]{SpatBenfordTest()}}
 }

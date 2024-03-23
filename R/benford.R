@@ -111,7 +111,7 @@ spatbenfordtest <- SpatBenfordTest
 #' Kopczewska K, Kopczewski T (2022) Natural spatial pattern—When mutual socio-geo distances between cities follow Benford’s law.
 #' PLoS ONE 17(10): e0276450. https://doi.org/10.1371/journal.pone.0276450
 #'
-#' @seealso [SpatBenfordPattern()]
+#' @seealso [SpatBenfordTest()]
 #'
 #' @examples #To be done!!!
 #'
