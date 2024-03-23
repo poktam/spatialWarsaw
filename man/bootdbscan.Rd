@@ -3,39 +3,42 @@
 \name{bootdbscan}
 \alias{bootdbscan}
 \alias{BOOTDBSCAN}
-\title{Linijka nr 1 - function title}
+\title{DBSCAN for big data using a bootstrap approach}
 \usage{
 bootdbscan(data_sf, sample_size, times, eps, minPts, plot = TRUE)
 
 BOOTDBSCAN(data_sf, sample_size, times, eps, minPts, plot = TRUE)
 }
 \arguments{
-\item{data_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
+\item{data_sf}{Object in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.}
 
-\item{sample_size}{do opisu}
+\item{sample_size}{The size of the subset used in a single clustering run.}
 
-\item{times}{do opisu}
+\item{times}{The number of times clustering is run on a random sub-sample.}
 
-\item{eps}{do opisu}
+\item{eps}{\code{\link[dbscan:dbscan]{dbscan::dbscan()}} parameter to define a radius around each point to count neighbouring points.}
 
-\item{minPts}{do opisu}
+\item{minPts}{The minimum number of points (in a radius eps) to classify the surroundings as dense, \code{\link[dbscan:dbscan]{dbscan::dbscan()}} parameter.}
 
-\item{plot}{czy ma generować wykres}
+\item{plot}{Logical; indicates whether the function should generate a plot, default \code{plot=TRUE}.}
 }
 \value{
 \code{bootdbscan()} returns an object of class \code{bootdbscan} with the following components:
-
-\item{cluster }{A integer vector with cluster assignments. Zero indicates noise points.}
+\item{cluster }{An integer vector of cluster assignments. 0 indicates noise points. 1 indicates high density cluster assignments.}
 \item{sample_size }{ value of the \code{sample_size} parameter.}
 \item{times }{ value of the \code{times} parameter.}
 \item{eps }{ value of the \code{eps} parameter.}
 \item{minPts }{ value of the \code{minPts} parameter.}
 }
 \description{
-Linijka nr 2 - description
+The function samples observations and performs DBSCAN (based on \code{\link[dbscan:dbscan]{dbscan::dbscan()}}) clustering on subsamples. Clusters are denoted binary (1/0) as cluster/noise. Results are aggregated
+by observations and majority voting is used to flag an observation as cluster or noise.
 }
 \details{
-Linijka nr 3 - details
+The function runs in a loop DBSCAN algorithm using subsamples smaller than a full sample. Clusters are binary coded (cluster/noise) and aggregated by observation ID.
+For each row (observation), a majority vote indicates whether a point is classified as cluster or noise. As a rule of thumb, \verb{sample_size*times=150\%} to \verb{200\%} of the original
+number of observations. Points that were never selected for subsampling are classified as cluster/noise using the k nearest neighbours algorithm - they are given
+the same flag as their first nearest neighbour.
 }
 \examples{
 #To be done!!!

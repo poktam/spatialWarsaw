@@ -2,29 +2,34 @@
 ### bootdbscan() ###
 ####################
 #
-#' Linijka nr 1 - function title
+#' @title DBSCAN for big data using a bootstrap approach
 #'
-#' Linijka nr 2 - description
+#' @description
+#' The function samples observations and performs DBSCAN (based on [dbscan::dbscan()]) clustering on subsamples. Clusters are denoted binary (1/0) as cluster/noise. Results are aggregated
+#' by observations and majority voting is used to flag an observation as cluster or noise.
 #'
-#' Linijka nr 3 - details
-#'
+#' @details
+#' The function runs in a loop DBSCAN algorithm using subsamples smaller than a full sample. Clusters are binary coded (cluster/noise) and aggregated by observation ID.
+#' For each row (observation), a majority vote indicates whether a point is classified as cluster or noise. As a rule of thumb, `sample_size*times=150%` to `200%` of the original
+#' number of observations. Points that were never selected for subsampling are classified as cluster/noise using the k nearest neighbours algorithm - they are given
+#' the same flag as their first nearest neighbour.
 #'
 #' @name bootdbscan
-#' @param data_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
-#' @param sample_size do opisu
-#' @param times do opisu
-#' @param eps do opisu
-#' @param minPts do opisu
-#' @param plot czy ma generować wykres
-#' @examples #To be done!!!
+#' @param data_sf Object in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' @param sample_size The size of the subset used in a single clustering run.
+#' @param times The number of times clustering is run on a random sub-sample.
+#' @param eps [dbscan::dbscan()] parameter to define a radius around each point to count neighbouring points.
+#' @param minPts The minimum number of points (in a radius eps) to classify the surroundings as dense, [dbscan::dbscan()] parameter.
+#' @param plot Logical; indicates whether the function should generate a plot, default `plot=TRUE`.
 #'
 #' @return `bootdbscan()` returns an object of class `bootdbscan` with the following components:
-#'
-#' \item{cluster }{A integer vector with cluster assignments. Zero indicates noise points.}
+#' \item{cluster }{An integer vector of cluster assignments. 0 indicates noise points. 1 indicates high density cluster assignments.}
 #' \item{sample_size }{ value of the `sample_size` parameter.}
 #' \item{times }{ value of the `times` parameter.}
 #' \item{eps }{ value of the `eps` parameter.}
 #' \item{minPts }{ value of the `minPts` parameter.}
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 bootdbscan<-function(data_sf, sample_size, times, eps, minPts, plot=TRUE){
