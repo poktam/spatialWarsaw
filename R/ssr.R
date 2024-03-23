@@ -104,14 +104,14 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
 
   if(type=="ClustConti" & bootstrap==FALSE)
   { # group points
-    output<-ClustConti(data_sf=crds, clusters=clusters, sep=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np)$cluster
+    output<-ClustConti(data_sf=crds, clusters=clusters, noise=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np)$cluster
   } else if(type=="ClustConti" & bootstrap==TRUE) {
     stop("Bootstraped DBSCAN cannot be applied to the ClustConti version of this model")
   } else if(type=="ClustDisjoint" & bootstrap==FALSE) {
-    output<-ClustDisjoint(data_sf=crds, sep=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np, minPts=minPts,
+    output<-ClustDisjoint(data_sf=crds, noise=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np, minPts=minPts,
                           bootstrap=FALSE, sample_size=NULL, times=NULL)$cluster
   } else if(type=="ClustDisjoint" & bootstrap==TRUE) {
-    output<-ClustDisjoint(data_sf=crds, sep=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np, minPts=minPts,
+    output<-ClustDisjoint(data_sf=crds, noise=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np, minPts=minPts,
                           bootstrap=TRUE, sample_size=sample_size, times=times)$cluster
   }
 
