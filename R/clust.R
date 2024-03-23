@@ -5,11 +5,11 @@
 #' @title Division of geolocalised points into spatially continuous clusters using DBSCAN
 #'
 #' @description
-#' This is a wrapper function for the DBSCAN algorithm. For a given number of n clusters, it generates the division into n+1 high-density groups
+#' This is a wrapper function for the DBSCAN algorithm (based on [dbscan::dbscan()]). For a given number of n clusters, it generates the division into n+1 high-density groups
 #' (n clusters + noise group) that guarantees the noise ratio specified by the user.
 #'
 #' @details
-#' The function performs modified DBSCAN clustering, with user-specified restrictions on the number of clusters and noise ratio. It produces spatially
+#' The function performs modified DBSCAN clustering (based on [dbscan::dbscan()]), with user-specified restrictions on the number of clusters and noise ratio. It produces spatially
 #' continuous clusters of geolocated points. The resulting clusters may have different internal densities and sizes. This method assumes that the area
 #' and its spatial structure are known (as visible agglomeration points), which allows an appropriate number of clusters to be set. For example,
 #' for urbanisation data, each cluster will cover the whole city with suburbs.
@@ -123,12 +123,12 @@ ClustConti<-function(data_sf, clusters, noise, r_p=0.001, eps_r=10e-16, eps_np=1
 #' @title Division of geolocalised points into spatially disjoint clusters using DBSCAN
 #'
 #' @description
-#' This is a wrapper function for the DBSCAN algorithm. For a given number of n clusters (given as n-1 interval noise thresholds),
+#' This is a wrapper function for the DBSCAN algorithm (based on [dbscan::dbscan()]). For a given number of n clusters (given as n-1 interval noise thresholds),
 #' it generates the division into n spatially disjoint density groups that guarantee the similar density of points within each cluster.
 #' It also works in the bootstrap version.
 #'
 #' @details
-#' The function performs modified DBSCAN clustering, which generates `n` spatially disjoint clusters of similar density from geolocated
+#' The function performs modified DBSCAN clustering (based on [dbscan::dbscan()]), which generates `n` spatially disjoint clusters of similar density from geolocated
 #' points - the result is like concentric density rings around cities. The resulting clusters have similar internal densities and similar sizes.
 #' The clustering depends on two user-specified parameters: `minPts` - the required number of points within the radius (argument typically used
 #' in DBSCAN clustering), and `noise` - a vector of `n-1` density thresholds sorted in descending order: `noise=(𝑠1, 𝑠2, ..., 𝑠(n-1)`) such

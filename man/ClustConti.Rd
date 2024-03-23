@@ -37,11 +37,11 @@ ClustConti(
 by default (\code{r_p}, \code{eps_r}, \code{eps_np}, \code{minPts0}).}
 }
 \description{
-This is a wrapper function for the DBSCAN algorithm. For a given number of n clusters, it generates the division into n+1 high-density groups
+This is a wrapper function for the DBSCAN algorithm (based on \code{\link[dbscan:dbscan]{dbscan::dbscan()}}). For a given number of n clusters, it generates the division into n+1 high-density groups
 (n clusters + noise group) that guarantees the noise ratio specified by the user.
 }
 \details{
-The function performs modified DBSCAN clustering, with user-specified restrictions on the number of clusters and noise ratio. It produces spatially
+The function performs modified DBSCAN clustering (based on \code{\link[dbscan:dbscan]{dbscan::dbscan()}}), with user-specified restrictions on the number of clusters and noise ratio. It produces spatially
 continuous clusters of geolocated points. The resulting clusters may have different internal densities and sizes. This method assumes that the area
 and its spatial structure are known (as visible agglomeration points), which allows an appropriate number of clusters to be set. For example,
 for urbanisation data, each cluster will cover the whole city with suburbs.

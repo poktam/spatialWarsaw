@@ -46,12 +46,12 @@ used only when \code{bootstrap=TRUE}.}
 \item{parameters}{A list of 8 parameters used in clustering - \code{noise}, \code{r_p}, \code{eps_r}, \code{eps_np}, \code{minPts}, \code{bootstrap},\code{sample_size}, \code{times}.}
 }
 \description{
-This is a wrapper function for the DBSCAN algorithm. For a given number of n clusters (given as n-1 interval noise thresholds),
+This is a wrapper function for the DBSCAN algorithm (based on \code{\link[dbscan:dbscan]{dbscan::dbscan()}}). For a given number of n clusters (given as n-1 interval noise thresholds),
 it generates the division into n spatially disjoint density groups that guarantee the similar density of points within each cluster.
 It also works in the bootstrap version.
 }
 \details{
-The function performs modified DBSCAN clustering, which generates \code{n} spatially disjoint clusters of similar density from geolocated
+The function performs modified DBSCAN clustering (based on \code{\link[dbscan:dbscan]{dbscan::dbscan()}}), which generates \code{n} spatially disjoint clusters of similar density from geolocated
 points - the result is like concentric density rings around cities. The resulting clusters have similar internal densities and similar sizes.
 The clustering depends on two user-specified parameters: \code{minPts} - the required number of points within the radius (argument typically used
 in DBSCAN clustering), and \code{noise} - a vector of \code{n-1} density thresholds sorted in descending order: \verb{noise=(𝑠1, 𝑠2, ..., 𝑠(n-1)}) such
