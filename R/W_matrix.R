@@ -2,21 +2,29 @@
 ### tessW() ###
 ###############
 #
-#
-#' Linijka nr 1 - function title
+#' @title Contiguity spatial weight matrix for point data based on Voronoi tesselation titles
 #'
-#' Linijka nr 2 - description
+#' @description
+#' The function constructs the alternative spatial weight matrix W for point data. It first performs the Voronoi tesselation
+#' and divides the area of the region into tiles, where points are the centroids of these tiles. Based on the newly created polygons,
+#' it constructs the contiguity matrix W.
 #'
-#' Linijka nr 3 - details
-#'
+#' @details
+#' The function starts with the tesselation of the point pattern using the [sf::st_voronoi()] function, and based on these polygons,
+#' creates the spatial weight matrix W using the [spdep::poly2nb()] and [spdep::nb2listw()] functions.
 #'
 #' @name tessW
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
-#' @param region_sf do opisu (obiekt sf ale jako region)
-#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
-#' @examples #To be done!!!
+#' @param points_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' For `data.frame`, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' @param region_sf Polygon in the `sf` class that defines the boundary for `points_sf`.
+#' @param sample_size The sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is greater, it is automatically set
+#' to the number of points in the dataset.
 #'
-#' @return `tessW()` returns ... to be done.
+#' @return `tessW()` returns the contiguity matrix and a visualisation of the contiguity links between the points/tiles.
+#'
+#' * **Will be available soon** *: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 tessW<-function(points_sf, region_sf, sample_size){
@@ -91,24 +99,44 @@ tessW<-function(points_sf, region_sf, sample_size){
 ### bestW() ###
 ###############
 #
-#
-#' Linijka nr 1 - function title
+#' @title Best number of k nearest neighbours (knn) to construct a spatial weight matrix for point data
 #'
-#' Linijka nr 2 - description
+#' @description
+#' Function calculates a set of candidate spatial econometric models on point data. The K nearest neighbours included in the
+#' spatial weight matrix are specified in a user-specified vector. For the same equation, the function calculates models using
+#' different spatial weight matrices and compares the AIC (Akaike Information Criterion). The model with the lowest AIC
+#' is selected as the best. The function outputs the spatial weight matrix W for the best model and the number of knn used in the best W.
 #'
-#' Linijka nr 3 - details
+#' @details
+#' Function in an iterative quality check of spatial models that differ only in the number of nearest neighbours used to construct
+#' the spatial weight matrix W. According to the study by Kubara & Kopczewska (2023), the AIC of such a set of models is a non-linear function
+#' with a clear minimum. This function searches among the models for the lowest AIC and the underlying structure of the neighbourhood -
+#' this is the best W. The function reports two line plots: AIC and spatial parameter (rho or lambda), both depending on knn,
+#' and returns the best spatial weight matrix W.
 #'
+#' The function may run into computational problems on large data, which is typical of all spatial functions. The `sample_size` option allows
+#' to set a smaller number of observations than in the original dataset to speed up the computation. If `sample_size` is equal to (or greater than)
+#' the size of the dataset, all observations will be used.
 #'
 #' @name bestW
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
-#' @param eq an object of class [stats::formula()] (or one that can be coerced to that class):
-#' a symbolic description of the model to be used.
-#' @param model_type one of: "SAR","SDM","SEM","SDEM","SAC". Default set to "SDM"
-#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
-#' @param knn knn vector for analysis
-#' @examples #To be done!!!
+#' @param points_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' @param eq An object of class [stats::formula()] (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.
+#' @param model_type The type of spatial econometric model, one of "SAR", "SDM", "SEM", "SDEM", "SAC". The default is "SDM".
+#' @param sample_size The sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is greater, it is automatically set
+#' to the number of points in the dataset.
+#' @param knn The vector of alternative k nearest neighbours used in the subsequent spatial econometric models for the spatial weight matrix.
 #'
-#' @return `bestW()` returns ... to be done.
+#' @return `bestW()` returns a spatial weight matrix that minimises the AIC of the models for the given equation.
+#' It defines the best number of knn. It displays two line plots with AIC and spatial parameter (rho or lambda),
+#' both depending on the user-defined knn.
+#'
+#' * **Will be available soon** *: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
+#'
+#' @references
+#' Kubara, M., & Kopczewska, K. (2023). Akaike information criterion in choosing the optimal k-nearest neighbours of the spatial weight matrix.
+#' Spatial Economic Analysis, 1-19.
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 bestW<-function(points_sf, eq, model_type="SDM", sample_size, knn){

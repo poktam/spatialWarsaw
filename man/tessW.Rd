@@ -2,25 +2,33 @@
 % Please edit documentation in R/W_matrix.R
 \name{tessW}
 \alias{tessW}
-\title{Linijka nr 1 - function title}
+\title{Contiguity spatial weight matrix for point data based on Voronoi tesselation titles}
 \usage{
 tessW(points_sf, region_sf, sample_size)
 }
 \arguments{
-\item{points_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.}
+\item{points_sf}{Geo-located points in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.
+For \code{data.frame}, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.}
 
-\item{region_sf}{do opisu (obiekt sf ale jako region)}
+\item{region_sf}{Polygon in the \code{sf} class that defines the boundary for \code{points_sf}.}
 
-\item{sample_size}{Sample size, must be less than or equal to the number of points in the dataset (\code{points_sf} parameter). If \code{sample_size} is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)}
+\item{sample_size}{The sample size, must be less than or equal to the number of points in the dataset (\code{points_sf} parameter). If \code{sample_size} is greater, it is automatically set
+to the number of points in the dataset.}
 }
 \value{
-\code{tessW()} returns ... to be done.
+\code{tessW()} returns the contiguity matrix and a visualisation of the contiguity links between the points/tiles.
+\itemize{
+\item \strong{Will be available soon} *: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
+}
 }
 \description{
-Linijka nr 2 - description
+The function constructs the alternative spatial weight matrix W for point data. It first performs the Voronoi tesselation
+and divides the area of the region into tiles, where points are the centroids of these tiles. Based on the newly created polygons,
+it constructs the contiguity matrix W.
 }
 \details{
-Linijka nr 3 - details
+The function starts with the tesselation of the point pattern using the \code{\link[sf:geos_unary]{sf::st_voronoi()}} function, and based on these polygons,
+creates the spatial weight matrix W using the \code{\link[spdep:poly2nb]{spdep::poly2nb()}} and \code{\link[spdep:nb2listw]{spdep::nb2listw()}} functions.
 }
 \examples{
 #To be done!!!
