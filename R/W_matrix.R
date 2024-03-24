@@ -338,7 +338,7 @@ bestW<-function(points_sf, eq, model_type="SDM", sample_size, knn){
 #' in spatial weights matrix for a point pattern.
 #'
 #' @details
-#' Theoretical correlation between spatial lags calculated at different nearest neighbours equals (m~i~/m~j~)^0.5^ where m~i~<m~j~
+#' Theoretical correlation between spatial lags calculated at different nearest neighbours equals (mi/mj)^0.5 where mi<mj
 #' are the number of nearest neighbours.
 #'
 #' Empirical correlation uses Pearson correlation coefficient to determine observed correlations between spatial lags derived for
