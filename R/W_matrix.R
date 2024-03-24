@@ -22,7 +22,7 @@
 #'
 #' @return `tessW()` returns the contiguity matrix and a visualisation of the contiguity links between the points/tiles.
 #'
-#' ***Will be available soon***: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
+#' ***Will be available soon***: In addition, if the value of `sample_size` is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
 #'
 #' @examples #To be done!!!
 #'
@@ -130,7 +130,7 @@ tessW<-function(points_sf, region_sf, sample_size){
 #' It defines the best number of knn. It displays two line plots with AIC and spatial parameter (rho or lambda),
 #' both depending on the user-defined knn.
 #'
-#' ***Will be available soon***: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
+#' ***Will be available soon***: In addition, if the value of `sample_size` is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
 #'
 #' @references
 #' Kubara, M., & Kopczewska, K. (2023). Akaike information criterion in choosing the optimal k-nearest neighbours of the spatial weight matrix.
@@ -328,22 +328,38 @@ bestW<-function(points_sf, eq, model_type="SDM", sample_size, knn){
 ### corrSpatialLags() ###
 #########################
 #
-#
-#' Linijka nr 1 - function title
+#' @title Empirical and theoretical correlations between spatial lags with different numbers of k nearest neighbours in the spatial weight matrix W
 #'
-#' Linijka nr 2 - description
+#' @description
+#' Spatial lags calculated using different numbers of k nearest neighbours are correlated - strongly when the values of knn are similar,
+#' and weakly when they are different. LeSage & Pace (2014) gave the formula for theoretical correlations between these lags.
+#' The function reports two types of correlations: theoretical, as given by LeSage & Pace (2014), and empirical, using the Pearson
+#' correlation coefficient applied to real values. It can be used to select the appropriate number of k nearest neighbours to be included
+#' in spatial weights matrix for a point pattern.
 #'
-#' Linijka nr 3 - details
+#' @details
+#' Theoretical correlation between spatial lags calculated at different nearest neighbours equals `(m~i~/m~j~)^0.5^` where `m~i~<m~j~`
+#' are the number of nearest neighbours.
 #'
+#' Empirical correlation uses Pearson correlation coefficient to determine observed correlations between spatial lags derived for
+#' the same variable and different number of k nearest neighbours.
 #'
 #' @name corrSpatialLags
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
-#' @param var_name Name of the column with the variable to be analysed.
-#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
-#' @param knn knn vector (!!!) for analysis
-#' @examples #To be done!!!
+#' @param points_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' @param var_name Name of the column (as text) in `points_sf` dataset with the variable to be analysed, e.g. "variable".
+#' @param sample_size The sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is greater, it is automatically set
+#' to the number of points in the dataset.
+#' @param knn The vector of alternative k nearest neighbours used in the subsequent spatial econometric models for the spatial weight matrix.
 #'
-#' @return `corrSpatialLags()` returns ... to be done.
+#' @return `corrSpatialLags()` returns theoretical and empirical correlation matrices as numerical tables and coloured plot matrix.
+#'
+#' @references
+#' Kubara, M., & Kopczewska, K. (2023). Akaike information criterion in choosing the optimal k-nearest neighbours of the spatial weight matrix.
+#' Spatial Economic Analysis, 1-19.
+#'
+#' LeSage, J. P., & Pace, R. K. (2014). The biggest myth in spatial econometrics. Econometrics, 2(4), 217-249.
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 corrSpatialLags<-function(points_sf, var_name, sample_size, knn){
@@ -431,7 +447,7 @@ corrSpatialLags<-function(points_sf, var_name, sample_size, knn){
 
   list(
     cor_result = cor.result,
-    lags_result = lags.result
+    t_cor_result = t_cor.result
   )
 
 }
@@ -440,22 +456,36 @@ corrSpatialLags<-function(points_sf, var_name, sample_size, knn){
 ### semiVarKnn() ###
 #########################
 #
-#
-#' Linijka nr 1 - function title
+#' @title Semi-variance that expands by k nearest neighbours
 #'
-#' Linijka nr 2 - description
+#' @description
+#' Semi-variance for spatial point data that does not expand in radius, but uses consecutive nearest neighbours
 #'
-#' Linijka nr 3 - details
+#' @details
+#' Typically, semi-variance is calculated by expanding radii. This function provides semi-variance by consecutive nearest neighbours expansion.
+#' It can be used to select the optimal number of k nearest neighbours to construct a spatial weight matrix for a spatial econometric model
+#' running on point data.
 #'
+#' The function may run into computational problems on large data, which is typical of all spatial functions. The `sample_size` option allows
+#' to set a smaller number of observations than in the original dataset to speed up the computation. If `sample_size` is equal to (or greater than)
+#' the size of the dataset, all observations will be used.
 #'
 #' @name semiVarKnn
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
-#' @param var_name Name of the column with the variable to be analysed.
-#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
-#' @param max_knn Maximum number of knn used. Calculations will be done on vector 2:max_knn (!!!)
-#' @examples #To be done!!!
+#' @param points_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' @param var_name Name of the column (as text) in `points_sf` dataset with the variable to be analysed, e.g. "variable".
+#' @param sample_size The sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is greater, it is automatically set
+#' to the number of points in the dataset.
+#' @param max_knn Maximum number of knn used. Calculations will be done on vector 2:max_knn, with step equal to 1.
 #'
-#' @return `semiVarKnn()` returns ... to be done.
+#' @return `semiVarKnn()` returns the vector of semi-variances for 2:max_knn observations. It also returns the line plot of this numerical output.
+#'
+#' ***Will be available soon***: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
+#'
+#' @references
+#' Kubara, M., & Kopczewska, K. (2023). Akaike information criterion in choosing the optimal k-nearest neighbours of the spatial weight matrix.
+#' Spatial Economic Analysis, 1-19.
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 semiVarKnn<-function(points_sf, var_name, sample_size, max_knn){

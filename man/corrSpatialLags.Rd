@@ -2,29 +2,44 @@
 % Please edit documentation in R/W_matrix.R
 \name{corrSpatialLags}
 \alias{corrSpatialLags}
-\title{Linijka nr 1 - function title}
+\title{Empirical and theoretical correlations between spatial lags with different numbers of k nearest neighbours in the spatial weight matrix W}
 \usage{
 corrSpatialLags(points_sf, var_name, sample_size, knn)
 }
 \arguments{
-\item{points_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.}
+\item{points_sf}{Geo-located points in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.}
 
-\item{var_name}{Name of the column with the variable to be analysed.}
+\item{var_name}{Name of the column (as text) in \code{points_sf} dataset with the variable to be analysed, e.g. "variable".}
 
-\item{sample_size}{Sample size, must be less than or equal to the number of points in the dataset (\code{points_sf} parameter). If \code{sample_size} is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)}
+\item{sample_size}{The sample size, must be less than or equal to the number of points in the dataset (\code{points_sf} parameter). If \code{sample_size} is greater, it is automatically set
+to the number of points in the dataset.}
 
-\item{knn}{knn vector (!!!) for analysis}
+\item{knn}{The vector of alternative k nearest neighbours used in the subsequent spatial econometric models for the spatial weight matrix.}
 }
 \value{
-\code{corrSpatialLags()} returns ... to be done.
+\code{corrSpatialLags()} returns theoretical and empirical correlation matrices as numerical tables and coloured plot matrix.
 }
 \description{
-Linijka nr 2 - description
+Spatial lags calculated using different numbers of k nearest neighbours are correlated - strongly when the values of knn are similar,
+and weakly when they are different. LeSage & Pace (2014) gave the formula for theoretical correlations between these lags.
+The function reports two types of correlations: theoretical, as given by LeSage & Pace (2014), and empirical, using the Pearson
+correlation coefficient applied to real values. It can be used to select the appropriate number of k nearest neighbours to be included
+in spatial weights matrix for a point pattern.
 }
 \details{
-Linijka nr 3 - details
+Theoretical correlation between spatial lags calculated at different nearest neighbours equals \verb{(m~i~/m~j~)^0.5^} where \verb{m~i~<m~j~}
+are the number of nearest neighbours.
+
+Empirical correlation uses Pearson correlation coefficient to determine observed correlations between spatial lags derived for
+the same variable and different number of k nearest neighbours.
 }
 \examples{
 #To be done!!!
 
+}
+\references{
+Kubara, M., & Kopczewska, K. (2023). Akaike information criterion in choosing the optimal k-nearest neighbours of the spatial weight matrix.
+Spatial Economic Analysis, 1-19.
+
+LeSage, J. P., & Pace, R. K. (2014). The biggest myth in spatial econometrics. Econometrics, 2(4), 217-249.
 }

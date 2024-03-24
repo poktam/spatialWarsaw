@@ -2,29 +2,42 @@
 % Please edit documentation in R/W_matrix.R
 \name{semiVarKnn}
 \alias{semiVarKnn}
-\title{Linijka nr 1 - function title}
+\title{Semi-variance that expands by k nearest neighbours}
 \usage{
 semiVarKnn(points_sf, var_name, sample_size, max_knn)
 }
 \arguments{
-\item{points_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords). When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.}
+\item{points_sf}{Geo-located points in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.}
 
-\item{var_name}{Name of the column with the variable to be analysed.}
+\item{var_name}{Name of the column (as text) in \code{points_sf} dataset with the variable to be analysed, e.g. "variable".}
 
-\item{sample_size}{Sample size, must be less than or equal to the number of points in the dataset (\code{points_sf} parameter). If \code{sample_size} is larger, it is automatically set to the number of points in the dataset. We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)}
+\item{sample_size}{The sample size, must be less than or equal to the number of points in the dataset (\code{points_sf} parameter). If \code{sample_size} is greater, it is automatically set
+to the number of points in the dataset.}
 
-\item{max_knn}{Maximum number of knn used. Calculations will be done on vector 2:max_knn (!!!)}
+\item{max_knn}{Maximum number of knn used. Calculations will be done on vector 2:max_knn, with step equal to 1.}
 }
 \value{
-\code{semiVarKnn()} returns ... to be done.
+\code{semiVarKnn()} returns the vector of semi-variances for 2:max_knn observations. It also returns the line plot of this numerical output.
+
+\emph{\strong{Will be available soon}}: In addition, if the value of sample_size is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
 }
 \description{
-Linijka nr 2 - description
+Semi-variance for spatial point data that does not expand in radius, but uses consecutive nearest neighbours
 }
 \details{
-Linijka nr 3 - details
+Typically, semi-variance is calculated by expanding radii. This function provides semi-variance by consecutive nearest neighbours expansion.
+It can be used to select the optimal number of k nearest neighbours to construct a spatial weight matrix for a spatial econometric model
+running on point data.
+
+The function may run into computational problems on large data, which is typical of all spatial functions. The \code{sample_size} option allows
+to set a smaller number of observations than in the original dataset to speed up the computation. If \code{sample_size} is equal to (or greater than)
+the size of the dataset, all observations will be used.
 }
 \examples{
 #To be done!!!
 
+}
+\references{
+Kubara, M., & Kopczewska, K. (2023). Akaike information criterion in choosing the optimal k-nearest neighbours of the spatial weight matrix.
+Spatial Economic Analysis, 1-19.
 }
