@@ -2,34 +2,44 @@
 % Please edit documentation in R/bootspatreg.R
 \name{SpatPredTess}
 \alias{SpatPredTess}
-\title{Linijka nr 1 - function title}
+\title{Prediction for out-of-sample point with spatial econometric models using Voronoi tesselation}
 \usage{
 SpatPredTess(model_spatial, points_spatial_sf, knnW, points_new_sf, region_sf)
 }
 \arguments{
-\item{model_spatial}{Spatial model}
+\item{model_spatial}{Spatial model object to predict with.}
 
-\item{points_spatial_sf}{Data on which the model_spatial was estimated (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
-When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.}
+\item{points_spatial_sf}{Geo-located points in \code{sf} or the \code{data.frame} class used in the estimation of \code{model_spatial} -
+in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.
+For \code{data.frame}, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.}
 
-\item{knnW}{Spatial weighting matrix (\code{listw} class) used to estimate model_spatial}
+\item{knnW}{Spatial weighting matrix (\code{listw} class) used to estimate \code{model_spatial}.}
 
-\item{points_new_sf}{New data for prediction (all used for a forecast). NOTE: The new data must have the same class and structure as
-the \code{points_spatial_sf} object. (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
-When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} and \code{points_spatial_sf} objects.}
+\item{points_new_sf}{New data for the forecast. The new data must have the same class, structure and projection as the \code{points_spatial_sf} object.}
 
-\item{region_sf}{do opisu (obiekt sf ale jako region)}
+\item{region_sf}{Polygon in the \code{sf} class that defines the boundary for \code{points_spatial_sf}. New points from \code{points_new_sf} must be inside this boundary.}
 }
 \value{
-\code{SpatPredTess()} returns ... to be done.
+\code{SpatPredTess()} returns the characteristics of new prediction points: values of predicted and real y, x and y coordinates of the point, and squared distance between real and predicted values (predY-realY)^2.
+
+\code{SpatPredTess()} also returns the Voronoi diagram of the in-sample points with red new points and the quality of the prediction RMSE.
 }
 \description{
-Linijka nr 2 - description
+Spatial econometric models estimated on point data are limited in predicting values for the new observations that are not included
+in the spatial weight matrix W. This function allows predictions for out-of-sample point data beyond W, as long as they are within
+the envelope of existing points. This algorithm performs a Voronoi tesselation of the in-sample points and checks to which
+Voronoi tile the new out-of-sample point belongs. It then replaces the data of the original point, which was assigned
+to the same Voronoi tile, with the values of a new point. Predictions for a new point are made using n-1 old points
+(which help to build spatial lags) and one new point.
 }
 \details{
-Linijka nr 3 - details
+Spatial predictions are only made for a single new point. If the input specifies more than one new point,
+the predictions are made sequentially, e.g. for 10 new points the algorithm will make 10 prediction runs.
 }
 \examples{
 #To be done!!!
 
+}
+\references{
+Kopczewska, K. (2023). Spatial bootstrapped microeconometrics: Forecasting for out‐of‐sample geo‐locations in big data. Scandinavian Journal of Statistics.
 }

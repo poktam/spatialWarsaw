@@ -7,7 +7,7 @@
 BootSpatReg(points_sf, iter, sample_size, eq, model_type, knn)
 }
 \arguments{
-\item{points_sf}{do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).}
+\item{points_sf}{Geo-located points in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.}
 
 \item{iter}{The number of iterations.}
 

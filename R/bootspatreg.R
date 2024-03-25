@@ -23,7 +23,7 @@
 #' `BootSpatReg()` is a time-efficient, methodologically correct approach to deal with the non-scalability of the spatial weight matrix W.
 #'
 #' @name BootSpatReg
-#' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
+#' @param points_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
 #' @param iter The number of iterations.
 #' @param sample_size The sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is greater, it is automatically set
 #' to the number of points in the dataset.For the first trial, try a value around 1000 for computational efficiency.
@@ -225,19 +225,32 @@ BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type, knn){
 ### ApproxSERoot2() ###
 #######################
 #
-#
-#' Linijka nr 1 - function title
+#' @title Approximation of standard errors of coefficients from small to large sample using the √2 rule
 #'
-#' Linijka nr 2 - description
+#' @description
+#' The function approximates the standard errors of the coefficients of any econometric model on n observations to hypothetical values
+#' for other sample sizes: n\*2, n\*4, n\*8, n\*16, n\*32 observations.
 #'
-#' Linijka nr 3 - details
+#' @details
+#' Approximating the standard errors of the coefficients is important when using bootstrap regression, e.g. [BootSpatReg()], which by default
+#' estimates the model on a smaller dataset and by nature yields higher standard errors of the coefficients. According to Kopczewska (2023),
+#' standard errors of coefficients, especially in spatial econometric models, follow the √2 rule - the standard error in a model on a sample
+#' twice as large is √2 as small.
 #'
+#' This function applies to hypothetical dataset sizes that are doubled n\*2, n\*4, n\*8, n\*16, n\*32. Errors for these dataset sizes
+#' are calculated as: er/(2^0.5)^1, er/(2^0.5)^2, er/(2^0.5)^3, er/(2^0.5)^4, er/(2^0.5)^5, where er is the standard error
+#' from an original model for n observations.
 #'
 #' @name ApproxSERoot2
-#' @param model_spatial Spatial model object to analyse
-#' @examples #To be done!!!
+#' @param model_spatial Spatial model object to analyse.
 #'
-#' @return `ApproxSERoot2()` returns ... to be done.
+#' @return `ApproxSERoot2()` returns a matrix of approximate standard errors for given variables and dataset sizes, and a linear graph
+#' to graphically illustrate these relationships.
+#'
+#' @references
+#' Kopczewska, K. (2023). Spatial bootstrapped microeconometrics: Forecasting for out‐of‐sample geo‐locations in big data. Scandinavian Journal of Statistics.
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 ApproxSERoot2<-function(model_spatial){
@@ -278,26 +291,37 @@ ApproxSERoot2<-function(model_spatial){
 ### SpatPredTess() ###
 #######################
 #
-#
-#' Linijka nr 1 - function title
+#' @title Prediction for out-of-sample point with spatial econometric models using Voronoi tesselation
 #'
-#' Linijka nr 2 - description
+#' @description
+#' Spatial econometric models estimated on point data are limited in predicting values for the new observations that are not included
+#' in the spatial weight matrix W. This function allows predictions for out-of-sample point data beyond W, as long as they are within
+#' the envelope of existing points. This algorithm performs a Voronoi tesselation of the in-sample points and checks to which
+#' Voronoi tile the new out-of-sample point belongs. It then replaces the data of the original point, which was assigned
+#' to the same Voronoi tile, with the values of a new point. Predictions for a new point are made using n-1 old points
+#' (which help to build spatial lags) and one new point.
 #'
-#' Linijka nr 3 - details
-#'
+#' @details
+#' Spatial predictions are only made for a single new point. If the input specifies more than one new point,
+#' the predictions are made sequentially, e.g. for 10 new points the algorithm will make 10 prediction runs.
 #'
 #' @name SpatPredTess
-#' @param model_spatial Spatial model
-#' @param points_spatial_sf Data on which the model_spatial was estimated (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
-#' When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
-#' @param knnW Spatial weighting matrix (`listw` class) used to estimate model_spatial
-#' @param points_new_sf New data for prediction (all used for a forecast). NOTE: The new data must have the same class and structure as
-#' the `points_spatial_sf` object. (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
-#' When using a simple data.frame, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` and `points_spatial_sf` objects.
-#' @param region_sf do opisu (obiekt sf ale jako region)
-#' @examples #To be done!!!
+#' @param model_spatial Spatial model object to predict with.
+#' @param points_spatial_sf Geo-located points in `sf` or the `data.frame` class used in the estimation of `model_spatial` -
+#' in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' For `data.frame`, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
+#' @param knnW Spatial weighting matrix (`listw` class) used to estimate `model_spatial`.
+#' @param points_new_sf New data for the forecast. The new data must have the same class, structure and projection as the `points_spatial_sf` object.
+#' @param region_sf Polygon in the `sf` class that defines the boundary for `points_spatial_sf`. New points from `points_new_sf` must be inside this boundary.
 #'
-#' @return `SpatPredTess()` returns ... to be done.
+#' @return `SpatPredTess()` returns the characteristics of new prediction points: values of predicted and real y, x and y coordinates of the point, and squared distance between real and predicted values (predY-realY)^2.
+#'
+#' `SpatPredTess()` also returns the Voronoi diagram of the in-sample points with red new points and the quality of the prediction RMSE.
+#'
+#' @references
+#' Kopczewska, K. (2023). Spatial bootstrapped microeconometrics: Forecasting for out‐of‐sample geo‐locations in big data. Scandinavian Journal of Statistics.
+#'
+#' @examples #To be done!!!
 #'
 #' @export
 SpatPredTess<-function(model_spatial, points_spatial_sf, knnW, points_new_sf, region_sf){

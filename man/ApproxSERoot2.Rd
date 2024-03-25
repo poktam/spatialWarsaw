@@ -2,23 +2,35 @@
 % Please edit documentation in R/bootspatreg.R
 \name{ApproxSERoot2}
 \alias{ApproxSERoot2}
-\title{Linijka nr 1 - function title}
+\title{Approximation of standard errors of coefficients from small to large sample using the √2 rule}
 \usage{
 ApproxSERoot2(model_spatial)
 }
 \arguments{
-\item{model_spatial}{Spatial model object to analyse}
+\item{model_spatial}{Spatial model object to analyse.}
 }
 \value{
-\code{ApproxSERoot2()} returns ... to be done.
+\code{ApproxSERoot2()} returns a matrix of approximate standard errors for given variables and dataset sizes, and a linear graph
+to graphically illustrate these relationships.
 }
 \description{
-Linijka nr 2 - description
+The function approximates the standard errors of the coefficients of any econometric model on n observations to hypothetical values
+for other sample sizes: n\*2, n\*4, n\*8, n\*16, n\*32 observations.
 }
 \details{
-Linijka nr 3 - details
+Approximating the standard errors of the coefficients is important when using bootstrap regression, e.g. \code{\link[=BootSpatReg]{BootSpatReg()}}, which by default
+estimates the model on a smaller dataset and by nature yields higher standard errors of the coefficients. According to Kopczewska (2023),
+standard errors of coefficients, especially in spatial econometric models, follow the √2 rule - the standard error in a model on a sample
+twice as large is √2 as small.
+
+This function applies to hypothetical dataset sizes that are doubled n\*2, n\*4, n\*8, n\*16, n\*32. Errors for these dataset sizes
+are calculated as: er/(2^0.5)^1, er/(2^0.5)^2, er/(2^0.5)^3, er/(2^0.5)^4, er/(2^0.5)^5, where er is the standard error
+from an original model for n observations.
 }
 \examples{
 #To be done!!!
 
+}
+\references{
+Kopczewska, K. (2023). Spatial bootstrapped microeconometrics: Forecasting for out‐of‐sample geo‐locations in big data. Scandinavian Journal of Statistics.
 }
