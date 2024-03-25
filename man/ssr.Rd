@@ -51,7 +51,7 @@ ssrShowModels(ssr_model, plot = TRUE, ...)
 a symbolic description of the model to be used.}
 
 \item{family}{a family object  consistent with \code{\link[stats:family]{stats::family()}}: a description of the error distribution
-and link function to be used in the model. The default value is binomial with logit link function.}
+and link function to be used in the model. The default value is \code{binomial} with logit link function.}
 
 \item{...}{other parameters (do opisu - chyba przekazywane do glm())}
 
@@ -59,11 +59,18 @@ and link function to be used in the model. The default value is binomial with lo
 
 \item{plot}{do opisu}
 }
+\value{
+description
+
+ssrShowModels description
+}
 \description{
 Linijka nr 2 - description (razem do funkcji ssr i show_models)
+
+A TU MOŻE TROSZKĘ POMOCY DO FUNKCJI show_models jeśli dostępne na zewnątrz :)
 }
 \details{
-Linijka nr 3 - details (razem do funkcji ssr i show_models)
+#' Linijka nr 3 - details (razem do funkcji ssr i show_models)
 }
 \examples{
 #To be done!!!

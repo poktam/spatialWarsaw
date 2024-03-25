@@ -2,11 +2,13 @@
 ### ssr i pochodne    #####
 ###########################
 #
-#' Linijka nr 1 - function title
+#' @title Linijka nr 1 - function title
 #'
+#' @description
 #' Linijka nr 2 - description (razem do funkcji ssr i show_models)
 #'
-#' Linijka nr 3 - details (razem do funkcji ssr i show_models)
+#' @details
+#' #' Linijka nr 3 - details (razem do funkcji ssr i show_models)
 #'
 #' @name ssr
 #' @param data_sf (obiekt 'sf' lub 'data.frame' zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
@@ -23,8 +25,10 @@
 #' @param eq an object of class [stats::formula()] (or one that can be coerced to that class):
 #' a symbolic description of the model to be used.
 #' @param family a family object  consistent with [stats::family()]: a description of the error distribution
-#' and link function to be used in the model. The default value is binomial with logit link function.
+#' and link function to be used in the model. The default value is `binomial` with logit link function.
 #' @param ... other parameters (do opisu - chyba przekazywane do glm())
+#'
+#' @return description
 #'
 #' @examples #To be done!!!
 #'
@@ -135,11 +139,15 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
 
 }
 
-# MK: z funkcją ggplot2::aes() może być problem - użycie aes w pakietach do sprawdzenia
 #' A TU MOŻE TROSZKĘ POMOCY DO FUNKCJI show_models jeśli dostępne na zewnątrz :)
+#' @title Linijka nr 1 - ssrShowModels() title
+#'
 #' @rdname ssr
 #' @param ssr_model do opisu
 #' @param plot do opisu
+#'
+#' @return ssrShowModels description
+#'
 #' @export
 ssrShowModels<-function(ssr_model, plot=TRUE, ...){
   if (!inherits(ssr_model,"ssr")) {
