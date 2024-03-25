@@ -32,7 +32,6 @@
 #' @param knn The number of k nearest neighbours (knn) used to construct the spatial weight matrix based on the k nearest neighbours criterion.
 #'
 #' @return `BootSpatReg()` returns the following list object:
-#' \describe{
 #' \item{coef.boot}{A `data.frame` with the coefficients of all iterations.}
 #' \item{error.boot}{A `data.frame` with the standard errors of the coefficients from all iterations.}
 #' \item{quality.boot}{A set of quality metrics for each iteration: Akaike Information Criterion of OLS model (`AIC.ols`) and selected spatial model (`AIC.spatial`),
@@ -42,7 +41,6 @@
 #' \item{knnW.best}{A spatial weight matrix used to estimate the best spatial model, constructed using the k nearest neighbours criterion for k specified by the user as input.}
 #' \item{model.best}{An object of the best spatial model, selected with PAM from the set of bootstrap models.}
 #' \item{RAMSE.best}{Root Mean Square Error (RAMSE) of the best spatial model.}
-#' }
 #'
 #' @references
 #' Kopczewska, K. (2023). Spatial bootstrapped microeconometrics: Forecasting for out‐of‐sample geo‐locations in big data.

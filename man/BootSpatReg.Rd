@@ -22,7 +22,6 @@ to the number of points in the dataset.For the first trial, try a value around 1
 }
 \value{
 \code{BootSpatReg()} returns the following list object:
-\describe{
 \item{coef.boot}{A \code{data.frame} with the coefficients of all iterations.}
 \item{error.boot}{A \code{data.frame} with the standard errors of the coefficients from all iterations.}
 \item{quality.boot}{A set of quality metrics for each iteration: Akaike Information Criterion of OLS model (\code{AIC.ols}) and selected spatial model (\code{AIC.spatial}),
@@ -32,7 +31,6 @@ used in the iteration that produced the best model.}
 \item{knnW.best}{A spatial weight matrix used to estimate the best spatial model, constructed using the k nearest neighbours criterion for k specified by the user as input.}
 \item{model.best}{An object of the best spatial model, selected with PAM from the set of bootstrap models.}
 \item{RAMSE.best}{Root Mean Square Error (RAMSE) of the best spatial model.}
-}
 }
 \description{
 The function uses the bootstrap approach to estimate a set of spatial models, each on a different subset of the data - the function selects the rows
