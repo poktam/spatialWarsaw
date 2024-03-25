@@ -2,7 +2,6 @@
 % Please edit documentation in R/ssr.R
 \name{ssr}
 \alias{ssr}
-\alias{ssrShowModels}
 \title{Linijka nr 1 - function title}
 \usage{
 ssr(
@@ -21,8 +20,6 @@ ssr(
   family = binomial,
   ...
 )
-
-ssrShowModels(ssr_model, plot = TRUE, ...)
 }
 \arguments{
 \item{data_sf}{(obiekt 'sf' lub 'data.frame' zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
@@ -54,29 +51,17 @@ a symbolic description of the model to be used.}
 and link function to be used in the model. The default value is \code{binomial} with logit link function.}
 
 \item{...}{other parameters (do opisu - chyba przekazywane do glm())}
-
-\item{ssr_model}{do opisu}
-
-\item{plot}{do opisu}
 }
 \value{
 description
-
-ssrShowModels description (DZIAŁA)
 }
 \description{
 Linijka nr 2 - description (razem do funkcji ssr i show_models?)
-
-A short description of ssrShowModels
 }
 \details{
-Linijka nr 3 - details (razem do funkcji ssr i show_models?)
-
 Linijka nr 3 - details (razem do funkcji ssr i show_models?)
 }
 \examples{
 #To be done!!!
-
-#To be done!
 
 }

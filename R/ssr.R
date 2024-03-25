@@ -33,7 +33,6 @@
 #' @examples #To be done!!!
 #'
 #' @export
-# może parametr family uprościć, żeby podawać tylko nazwę funkcji łączącej
 ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts=5,
               bootstrap=FALSE, sample_size=NULL, times=NULL, eq, family=binomial, ...){
 
@@ -147,7 +146,7 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
 #' @details
 #' Linijka nr 3 - details (razem do funkcji ssr i show_models?)
 #'
-#' @name ssr
+#' @name ssrShowModels
 #' @param ssr_model do opisu
 #' @param plot do opisu
 #'
