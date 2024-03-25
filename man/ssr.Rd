@@ -67,7 +67,7 @@ ssrShowModels description
 \description{
 Linijka nr 2 - description (razem do funkcji ssr i show_models)
 
-A TU MOŻE TROSZKĘ POMOCY DO FUNKCJI show_models jeśli dostępne na zewnątrz :)
+A short description of ssrShowModels
 }
 \details{
 #' Linijka nr 3 - details (razem do funkcji ssr i show_models)

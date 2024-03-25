@@ -139,8 +139,10 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
 
 }
 
-#' A TU MOŻE TROSZKĘ POMOCY DO FUNKCJI show_models jeśli dostępne na zewnątrz :)
 #' @title Linijka nr 1 - ssrShowModels() title
+#'
+#' @description
+#' A short description of ssrShowModels
 #'
 #' @rdname ssr
 #' @param ssr_model do opisu
