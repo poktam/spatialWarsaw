@@ -2,28 +2,53 @@
 ### BootSpatReg() ###
 #####################
 #
-#
-#' Linijka nr 1 - function title
+#' @title Spatial bootstrapped regression model for handling large data sets
 #'
-#' Linijka nr 2 - description
+#' @description
+#' The function uses the bootstrap approach to estimate a set of spatial models, each on a different subset of the data - the function selects the rows
+#' and the columns are fixed according to the equation. The best model is selected using the Partitioning Around Medoid (PAM) algorithm for the k=1 cluster -
+#' it is the most central model in a multidimensional setting. The function reports which observations are associated with the best model.
 #'
-#' Linijka nr 3 - details
+#' @details
+#' For each iteration specified in the iter argument, the function selects the random subset of observations, estimates the model and stores the results.
+#' The best model is selected as the most central using multidimensional medoid for all estimated coefficients. PAM searches for the model that is closest
+#' to the other models on all coefficients.
 #'
+#' The models are estimated more quickly on subsamples than on a full sample. As shown in Kopczewska (2023), coefficients in subsample models are consistent -
+#' there is no significant difference between coefficients from full and subsample models. The standard errors of the coefficients in a subsample model
+#' are generally higher than in a full sample model. However, they can be approximated by the √2 rule - the standard error in a model based on a sample twice as large
+#' is √2 as small. This approximation can be easily checked using the [ApproxSERoot2()] function. This property allows estimating spatial econometric models
+#' for large data using random subsamples without losing precision.
+#'
+#' `BootSpatReg()` is a time-efficient, methodologically correct approach to deal with the non-scalability of the spatial weight matrix W.
 #'
 #' @name BootSpatReg
 #' @param points_sf do opisu (obiekt sf lub data.frame - w data frame 1 kolumna musi być X coords, druga kolumna Y coords).
-#' @param iter Number of iterations
-#' @param sample_size Sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter).
-#' If `sample_size` is larger, it is automatically set to the number of points in the dataset.
-#' We suggest that a value greater than 800 is not used for reasons of computational efficiency. (SPRAWDZIĆ)
-#' @param eq an object of class [stats::formula()] (or one that can be coerced to that class):
-#' a symbolic description of the model to be used.
-#' @param model_type one of: "SAR","SDM","SEM".
-#' @param knn chosen knn
+#' @param iter The number of iterations.
+#' @param sample_size The sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is greater, it is automatically set
+#' to the number of points in the dataset.For the first trial, try a value around 1000 for computational efficiency.
+#' @param eq An object of class [stats::formula()] (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.
+#' @param model_type The type of spatial econometric model, one of "SAR", "SDM", "SEM". *Soon to be updated for use with "SDEM", "SAC" models.*
+#' @param knn The number of k nearest neighbours (knn) used to construct the spatial weight matrix based on the k nearest neighbours criterion.
+#'
+#' @return `BootSpatReg()` returns the following list object:
+#' \describe{
+#' \item{coef.boot}{A `data.frame` with the coefficients of all iterations.}
+#' \item{error.boot}{A `data.frame` with the standard errors of the coefficients from all iterations.}
+#' \item{quality.boot}{A set of quality metrics for each iteration: Akaike Information Criterion of OLS model (`AIC.ols`) and selected spatial model (`AIC.spatial`),
+#' time of computation of spatial weight matrix (`time.W`) and estimation of spatial model (`time.model`), selected spatial coefficient, rho or lambda (`spatial.coef`).}
+#' \item{data.best}{A subset of the data used to estimate the best model, reported as an `sf` object; the rownames (`outome$data.best`) command allows you to obtain the IDs of the rows
+#' used in the iteration that produced the best model.}
+#' \item{knnW.best}{A spatial weight matrix used to estimate the best spatial model, constructed using the k nearest neighbours criterion for k specified by the user as input.}
+#' \item{model.best}{An object of the best spatial model, selected with PAM from the set of bootstrap models.}
+#' \item{RAMSE.best}{Root Mean Square Error (RAMSE) of the best spatial model.}
+#' }
+#'
+#' @references
+#' Kopczewska, K. (2023). Spatial bootstrapped microeconometrics: Forecasting for out‐of‐sample geo‐locations in big data.
+#' Scandinavian Journal of Statistics.
 #'
 #' @examples #To be done!!!
-#'
-#' @return `BootSpatReg()` returns ... to be done.
 #'
 #' @export
 BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type, knn){
