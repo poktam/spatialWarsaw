@@ -145,7 +145,7 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
 #' A short description of ssrShowModels
 #'
 #' @details
-#' Linijka nr 3 - details (razem do funkcji ssr i show_models)
+#' Linijka nr 3 - details (razem do funkcji ssr i show_models?)
 #'
 #' @name ssr
 #' @param ssr_model do opisu
