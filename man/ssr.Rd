@@ -72,7 +72,7 @@ A short description of ssrShowModels
 \details{
 Linijka nr 3 - details (razem do funkcji ssr i show_models?)
 
-Linijka nr 3 - details (razem do funkcji ssr i show_models)
+Linijka nr 3 - details (razem do funkcji ssr i show_models?)
 }
 \examples{
 #To be done!!!
