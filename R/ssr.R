@@ -5,10 +5,10 @@
 #' @title Linijka nr 1 - function title
 #'
 #' @description
-#' Linijka nr 2 - description (razem do funkcji ssr i show_models)
+#' Linijka nr 2 - description (razem do funkcji ssr i show_models?)
 #'
 #' @details
-#' #' Linijka nr 3 - details (razem do funkcji ssr i show_models)
+#' Linijka nr 3 - details (razem do funkcji ssr i show_models?)
 #'
 #' @name ssr
 #' @param data_sf (obiekt 'sf' lub 'data.frame' zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
@@ -139,14 +139,21 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
 
 }
 
-#' A TU MOŻE TROSZKĘ POMOCY DO FUNKCJI show_models jeśli dostępne na zewnątrz :)
 #' @title Linijka nr 1 - ssrShowModels() title
 #'
-#' @rdname ssr
+#' @description
+#' A short description of ssrShowModels
+#'
+#' @details
+#' Linijka nr 3 - details (razem do funkcji ssr i show_models)
+#'
+#' @name ssr
 #' @param ssr_model do opisu
 #' @param plot do opisu
 #'
-#' @return ssrShowModels description
+#' @return ssrShowModels description (DZIAŁA)
+#'
+#' @examples #To be done!
 #'
 #' @export
 ssrShowModels<-function(ssr_model, plot=TRUE, ...){

@@ -62,17 +62,21 @@ and link function to be used in the model. The default value is \code{binomial} 
 \value{
 description
 
-ssrShowModels description
+ssrShowModels description (DZIAŁA)
 }
 \description{
-Linijka nr 2 - description (razem do funkcji ssr i show_models)
+Linijka nr 2 - description (razem do funkcji ssr i show_models?)
 
-A TU MOŻE TROSZKĘ POMOCY DO FUNKCJI show_models jeśli dostępne na zewnątrz :)
+A short description of ssrShowModels
 }
 \details{
-#' Linijka nr 3 - details (razem do funkcji ssr i show_models)
+Linijka nr 3 - details (razem do funkcji ssr i show_models?)
+
+Linijka nr 3 - details (razem do funkcji ssr i show_models)
 }
 \examples{
 #To be done!!!
+
+#To be done!
 
 }
