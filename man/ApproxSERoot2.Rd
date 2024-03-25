@@ -15,7 +15,7 @@ to graphically illustrate these relationships.
 }
 \description{
 The function approximates the standard errors of the coefficients of any econometric model on n observations to hypothetical values
-for other sample sizes: n\*2, n\*4, n\*8, n\*16, n\*32 observations.
+for other sample sizes: \code{n*2}, \code{n*4}, \code{n*8}, \code{n*16}, \code{n*32} observations.
 }
 \details{
 Approximating the standard errors of the coefficients is important when using bootstrap regression, e.g. \code{\link[=BootSpatReg]{BootSpatReg()}}, which by default
@@ -23,8 +23,8 @@ estimates the model on a smaller dataset and by nature yields higher standard er
 standard errors of coefficients, especially in spatial econometric models, follow the √2 rule - the standard error in a model on a sample
 twice as large is √2 as small.
 
-This function applies to hypothetical dataset sizes that are doubled n\*2, n\*4, n\*8, n\*16, n\*32. Errors for these dataset sizes
-are calculated as: er/(2^0.5)^1, er/(2^0.5)^2, er/(2^0.5)^3, er/(2^0.5)^4, er/(2^0.5)^5, where er is the standard error
+This function applies to hypothetical dataset sizes that are doubled \code{n*2}, \code{n*4}, \code{n*8}, \code{n*16}, \code{n*32}. Errors for these dataset sizes
+are calculated as: \code{er/(2^0.5)^1}, \code{er/(2^0.5)^2}, \code{er/(2^0.5)^3}, \code{er/(2^0.5)^4}, \code{er/(2^0.5)^5}, where er is the standard error
 from an original model for n observations.
 }
 \examples{

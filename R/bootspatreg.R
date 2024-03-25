@@ -229,7 +229,7 @@ BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type, knn){
 #'
 #' @description
 #' The function approximates the standard errors of the coefficients of any econometric model on n observations to hypothetical values
-#' for other sample sizes: n\*2, n\*4, n\*8, n\*16, n\*32 observations.
+#' for other sample sizes: `n*2`, `n*4`, `n*8`, `n*16`, `n*32` observations.
 #'
 #' @details
 #' Approximating the standard errors of the coefficients is important when using bootstrap regression, e.g. [BootSpatReg()], which by default
@@ -237,8 +237,8 @@ BootSpatReg<-function(points_sf, iter, sample_size, eq, model_type, knn){
 #' standard errors of coefficients, especially in spatial econometric models, follow the √2 rule - the standard error in a model on a sample
 #' twice as large is √2 as small.
 #'
-#' This function applies to hypothetical dataset sizes that are doubled n\*2, n\*4, n\*8, n\*16, n\*32. Errors for these dataset sizes
-#' are calculated as: er/(2^0.5)^1, er/(2^0.5)^2, er/(2^0.5)^3, er/(2^0.5)^4, er/(2^0.5)^5, where er is the standard error
+#' This function applies to hypothetical dataset sizes that are doubled `n*2`, `n*4`, `n*8`, `n*16`, `n*32`. Errors for these dataset sizes
+#' are calculated as: `er/(2^0.5)^1`, `er/(2^0.5)^2`, `er/(2^0.5)^3`, `er/(2^0.5)^4`, `er/(2^0.5)^5`, where er is the standard error
 #' from an original model for n observations.
 #'
 #' @name ApproxSERoot2
