@@ -2,17 +2,17 @@
 ### ssr i pochodne    #####
 ###########################
 #
-#' @title Linijka nr 1 - function title
+#' @title ssr() function
 #'
 #' @description
-#' Linijka nr 2 - description (razem do funkcji ssr i show_models?)
+#' Will be updated soon
 #'
 #' @details
-#' Linijka nr 3 - details (razem do funkcji ssr i show_models?)
+#' Will be updated soon
 #'
 #' @name ssr
-#' @param data_sf (obiekt 'sf' lub 'data.frame' zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)
-#' @param type do opisu: one of: "ClustConti","ClustDisjoint".
+#' @param data_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
+#' @param type One of the: "ClustConti","ClustDisjoint". See [ClustConti()] and [ClustDisjoint()] for more details.
 #' @param clusters do opisu
 #' @param sep do opisu
 #' @param r_p do opisu
@@ -24,11 +24,11 @@
 #' @param times do opisu  (used only if bootstrap=TRUE)
 #' @param eq an object of class [stats::formula()] (or one that can be coerced to that class):
 #' a symbolic description of the model to be used.
-#' @param family a family object  consistent with [stats::family()]: a description of the error distribution
+#' @param family A `family` object  consistent with [stats::family()]: a description of the error distribution
 #' and link function to be used in the model. The default value is `binomial` with logit link function.
-#' @param ... other parameters (do opisu - chyba przekazywane do glm())
+#' @param ... Other parameters passed to [stats::glm()] during the calculation.
 #'
-#' @return description
+#' @return Will be updated soon
 #'
 #' @examples #To be done!!!
 #'
@@ -138,19 +138,19 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
 
 }
 
-#' @title Linijka nr 1 - ssrShowModels() title
+#' @title ssrShowModels() function
 #'
 #' @description
-#' A short description of ssrShowModels
+#' Will be updated soon
 #'
 #' @details
-#' Linijka nr 3 - details (razem do funkcji ssr i show_models?)
+#' Will be updated soon
 #'
 #' @name ssrShowModels
-#' @param ssr_model do opisu
-#' @param plot do opisu
+#' @param ssr_model Result object of the [ssr()] function from this package. The class of `ssr_model` object must only be 'ssr'.
+#' @param plot Logical; indicates whether the function should generate a plot, default `plot=TRUE`.
 #'
-#' @return ssrShowModels description (DZIAŁA)
+#' @return Will be updated soon
 #'
 #' @examples #To be done!
 #'

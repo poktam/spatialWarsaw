@@ -2,7 +2,7 @@
 % Please edit documentation in R/ssr.R
 \name{ssr}
 \alias{ssr}
-\title{Linijka nr 1 - function title}
+\title{ssr() function}
 \usage{
 ssr(
   data_sf,
@@ -22,9 +22,9 @@ ssr(
 )
 }
 \arguments{
-\item{data_sf}{(obiekt 'sf' lub 'data.frame' zawierający współrzędne - w data frame 1 kolumna musi być X coords, druga kolumna Y coords)}
+\item{data_sf}{Geo-located points in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.}
 
-\item{type}{do opisu: one of: "ClustConti","ClustDisjoint".}
+\item{type}{One of the: "ClustConti","ClustDisjoint". See \code{\link[=ClustConti]{ClustConti()}} and \code{\link[=ClustDisjoint]{ClustDisjoint()}} for more details.}
 
 \item{clusters}{do opisu}
 
@@ -47,19 +47,19 @@ ssr(
 \item{eq}{an object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class):
 a symbolic description of the model to be used.}
 
-\item{family}{a family object  consistent with \code{\link[stats:family]{stats::family()}}: a description of the error distribution
+\item{family}{A \code{family} object  consistent with \code{\link[stats:family]{stats::family()}}: a description of the error distribution
 and link function to be used in the model. The default value is \code{binomial} with logit link function.}
 
-\item{...}{other parameters (do opisu - chyba przekazywane do glm())}
+\item{...}{Other parameters passed to \code{\link[stats:glm]{stats::glm()}} during the calculation.}
 }
 \value{
-description
+Will be updated soon
 }
 \description{
-Linijka nr 2 - description (razem do funkcji ssr i show_models?)
+Will be updated soon
 }
 \details{
-Linijka nr 3 - details (razem do funkcji ssr i show_models?)
+Will be updated soon
 }
 \examples{
 #To be done!!!

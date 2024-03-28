@@ -2,23 +2,23 @@
 % Please edit documentation in R/ssr.R
 \name{ssrShowModels}
 \alias{ssrShowModels}
-\title{Linijka nr 1 - ssrShowModels() title}
+\title{ssrShowModels() function}
 \usage{
 ssrShowModels(ssr_model, plot = TRUE, ...)
 }
 \arguments{
-\item{ssr_model}{do opisu}
+\item{ssr_model}{Result object of the \code{\link[=ssr]{ssr()}} function from this package. The class of \code{ssr_model} object must only be 'ssr'.}
 
-\item{plot}{do opisu}
+\item{plot}{Logical; indicates whether the function should generate a plot, default \code{plot=TRUE}.}
 }
 \value{
-ssrShowModels description (DZIAŁA)
+Will be updated soon
 }
 \description{
-A short description of ssrShowModels
+Will be updated soon
 }
 \details{
-Linijka nr 3 - details (razem do funkcji ssr i show_models?)
+Will be updated soon
 }
 \examples{
 #To be done!
