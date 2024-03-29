@@ -16,7 +16,9 @@ URL: https://github.com/poktam/spatialWarsaw
 BugReports: https://github.com/poktam/spatialWarsaw/issues    
 Imports: benford.analysis, dbscan, DescTools, dplyr, ggplot2, sp, spdep, sf, stats, stargazer, graphics, rlang, 
     terra, GWmodel, fossil, grDevices, spatialreg, gridExtra, sampling, cluster
-Depends: plot.matrix
+Depends:
+    R (>= 3.5.0)
+    plot.matrix
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.1
