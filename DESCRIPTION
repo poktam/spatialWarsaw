@@ -1,8 +1,8 @@
 Package: spatialWarsaw
 Type: Package
-Date: 2024-03-06
+Date: 2024-03-29
 Title: Spatial analysis on geolocalised point data including clustering measures and bootstrap methods 
-Version: 0.1.11
+Version: 0.2.0
 Authors@R: c(
     person("Mateusz", "Kopyt", email = "mkopyt@wne.uw.edu.pl", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5285-7792")),
     person("Katarzyna", "Kopczewska", email = "kkopczewska@wne.uw.edu.pl", role = "aut", comment = c(ORCID = "0000-0003-1065-1790")),

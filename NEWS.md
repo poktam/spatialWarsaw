@@ -1,9 +1,15 @@
 Revision history for the SpatialWarsaw package
 ----------------------------------------------
 
+## spatialWarsaw 0.2.0
+
+* Documentation for (most) functions in the package added
+* Sample dataset added
+* Still a development version
+
 ## spatialWarsaw 0.1.11
 
-* Substantial correction of functions: ClustConti(), ClustDisjoint(). 
+* Substantial correction of functions: ClustConti(), ClustDisjoint()
 * Substantial correction of functions: srr(), ssrShowModels() (previous name: show_models())
 * Still a development version
 
