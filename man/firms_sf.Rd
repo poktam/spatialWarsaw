@@ -6,6 +6,7 @@
 \title{A collection of data on companies in the Lubelskie Voivodship in Poland.}
 \format{
 An object of class \code{sf} with projection EPSG:4326 (WGS84) consisting of the following variables:
+\describe{
 \item{empl}{Employment.}
 \item{roa}{Return on assets.}
 \item{dummy.agri}{Dummy variable indicating whether the enterprise belongs to the agricultural sector.}
@@ -17,6 +18,7 @@ An object of class \code{sf} with projection EPSG:4326 (WGS84) consisting of the
 \item{year}{Year.}
 \item{sector.aggr}{Sector to which the enterprise belongs.}
 \item{sector}{Sector according to Polish Classification of Economic Activities (PKD 2007).}
+}
 }
 \source{
 Own work based on REGON registry (Statistics Poland),
