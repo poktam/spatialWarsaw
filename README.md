@@ -41,10 +41,10 @@ When using our package, please include an appropriate entry in your reference li
 ``` r
 citation("spatialWarsaw")
 
-  # Please check the current citation using the citation() command:
-  # Kopyt M, Kopczewska K, Kubara M (2024). _spatialWarsaw: Spatial analysis on geolocalised point data
-  # including clustering measures and bootstrap methods_. R package version 0.2.0,
-  # <https://github.com/poktam/spatialWarsaw>.
+# Please check the current citation using the citation() command:
+Kopyt M, Kopczewska K, Kubara M (2024). _spatialWarsaw: Spatial analysis on geolocalised point data
+including clustering measures and bootstrap methods_. R package version 0.2.0,
+<https://github.com/poktam/spatialWarsaw>.
 ```
 
 ## License
