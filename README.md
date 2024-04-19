@@ -28,13 +28,24 @@ library (spatialWarsaw)
 packageVersion ("spatialWarsaw")
 ```
 
-## Authors and Contributors
+## Authors and Contributors; Citations
 The package was created thanks to the work of members and collaborators of the [Spatial Warsaw Team](https://spatial.wne.uw.edu.pl/) affiliated to the Faculty of Economic Sciences of the University of Warsaw.
 
 - Katarzyna Kopczewska
 - Mateusz Kopyt
 - Maria Kubara
 - Ewa Dobrowolska
+
+When using our package, please include an appropriate entry in your reference list. To see how to cite our package, the following commands can be used (also includes BibTeX format entry):
+
+``` r
+citation("spatialWarsaw")
+
+  # Please check the current citation using the citation() command:
+  # Kopyt M, Kopczewska K, Kubara M (2024). _spatialWarsaw: Spatial analysis on geolocalised point data
+  # including clustering measures and bootstrap methods_. R package version 0.2.0,
+  # <https://github.com/poktam/spatialWarsaw>.
+```
 
 ## License
 
