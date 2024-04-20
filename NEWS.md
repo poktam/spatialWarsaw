@@ -1,6 +1,12 @@
 Revision history for the SpatialWarsaw package
 ----------------------------------------------
 
+## spatialWarsaw 0.2.1
+
+* Changed class name in ClustConti() and ClustDisjoint()
+* ssr() function has been simplified, now it needs an object of the 'clust' class as one of the parameters
+* Still a development version
+
 ## spatialWarsaw 0.2.0
 
 * Documentation for (most) functions in the package added

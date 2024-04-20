@@ -103,7 +103,7 @@ ClustConti<-function(data_sf, clusters, noise, r_p=0.001, eps_r=10e-16, eps_np=1
   cat("\nFinal value: minPts = ", minPts,"\n",sep="")
   if(length(unique(output))!=clusters+1) warning(paste0("Failed to get ", clusters, " clusters. Try changing minPts0 value."))
 
-  # zastanowić się, czy klasa testing nie jest do usunięcia?
+  # zastanowić się, czy klasa clust nie jest do usunięcia?
   structure(
     list(
       type = "ClustConti",

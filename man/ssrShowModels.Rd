@@ -10,6 +10,8 @@ ssrShowModels(ssr_model, plot = TRUE, ...)
 \item{ssr_model}{Result object of the \code{\link[=ssr]{ssr()}} function from this package. The class of \code{ssr_model} object must only be 'ssr'.}
 
 \item{plot}{Logical; indicates whether the function should generate a plot, default \code{plot=TRUE}.}
+
+\item{...}{Other parameters passed to \code{\link[stargazer:stargazer]{stargazer::stargazer()}}.}
 }
 \value{
 Will be updated soon

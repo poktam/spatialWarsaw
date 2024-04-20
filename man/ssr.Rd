@@ -4,45 +4,14 @@
 \alias{ssr}
 \title{ssr() function}
 \usage{
-ssr(
-  data_sf,
-  type = "ClustConti",
-  clusters,
-  sep,
-  r_p = 0.001,
-  eps_r = 1e-15,
-  eps_np = 0.01,
-  minPts = 5,
-  bootstrap = FALSE,
-  sample_size = NULL,
-  times = NULL,
-  eq,
-  family = binomial,
-  ...
-)
+ssr(data_sf, clusters, eq, family = binomial, ...)
 }
 \arguments{
-\item{data_sf}{Geo-located points in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.}
+\item{data_sf}{Geo-located points in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.
+\emph{\strong{NOTE! The same \code{data_sf} object must also be used to obtain a cluster split using the \code{\link[=ClustConti]{ClustConti()}} or \code{\link[=ClustDisjoint]{ClustDisjoint()}} function.}}}
 
-\item{type}{One of the: "ClustConti","ClustDisjoint". See \code{\link[=ClustConti]{ClustConti()}} and \code{\link[=ClustDisjoint]{ClustDisjoint()}} for more details.}
-
-\item{clusters}{do opisu}
-
-\item{sep}{do opisu}
-
-\item{r_p}{do opisu}
-
-\item{eps_r}{do opisu}
-
-\item{eps_np}{do opisu}
-
-\item{minPts}{do opisu}
-
-\item{bootstrap}{do opisu}
-
-\item{sample_size}{do opisu (used only if bootstrap=TRUE)}
-
-\item{times}{do opisu  (used only if bootstrap=TRUE)}
+\item{clusters}{Object of class \code{clust} as output of the function \code{\link[=ClustConti]{ClustConti()}} or \code{\link[=ClustDisjoint]{ClustDisjoint()}} containing a vector of assignments of observations from the object \code{data_sf}
+to individual clusters and the name of the function used for the division.}
 
 \item{eq}{an object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class):
 a symbolic description of the model to be used.}

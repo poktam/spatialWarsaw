@@ -12,16 +12,9 @@
 #'
 #' @name ssr
 #' @param data_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
-#' @param type One of the: "ClustConti","ClustDisjoint". See [ClustConti()] and [ClustDisjoint()] for more details.
-#' @param clusters do opisu
-#' @param sep do opisu
-#' @param r_p do opisu
-#' @param eps_r do opisu
-#' @param eps_np do opisu
-#' @param minPts do opisu
-#' @param bootstrap do opisu
-#' @param sample_size do opisu (used only if bootstrap=TRUE)
-#' @param times do opisu  (used only if bootstrap=TRUE)
+#' ***NOTE! The same `data_sf` object must also be used to obtain a cluster split using the [spatialWarsaw::ClustConti()] or [spatialWarsaw::ClustDisjoint()] function.***
+#' @param clusters Object of class `clust` as output of the function [spatialWarsaw::ClustConti()] or [spatialWarsaw::ClustDisjoint()] containing a vector of assignments of observations from the object `data_sf`
+#' to individual clusters and the name of the function used for the division.
 #' @param eq an object of class [stats::formula()] (or one that can be coerced to that class):
 #' a symbolic description of the model to be used.
 #' @param family A `family` object  consistent with [stats::family()]: a description of the error distribution
@@ -33,10 +26,7 @@
 #' @examples #To be done!!!
 #'
 #' @export
-ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts=5,
-              bootstrap=FALSE, sample_size=NULL, times=NULL, eq, family=binomial, ...){
-
-  params <- (as.list(environment()))[-1] # tu można poprawić, żeby w zależności od bootstrap dawało odpowiednie
+ssr<-function(data_sf, clusters, eq, family=binomial, ...){
 
   if((inherits(data_sf,"sf") && st_geometry_type(data_sf,FALSE)=="POINT")) {
     crds<-as.data.frame(st_coordinates(data_sf))
@@ -50,6 +40,10 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
     stop("The class of data_sf must only be 'sf' of geometry type 'POINTS' or 'data.frame'.")
   }
 
+  if (!inherits(clusters,"clust")) {
+    stop("The class of `clusters` argument must only be `clust`: result of ClustConti() or ClustDisjoint() from the spatialWarsaw package.")
+  }
+
   # zbadać type
   if (length(type)>1) {
     type<-type[1]
@@ -60,43 +54,6 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
     stop("Unknown model type. Must be one of: ClustConti, ClustDisjoint")
   }
 
-  # zbadać clusters, czy nie ujemne - może inny warunek niż <=0
-  if (type=="ClustConti"){
-    clusters<-round(clusters,0)
-    if (clusters<=0) {
-      clusters<-4
-      cat("Incorrect clusters parameter. Set to the proposed value: 4.","\n",sep="")
-    }
-  }
-
-  # zbadać minPts, czy nie ujemne - może inny warunek niż <=0
-  minPts<-round(minPts,0)
-  if (minPts<=0) {
-    minPts<-5
-    cat("Incorrect minPts parameter. Set to the proposed value: 5.","\n",sep="")
-  }
-
-  if(bootstrap){
-
-    if (is.null(sample_size) || is.null(times)) {
-      stop("For bootstrap=TRUE, both sample_size and times parameters must be set.")
-    }
-
-    # zbadać sample_size i ustawić ew. na wielkość zbioru danych
-    sample_size <- as.integer(sample_size)
-    if (sample_size > nrow(crds) || sample_size<1) {
-      sample_size<-nrow(crds)
-      cat("Wrong sample size. Sample_size set to:",sample_size,"\n",sep="")
-    }
-
-    # zbadać times, czy nie ujemne - może inny warunek niż <=0
-    times<-round(times,0)
-    if (times<=0) {
-      times<-16
-      cat("Incorrect times value. Times set to the proposed value: 16.","\n",sep="")
-    }
-  }
-
   var_names<-all.vars(eq)
   m <- match(gsub(" ", ".", var_names), colnames(data_sf))
   if (any(is.na(m))) {
@@ -105,20 +62,7 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
 
   # czy nie sprawdzać jakoś parametru family -> to sprawdza glm
 
-  if(type=="ClustConti" & bootstrap==FALSE)
-  { # group points
-    output<-ClustConti(data_sf=crds, clusters=clusters, noise=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np)$cluster
-  } else if(type=="ClustConti" & bootstrap==TRUE) {
-    stop("Bootstraped DBSCAN cannot be applied to the ClustConti version of this model")
-  } else if(type=="ClustDisjoint" & bootstrap==FALSE) {
-    output<-ClustDisjoint(data_sf=crds, noise=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np, minPts=minPts,
-                          bootstrap=FALSE, sample_size=NULL, times=NULL)$cluster
-  } else if(type=="ClustDisjoint" & bootstrap==TRUE) {
-    output<-ClustDisjoint(data_sf=crds, noise=sep, r_p=r_p, eps_r=eps_r, eps_np=eps_np, minPts=minPts,
-                          bootstrap=TRUE, sample_size=sample_size, times=times)$cluster
-  }
-
-  data_sf_s<-split(data_sf, output) # create subgroups
+  data_sf_s<-split(data_sf, clusters$cluster) # create subgroups
 
   result_list<-list()
   for(i in 1:length(data_sf_s)){ # models in subgroups
@@ -129,15 +73,17 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
     list(
       data = data_sf_s, #czy to dawać? To są dane w podziale na subgrupy
       coords = crds,
-      models = result_list,
-      cluster = output,
-      parameters = params
+      cluster = clusters$cluster,
+      type = clusters$type,
+      models = result_list
     ),
     class = "ssr"
   )
 
 }
 
+# The ssrShowModels() function is likely to be merged with the ssr() function!!!!
+#
 #' @title ssrShowModels() function
 #'
 #' @description
@@ -149,6 +95,7 @@ ssr<-function(data_sf, type="ClustConti", clusters, sep, r_p=0.001, eps_r=10e-16
 #' @name ssrShowModels
 #' @param ssr_model Result object of the [ssr()] function from this package. The class of `ssr_model` object must only be 'ssr'.
 #' @param plot Logical; indicates whether the function should generate a plot, default `plot=TRUE`.
+#' @param ... Other parameters passed to [stargazer::stargazer()].
 #'
 #' @return Will be updated soon
 #'
@@ -168,14 +115,14 @@ ssrShowModels<-function(ssr_model, plot=TRUE, ...){
   stargazer(ssr_model$models, type="text", add.lines=list(R2mcf, R2n, R2mkz), column.labels = labels, ...)
 
   if(plot){
-    if(ssr_model$parameters$type == 'ClustConti'){
-      cols = ifelse(ssr_model$cluster==0, ssr_model$parameters$clusters+1, ssr_model$cluster)
+    if(ssr_model$type == 'ClustConti'){
+      cols = ifelse(ssr_model$cluster==0, max(ssr_model$cluster)+1, ssr_model$cluster)
       ggplot2::ggplot()+
         ggplot2::geom_point(ggplot2::aes(x=as.numeric(ssr_model$coords[,1]), y=as.numeric(ssr_model$coords[,2]), colour=as.factor(cols)))+
         xlab("")+
         ylab("")+
         ggplot2::ggtitle("Group assignments")+
-        ggplot2::scale_color_viridis_d(labels = c(paste0("Cluster ", 1:ssr_model$parameters$clusters),"Noise points"))+
+        ggplot2::scale_color_viridis_d(labels = c(paste0("Cluster ", 1:max(ssr_model$cluster)),"Noise points"))+
         ggplot2::guides(col=ggplot2::guide_legend(title="Group:"))+
         ggplot2::theme_minimal()+
         ggplot2::theme(plot.title=ggplot2::element_text(hjust=0.5))
@@ -203,5 +150,5 @@ print.ssr <- function(x){
   cat("Group assignments:\n",summary(factor(x$cluster)),"\n")
   cat("\nSummary of model coefficients:\n")
   cat(ssrShowModels(x, plot=FALSE))
-  cat("\nAvailable fields: data, coords, models, cluster, parameters\n")
+  cat("\nAvailable fields: data, coords, cluster, type, models\n")
 }
