@@ -110,7 +110,7 @@ ClustConti<-function(data_sf, clusters, noise, r_p=0.001, eps_r=10e-16, eps_np=1
       cluster = output,
       parameters = params
     ),
-    class = "testing"
+    class = "clust"
   )
 
 }
@@ -279,21 +279,21 @@ ClustDisjoint<-function(data_sf, noise=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=1
 
     if(length(noise)==1) output<-result_temp$cluster}
 
-  # zastanowić się, czy klasa testing nie jest do usunięcia?
+  # zastanowić się, czy klasa clust nie jest do usunięcia?
   structure(
     list(
       type = "ClustDisjoint",
       cluster = output,
       parameters = params
     ),
-    class = "testing"
+    class = "clust"
   )
 
 }
 
-# Define the output format for print(testing)
+# Define the output format for print(clust)
 #' @export
-print.testing <- function(x) {
+print.clust <- function(x) {
   cat("Type", x$type,"group assignments for", length(x$cluster), "objects.\n")
   cat("Summary of assignments:\n")
   print(summary(factor(x$cluster)))
