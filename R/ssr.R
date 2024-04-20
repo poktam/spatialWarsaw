@@ -44,6 +44,11 @@ ssr<-function(data_sf, clusters, eq, family=binomial, ...){
     stop("The class of `clusters` argument must only be `clust`: result of ClustConti() or ClustDisjoint() from the spatialWarsaw package.")
   }
 
+  if (nrows(data_sf)!=length(clusters$cluster)) {
+    stop("The number of observations in the `data_sf` object and the length of the vector indicating
+         cluster membership in the `clusters` object are not the same.")
+  }
+
   var_names<-all.vars(eq)
   m <- match(gsub(" ", ".", var_names), colnames(data_sf))
   if (any(is.na(m))) {
