@@ -44,16 +44,6 @@ ssr<-function(data_sf, clusters, eq, family=binomial, ...){
     stop("The class of `clusters` argument must only be `clust`: result of ClustConti() or ClustDisjoint() from the spatialWarsaw package.")
   }
 
-  # zbadać type
-  if (length(type)>1) {
-    type<-type[1]
-    cat("Parameter type longer than 1. The first element has been selected: ",type,"\n",sep="")
-  }
-
-  if (!(type %in% c("ClustConti","ClustDisjoint"))) {
-    stop("Unknown model type. Must be one of: ClustConti, ClustDisjoint")
-  }
-
   var_names<-all.vars(eq)
   m <- match(gsub(" ", ".", var_names), colnames(data_sf))
   if (any(is.na(m))) {
