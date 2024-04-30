@@ -27,7 +27,8 @@
 #' @param iter The number of iterations.
 #' @param sample_size The sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is greater, it is automatically set
 #' to the number of points in the dataset.For the first trial, try a value around 1000 for computational efficiency.
-#' @param eq An object of class [stats::formula()] (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.
+#' @param eq An object that defines the equation for the model, can be in the [stats::formula()] class (or one that can be coerced to that class) or
+#' a symbolic description of the model to be used.
 #' @param model_type The type of spatial econometric model, one of "SAR", "SDM", "SEM". *Soon to be updated for use with "SDEM", "SAC" models.*
 #' @param knn The number of k nearest neighbours (knn) used to construct the spatial weight matrix based on the k nearest neighbours criterion.
 #'

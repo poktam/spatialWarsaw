@@ -14,7 +14,8 @@ BootSpatReg(points_sf, iter, sample_size, eq, model_type, knn)
 \item{sample_size}{The sample size, must be less than or equal to the number of points in the dataset (\code{points_sf} parameter). If \code{sample_size} is greater, it is automatically set
 to the number of points in the dataset.For the first trial, try a value around 1000 for computational efficiency.}
 
-\item{eq}{An object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.}
+\item{eq}{An object that defines the equation for the model, can be in the \code{\link[stats:formula]{stats::formula()}} class (or one that can be coerced to that class) or
+a symbolic description of the model to be used.}
 
 \item{model_type}{The type of spatial econometric model, one of "SAR", "SDM", "SEM". \emph{Soon to be updated for use with "SDEM", "SAC" models.}}
 

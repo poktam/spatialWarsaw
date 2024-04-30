@@ -9,7 +9,8 @@ bestW(points_sf, eq, model_type = "SDM", sample_size, knn)
 \arguments{
 \item{points_sf}{Geo-located points in \code{sf} or the \code{data.frame} class - in the case of a \code{data.frame} object, the first and second columns must contain X and Y coordinates.}
 
-\item{eq}{An object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.}
+\item{eq}{An object that defines the equation for the model, can be in the \code{\link[stats:formula]{stats::formula()}} class (or one that can be coerced to that class) or
+a symbolic description of the model to be used.}
 
 \item{model_type}{The type of spatial econometric model, one of "SAR", "SDM", "SEM", "SDEM", "SAC". The default is "SDM".}
 

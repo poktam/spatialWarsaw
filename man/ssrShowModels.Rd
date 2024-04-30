@@ -2,7 +2,7 @@
 % Please edit documentation in R/ssr.R
 \name{ssrShowModels}
 \alias{ssrShowModels}
-\title{Friendly summary and plot for \code{ssr} objects (\code{\link[=ssr]{ssr()}} function result)}
+\title{Friendly summary and plot for ssr objects (ssr() function result)}
 \usage{
 ssrShowModels(ssr_model, plot = TRUE, ...)
 }
@@ -18,7 +18,7 @@ This function returns the summary table of econometric models in density cluster
 the the point plot with division into clusters.
 }
 \description{
-The ssrShowModels() function with the plot=TRUE option shows the summary of the models and plots the points divided
+The \code{ssrShowModels()} function with the \code{plot=TRUE} option shows the summary of the models and plots the points divided
 by the applied density clusters.
 }
 \details{

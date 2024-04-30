@@ -22,7 +22,8 @@
 #' @param points_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
 #' For `data.frame`, make sure that the coordinates of the points are in the same coordinate system / projection as the `region_sf` object.
 #' Data must be for a single period.
-#' @param eq An object of class [stats::formula()] (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.
+#' @param eq An object that defines the equation for the model, can be in the [stats::formula()] class (or one that can be coerced to that class) or
+#' a symbolic description of the model to be used.
 #' @param region_sf Polygon in the `sf` class that defines the boundary for `points_sf`.
 #' @param nrows.raster Raster row dimension, default 50.
 #' @param ncols.raster Raster column dimension, default 50.

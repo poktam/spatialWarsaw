@@ -120,7 +120,8 @@ tessW<-function(points_sf, region_sf, sample_size){
 #'
 #' @name bestW
 #' @param points_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
-#' @param eq An object of class [stats::formula()] (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.
+#' @param eq An object that defines the equation for the model, can be in the [stats::formula()] class (or one that can be coerced to that class) or
+#' a symbolic description of the model to be used.
 #' @param model_type The type of spatial econometric model, one of "SAR", "SDM", "SEM", "SDEM", "SAC". The default is "SDM".
 #' @param sample_size The sample size, must be less than or equal to the number of points in the dataset (`points_sf` parameter). If `sample_size` is greater, it is automatically set
 #' to the number of points in the dataset.

@@ -20,7 +20,8 @@ rastClustGWR(
 For \code{data.frame}, make sure that the coordinates of the points are in the same coordinate system / projection as the \code{region_sf} object.
 Data must be for a single period.}
 
-\item{eq}{An object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class) that defines the equation for the model: a symbolic description of the model to be used.}
+\item{eq}{An object that defines the equation for the model, can be in the \code{\link[stats:formula]{stats::formula()}} class (or one that can be coerced to that class) or
+a symbolic description of the model to be used.}
 
 \item{region_sf}{Polygon in the \code{sf} class that defines the boundary for \code{points_sf}.}
 
