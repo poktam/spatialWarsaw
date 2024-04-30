@@ -2,7 +2,7 @@
 % Please edit documentation in R/ssr.R
 \name{ssr}
 \alias{ssr}
-\title{ssr() function}
+\title{Spatial Switching Regimes (SSR): estimation and comparison of econometric models in groups of different densities}
 \usage{
 ssr(data_sf, clusters, eq, family = binomial, ...)
 }
@@ -13,8 +13,7 @@ ssr(data_sf, clusters, eq, family = binomial, ...)
 \item{clusters}{Object of class \code{clust} as output of the function \code{\link[=ClustConti]{ClustConti()}} or \code{\link[=ClustDisjoint]{ClustDisjoint()}} containing a vector of assignments of observations from the object \code{data_sf}
 to individual clusters and the name of the function used for the division.}
 
-\item{eq}{an object of class \code{\link[stats:formula]{stats::formula()}} (or one that can be coerced to that class):
-a symbolic description of the model to be used.}
+\item{eq}{An object that defines the equation for the model, can be in the \code{\link[stats:formula]{stats::formula()}} class (or one that can be coerced to that class) or a symbolic description of the model to be used.}
 
 \item{family}{A \code{family} object  consistent with \code{\link[stats:family]{stats::family()}}: a description of the error distribution
 and link function to be used in the model. The default value is \code{binomial} with logit link function.}
@@ -22,15 +21,26 @@ and link function to be used in the model. The default value is \code{binomial} 
 \item{...}{Other parameters passed to \code{\link[stats:glm]{stats::glm()}} during the calculation.}
 }
 \value{
-Will be updated soon
+\code{ssr()} returns the table with a summary of models estimated in density groups and a list object:
+\item{data}{Simply the name of the wrapper function used: "ClustConti".}
+\item{coords}{Vector of cluster assignments, 1:n are high density clusters, 0 is noise (low density cluster of remaining points).}
+\item{cluster}{A list of 6 parameters used in clustering - two user-defined (\code{clusters} and \code{noise}) and four that can also be set}
+\item{type}{}
+\item{models}{}
+Output also includesa \code{texreg} table that summarizes the models in density groups and sizes of density clasters.
 }
 \description{
-Will be updated soon
+The ssr() function works on geolocated point data. It uses input from the \code{\link[=ClustConti]{ClustConti()}} or \code{\link[=ClustDisjoint]{ClustDisjoint()}} functions from the \code{spatialWarsaw} package to divide points
+into density groups - within these subsamples it estimates the econometric model given by the equation. An important point is that the size and order of the datasets used to obtain density groups and
+the econometric model must be the same.
 }
 \details{
-Will be updated soon
+Function returns a table with a summary of the models estimated in density groups.
 }
 \examples{
 #To be done!!!
 
+}
+\seealso{
+\code{\link[=ssrShowModels]{ssrShowModels()}}
 }

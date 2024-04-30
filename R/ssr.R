@@ -22,7 +22,13 @@
 #' and link function to be used in the model. The default value is `binomial` with logit link function.
 #' @param ... Other parameters passed to [stats::glm()] during the calculation.
 #'
-#' @return Will be updated soon
+#' @return `ssr()` returns the table with a summary of models estimated in density groups and a list object:
+#' \item{data}{Simply the name of the wrapper function used: "ClustConti".}
+#' \item{coords}{Vector of cluster assignments, 1:n are high density clusters, 0 is noise (low density cluster of remaining points).}
+#' \item{cluster}{A list of 6 parameters used in clustering - two user-defined (`clusters` and `noise`) and four that can also be set}
+#' \item{type}{}
+#' \item{models}{}
+#' Output also includesa `texreg` table that summarizes the models in density groups and sizes of density clasters.
 #'
 #' @examples #To be done!!!
 #'
