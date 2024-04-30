@@ -1,6 +1,11 @@
 Revision history for the SpatialWarsaw package
 ----------------------------------------------
 
+## spatialWarsaw 0.2.2
+
+* Documentation for all functions finished
+* Still a development version
+
 ## spatialWarsaw 0.2.1
 
 * Changed class name in ClustConti() and ClustDisjoint()
