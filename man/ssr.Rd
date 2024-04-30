@@ -30,7 +30,7 @@ and link function to be used in the model. The default value is \code{binomial} 
 The output also includes a \code{texreg} table which summarises the models in density groups and the size of density clusters.
 }
 \description{
-The ssr() function works on geolocated point data. It uses input from the \code{\link[=ClustConti]{ClustConti()}} or \code{\link[=ClustDisjoint]{ClustDisjoint()}} functions from the \code{spatialWarsaw} package to divide points
+The \code{ssr()} function works on geolocated point data. It uses input from the \code{\link[=ClustConti]{ClustConti()}} or \code{\link[=ClustDisjoint]{ClustDisjoint()}} functions from the \code{spatialWarsaw} package to divide points
 into density groups - within these subsamples it estimates the econometric model given by the equation. An important point is that the size and order of the datasets used to obtain density groups and
 the econometric model must be the same.
 }

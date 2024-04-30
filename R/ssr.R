@@ -5,7 +5,7 @@
 #' @title Spatial Switching Regimes (SSR): estimation and comparison of econometric models in groups of different densities
 #'
 #' @description
-#' The ssr() function works on geolocated point data. It uses input from the [spatialWarsaw::ClustConti()] or [spatialWarsaw::ClustDisjoint()] functions from the `spatialWarsaw` package to divide points
+#' The `ssr()` function works on geolocated point data. It uses input from the [spatialWarsaw::ClustConti()] or [spatialWarsaw::ClustDisjoint()] functions from the `spatialWarsaw` package to divide points
 #' into density groups - within these subsamples it estimates the econometric model given by the equation. An important point is that the size and order of the datasets used to obtain density groups and
 #' the econometric model must be the same.
 #'
@@ -88,10 +88,10 @@ ssr<-function(data_sf, clusters, eq, family=binomial, ...){
 
 # The ssrShowModels() function is likely to be merged with the ssr() function in the future!!!!
 #
-#' @title Friendly summary and plot for `ssr` objects ([ssr()] function result)
+#' @title Friendly summary and plot for ssr objects (ssr() function result)
 #'
 #' @description
-#' The ssrShowModels() function with the plot=TRUE option shows the summary of the models and plots the points divided
+#' The `ssrShowModels()` function with the `plot=TRUE` option shows the summary of the models and plots the points divided
 #' by the applied density clusters.
 #'
 #' @details
