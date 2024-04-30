@@ -66,3 +66,4 @@ the best relation between quality and computation time.
 \references{
 Kopczewska K., (under review), QDC: Quick Density Clustering of Geo-located Data
 }
+\keyword{internal}
