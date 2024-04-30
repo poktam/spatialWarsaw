@@ -2,21 +2,22 @@
 ### ssr i pochodne    #####
 ###########################
 #
-#' @title ssr() function
+#' @title Spatial Switching Regimes (SSR): estimation and comparison of econometric models in groups of different densities
 #'
 #' @description
-#' Will be updated soon
+#' The ssr() function works on geolocated point data. It uses input from the [spatialWarsaw::ClustConti()] or [spatialWarsaw::ClustDisjoint()] functions from the `spatialWarsaw` package to divide points
+#' into density groups - within these subsamples it estimates the econometric model given by the equation. An important point is that the size and order of the datasets used to obtain density groups and
+#' the econometric model must be the same.
 #'
 #' @details
-#' Will be updated soon
+#' Function returns a table with a summary of the models estimated in density groups.
 #'
 #' @name ssr
 #' @param data_sf Geo-located points in `sf` or the `data.frame` class - in the case of a `data.frame` object, the first and second columns must contain X and Y coordinates.
 #' ***NOTE! The same `data_sf` object must also be used to obtain a cluster split using the [spatialWarsaw::ClustConti()] or [spatialWarsaw::ClustDisjoint()] function.***
 #' @param clusters Object of class `clust` as output of the function [spatialWarsaw::ClustConti()] or [spatialWarsaw::ClustDisjoint()] containing a vector of assignments of observations from the object `data_sf`
 #' to individual clusters and the name of the function used for the division.
-#' @param eq an object of class [stats::formula()] (or one that can be coerced to that class):
-#' a symbolic description of the model to be used.
+#' @param eq An object that defines the equation for the model, can be in the [stats::formula()] class (or one that can be coerced to that class) or a symbolic description of the model to be used.
 #' @param family A `family` object  consistent with [stats::family()]: a description of the error distribution
 #' and link function to be used in the model. The default value is `binomial` with logit link function.
 #' @param ... Other parameters passed to [stats::glm()] during the calculation.
@@ -24,6 +25,8 @@
 #' @return Will be updated soon
 #'
 #' @examples #To be done!!!
+#'
+#' @seealso [ssrShowModels()]
 #'
 #' @export
 ssr<-function(data_sf, clusters, eq, family=binomial, ...){
