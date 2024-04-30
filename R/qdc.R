@@ -141,7 +141,6 @@ QDC<-function(data_sf, sample_size, nclust=3, k=10, eps=0.05){
 }
 
 #' @rdname QDC
-#' @keywords internal
 #' @export
 qdc <- QDC
 
