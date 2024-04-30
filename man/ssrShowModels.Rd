@@ -2,7 +2,7 @@
 % Please edit documentation in R/ssr.R
 \name{ssrShowModels}
 \alias{ssrShowModels}
-\title{ssrShowModels() function}
+\title{Friendly summary and plot for \code{ssr} objects (\code{\link[=ssr]{ssr()}} function result)}
 \usage{
 ssrShowModels(ssr_model, plot = TRUE, ...)
 }
@@ -14,13 +14,16 @@ ssrShowModels(ssr_model, plot = TRUE, ...)
 \item{...}{Other parameters passed to \code{\link[stargazer:stargazer]{stargazer::stargazer()}}.}
 }
 \value{
-Will be updated soon
+This function returns the summary table of econometric models in density clusters. If \code{plot=TRUE} it will also return
+the the point plot with division into clusters.
 }
 \description{
-Will be updated soon
+The ssrShowModels() function with the plot=TRUE option shows the summary of the models and plots the points divided
+by the applied density clusters.
 }
 \details{
-Will be updated soon
+The plot illustrates the division of geolocated points into density clusters. This partitioning is used in
+the \code{\link[=ssr]{ssr()}} function for subgroup model estimation.
 }
 \examples{
 #To be done!

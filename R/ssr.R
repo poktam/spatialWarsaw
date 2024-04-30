@@ -86,22 +86,25 @@ ssr<-function(data_sf, clusters, eq, family=binomial, ...){
 
 }
 
-# The ssrShowModels() function is likely to be merged with the ssr() function!!!!
+# The ssrShowModels() function is likely to be merged with the ssr() function in the future!!!!
 #
-#' @title ssrShowModels() function
+#' @title Friendly summary and plot for `ssr` objects ([ssr()] function result)
 #'
 #' @description
-#' Will be updated soon
+#' The ssrShowModels() function with the plot=TRUE option shows the summary of the models and plots the points divided
+#' by the applied density clusters.
 #'
 #' @details
-#' Will be updated soon
+#' The plot illustrates the division of geolocated points into density clusters. This partitioning is used in
+#' the [ssr()] function for subgroup model estimation.
 #'
 #' @name ssrShowModels
 #' @param ssr_model Result object of the [ssr()] function from this package. The class of `ssr_model` object must only be 'ssr'.
 #' @param plot Logical; indicates whether the function should generate a plot, default `plot=TRUE`.
 #' @param ... Other parameters passed to [stargazer::stargazer()].
 #'
-#' @return Will be updated soon
+#' @return This function returns the summary table of econometric models in density clusters. If `plot=TRUE` it will also return
+#' the the point plot with division into clusters.
 #'
 #' @examples #To be done!
 #'
