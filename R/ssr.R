@@ -23,12 +23,12 @@
 #' @param ... Other parameters passed to [stats::glm()] during the calculation.
 #'
 #' @return `ssr()` returns the table with a summary of models estimated in density groups and a list object:
-#' \item{data}{Simply the name of the wrapper function used: "ClustConti".}
-#' \item{coords}{Vector of cluster assignments, 1:n are high density clusters, 0 is noise (low density cluster of remaining points).}
-#' \item{cluster}{A list of 6 parameters used in clustering - two user-defined (`clusters` and `noise`) and four that can also be set}
-#' \item{type}{}
-#' \item{models}{}
-#' Output also includesa `texreg` table that summarizes the models in density groups and sizes of density clasters.
+#' \item{data}{provides data by density groups.}
+#' \item{coords}{provides all xy coordinates of point data, without the density group subdivision information.}
+#' \item{cluster}{Provides a clustering vector that assigns all point data to density clusters.}
+#' \item{type}{provides the type of clustering based on the `clusters` argument, one of "ClustDisjoint" or "ClustConti".}
+#' \item{models}{privides the basic models (without significance tests) in each density cluster.}
+#' The output also includes a `texreg` table which summarises the models in density groups and the size of density clusters.
 #'
 #' @examples #To be done!!!
 #'
