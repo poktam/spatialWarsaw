@@ -31,5 +31,11 @@ creates the spatial weight matrix W using the \code{\link[spdep:poly2nb]{spdep::
 }
 \examples{
 #To be done!!!
+# Example of how tessW() works on a random subsample
+tess<-tessW(firms_sf, region_sf, sample_size=50)
+
+# tesselated W on a predefined dataset
+subfirms_sf<-firms_sf[1:100,]
+tess<-tessW(subfirms_sf, region_sf, sample_size=nrow(subfirms_sf))
 
 }

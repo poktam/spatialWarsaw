@@ -25,6 +25,12 @@
 #' ***Will be available soon***: In addition, if the value of `sample_size` is less than the number of observations in the dataset, the function will return which observations were used in the modelling.
 #'
 #' @examples #To be done!!!
+#' # Example of how tessW() works on a random subsample
+#' tess<-tessW(firms_sf, region_sf, sample_size=50)
+#'
+#' # tesselated W on a predefined dataset
+#' subfirms_sf<-firms_sf[1:100,]
+#' tess<-tessW(subfirms_sf, region_sf, sample_size=nrow(subfirms_sf))
 #'
 #' @export
 tessW<-function(points_sf, region_sf, sample_size){
