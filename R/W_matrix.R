@@ -506,7 +506,8 @@ corrSpatialLags<-function(points_sf, var_name, sample_size, knn){
 #' Spatial Economic Analysis, 1-19.
 #'
 #' @examples
-#' svk<-semiVarKnn(firms.sf, "roa", 500, max_knn=20)
+#' # Running the example takes a while.
+#' svk<-semiVarKnn(firms_sf, "roa", 500, max_knn=20)
 #' svk
 #'
 #' @export
