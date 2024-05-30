@@ -60,8 +60,8 @@ The algorithm is robust to sampling. Limiting the size of the data set speeds up
 the best relation between quality and computation time.
 }
 \examples{
-qdc<-QDC(firms_sf, 5000, nclust=3, k=10, eps=0.05)
-qdc
+my.qdc<-QDC(firms_sf, 5000, nclust=3, k=10, eps=0.05)
+my.qdc
 
 }
 \references{

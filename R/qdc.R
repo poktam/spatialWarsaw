@@ -52,8 +52,8 @@
 #' Kopczewska K., (under review), QDC: Quick Density Clustering of Geo-located Data
 #'
 #' @examples
-#' qdc<-QDC(firms_sf, 5000, nclust=3, k=10, eps=0.05)
-#' qdc
+#' my.qdc<-QDC(firms_sf, 5000, nclust=3, k=10, eps=0.05)
+#' my.qdc
 #'
 #' @export
 QDC<-function(data_sf, sample_size, nclust=3, k=10, eps=0.05){

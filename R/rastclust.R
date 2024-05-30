@@ -153,7 +153,14 @@ rastClustGWR<-function(points_sf, eq, region_sf, nrows.raster=50, ncols.raster=5
 #' `STS()` is related to [rastClustGWR()] which clusters the GWR coefficients from a single period and displays them in a raster.
 #' `STS()` works as a looped [rastClustGWR()] over time and additionally calculates the Rand Index for each pair of periods.
 #'
-#' @examples #To be done!!!
+#' @examples
+#' # The form of the equation to be estimated:
+#' # Companies' return on assets (ROA) depends on their size, sector and relative location.
+#' eq<-roa~empl+dummy.prod+dummy.constr+dummy.serv+dist.big.city
+#'
+#' # Running the example requires to compute GWR models for 6 periods. It can take a long while.
+#' my.sts<-sts(firms_sf, eq, "year", region_sf, nc=5, bw=0.05)
+#' my.sts
 #'
 #' @export
 STS<-function(points_sf, eq, time_var, region_sf, nrows.raster=50, ncols.raster=50, nc, bw, adaptive=FALSE){

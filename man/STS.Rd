@@ -74,7 +74,13 @@ The higher the RI values, the greater the similarity of the cluster location in 
 \code{STS()} works as a looped \code{\link[=rastClustGWR]{rastClustGWR()}} over time and additionally calculates the Rand Index for each pair of periods.
 }
 \examples{
-#To be done!!!
+# The form of the equation to be estimated:
+# Companies' return on assets (ROA) depends on their size, sector and relative location.
+eq<-roa~empl+dummy.prod+dummy.constr+dummy.serv+dist.big.city
+
+# Running the example requires to compute GWR models for 6 periods. It can take a long while.
+my.sts<-sts(firms_sf, eq, "year", region_sf, nc=5, bw=0.05)
+my.sts
 
 }
 \references{

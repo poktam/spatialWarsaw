@@ -26,13 +26,13 @@
 #'
 #' @examples
 #' # Example of how tessW() works on a random subsample
-#' tess<-tessW(firms_sf, region_sf, sample_size=50)
-#' tess
+#' my.tess<-tessW(firms_sf, region_sf, sample_size=50)
+#' my.tess
 #'
 #' # tesselated W on a predefined dataset
 #' subfirms_sf<-firms_sf[1:100,]
-#' tess<-tessW(subfirms_sf, region_sf, sample_size=nrow(subfirms_sf))
-#' tess
+#' my.tess<-tessW(subfirms_sf, region_sf, sample_size=nrow(subfirms_sf))
+#' my.tess
 #'
 #' @export
 tessW<-function(points_sf, region_sf, sample_size){
