@@ -44,7 +44,11 @@ to set a smaller number of observations than in the original dataset to speed up
 the size of the dataset, all observations will be used.
 }
 \examples{
-#To be done!!!
+# The form of the equation to be estimated:
+# Companies' return on assets (ROA) depends on their size, sector and relative location.
+eq<-roa~empl+dummy.prod+dummy.constr+dummy.serv+dist.big.city
+best.W<-bestW(firms_sf, eq, model_type="SDM", 1000, knn=c(2,5,10,15,20))
+best.W
 
 }
 \references{

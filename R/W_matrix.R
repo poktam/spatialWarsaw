@@ -145,7 +145,12 @@ tessW<-function(points_sf, region_sf, sample_size){
 #' Kubara, M., & Kopczewska, K. (2023). Akaike information criterion in choosing the optimal k-nearest neighbours of the spatial weight matrix.
 #' Spatial Economic Analysis, 1-19.
 #'
-#' @examples #To be done!!!
+#' @examples
+#' # The form of the equation to be estimated:
+#' # Companies' return on assets (ROA) depends on their size, sector and relative location.
+#' eq<-roa~empl+dummy.prod+dummy.constr+dummy.serv+dist.big.city
+#' best.W<-bestW(firms_sf, eq, model_type="SDM", 1000, knn=c(2,5,10,15,20))
+#' best.W
 #'
 #' @export
 bestW<-function(points_sf, eq, model_type="SDM", sample_size, knn){
@@ -329,6 +334,8 @@ bestW<-function(points_sf, eq, model_type="SDM", sample_size, knn){
     abline(v=best.result[1], lty=3, col="grey60")
     text(best.result[1], min(result$lambda, na.rm=TRUE), "lambda for best knn")
   }
+
+  par(mar=c(5.1,4.1,4.1,2.1), mfrow=c(1,1))
 
   return(result)
 }
