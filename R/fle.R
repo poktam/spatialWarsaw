@@ -35,7 +35,9 @@
 #'
 #' @return `FLE()` returns the `terra` class object and its visualisation.
 #'
-#' @examples #To be done!!!
+#' @examples
+#' fle<-FLE(firms_sf, region_sf, nrows.raster=50, ncols.raster=50, w=9)
+#' fle
 #'
 #' @export
 FLE<-function(points_sf, region_sf, nrows.raster=50, ncols.raster=50, w, r){

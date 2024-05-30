@@ -46,6 +46,7 @@ for east/west/north/south cells and longer for east-north, east-south, west-nort
 Too short r can exclude the second group from the neighbours list.
 }
 \examples{
-#To be done!!!
+fle<-FLE(firms_sf, region_sf, nrows.raster=50, ncols.raster=50, w=9)
+fle
 
 }

@@ -42,7 +42,9 @@
 #' @references
 #' Kopczewska, K., Churski, P., Ochojski, A., & Polko, A. (2019). SPAG: Index of spatial agglomeration. Papers in Regional Science, 98(6), 2391-2424.
 #'
-#' @examples #To be done!!!
+#' @examples
+#' my.spag<-SPAG(firms_sf, "empl", region_sf)
+#' my.spag
 #'
 #' @export
 SPAG<-function(points_sf, size_var, region_sf){

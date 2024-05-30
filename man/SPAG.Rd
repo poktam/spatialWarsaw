@@ -47,7 +47,8 @@ The size of the region is important for the result - if \code{region_sf} is much
 SPAG detects agglomeration.
 }
 \examples{
-#To be done!!!
+my.spag<-SPAG(firms_sf, "empl", region_sf)
+my.spag
 
 }
 \references{
