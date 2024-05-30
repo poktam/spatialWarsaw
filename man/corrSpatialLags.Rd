@@ -34,7 +34,8 @@ Empirical correlation uses Pearson correlation coefficient to determine observed
 the same variable and different number of k nearest neighbours.
 }
 \examples{
-#To be done!!!
+csl<-corrSpatialLags(firms_sf, "roa", 500, knn=1:30)
+csl
 
 }
 \references{

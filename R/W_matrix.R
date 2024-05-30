@@ -375,7 +375,9 @@ bestW<-function(points_sf, eq, model_type="SDM", sample_size, knn){
 #'
 #' LeSage, J. P., & Pace, R. K. (2014). The biggest myth in spatial econometrics. Econometrics, 2(4), 217-249.
 #'
-#' @examples #To be done!!!
+#' @examples
+#' csl<-corrSpatialLags(firms_sf, "roa", 500, knn=1:30)
+#' csl
 #'
 #' @export
 corrSpatialLags<-function(points_sf, var_name, sample_size, knn){
@@ -461,6 +463,8 @@ corrSpatialLags<-function(points_sf, var_name, sample_size, knn){
   plot(t_cor.result, xlab="knn in W1", ylab="knn in W2",cex.main=0.9,
        main="Expected (theoretical) correlation between spatial lags for different knn", )
 
+  par(mar=c(5.1,4.1,4.1,2.1), mfrow=c(1,1))
+
   list(
     cor_result = cor.result,
     t_cor_result = t_cor.result
@@ -501,7 +505,9 @@ corrSpatialLags<-function(points_sf, var_name, sample_size, knn){
 #' Kubara, M., & Kopczewska, K. (2023). Akaike information criterion in choosing the optimal k-nearest neighbours of the spatial weight matrix.
 #' Spatial Economic Analysis, 1-19.
 #'
-#' @examples #To be done!!!
+#' @examples
+#' svk<-semiVarKnn(firms.sf, "roa", 500, max_knn=20)
+#' svk
 #'
 #' @export
 semiVarKnn<-function(points_sf, var_name, sample_size, max_knn){
@@ -584,6 +590,8 @@ semiVarKnn<-function(points_sf, var_name, sample_size, max_knn){
   points(2:max_knn, semiKnn[2:max_knn], pch=21, bg="lightblue", cex=1.5)
   # abline(h=(floor(min(semiKnn[2:max_knn])):ceiling(max(semiKnn[2:max_knn]))), lty=3)
   abline(v=(2:max_knn), lty=3)
+
+  par(mar=c(5.1,4.1,4.1,2.1))
 
   return(semiKnn)
 }
