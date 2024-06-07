@@ -31,6 +31,16 @@ The function returns the Benford's law conformity test of geolocated spatial poi
 from the \code{benford.analysis} package. Euclidean distances between points are calculated using the \code{dist()} function.
 }
 \examples{
-#To be done!!!
+# The example below is based on the result of SpatBenfordPattern() function.
+sbp<-SpatBenfordPattern(region_sf, 5000)
 
+SpatBenfordTest(sbp, 5000)
+
+# You can directly subset columns with X and Y coordinates from a larger `data.frame` object.
+# In this example the result will be the same as above.
+SpatBenfordTest(sbp[,1:2], 5000)
+
+}
+\seealso{
+\code{\link[=SpatBenfordPattern]{SpatBenfordPattern()}}
 }

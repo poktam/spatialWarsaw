@@ -33,9 +33,12 @@ These proportions have been incorporated into the \code{SpatBenfordPattern()} fu
 is generated as X and Y coordinates from a normal distribution centred at 0.25 of the spatial range
 of longitude and latitude. A clustered point pattern centred within the region makes this mixture non-conforming to Benford's law.
 This natural point pattern can be tested for Benford's law conformity using \code{SpatBenfordTest()}.
+
+NOTE: In some cases the \verb{lwgeom::} package should be installed to get rid of certain warnings.
 }
 \examples{
-#To be done!!!
+sbp<-SpatBenfordPattern(region_sf, 5000)
+head(sbp,10)
 
 }
 \references{

@@ -24,7 +24,17 @@
 #'
 #' @return `SpatBenfordTest()` returns the test for Benford's law conformity.
 #'
-#' @examples #To be done!!!
+#' @seealso [SpatBenfordPattern()]
+#'
+#' @examples
+#' # The example below is based on the result of SpatBenfordPattern() function.
+#' sbp<-SpatBenfordPattern(region_sf, 5000)
+#'
+#' SpatBenfordTest(sbp, 5000)
+#'
+#' # You can directly subset columns with X and Y coordinates from a larger `data.frame` object.
+#' # In this example the result will be the same as above.
+#' SpatBenfordTest(sbp[,1:2], 5000)
 #'
 #' @export
 SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
@@ -97,6 +107,8 @@ spatbenfordtest <- SpatBenfordTest
 #' of longitude and latitude. A clustered point pattern centred within the region makes this mixture non-conforming to Benford's law.
 #' This natural point pattern can be tested for Benford's law conformity using `SpatBenfordTest()`.
 #'
+#' NOTE: In some cases the `lwgeom::` package should be installed to get rid of certain warnings.
+#'
 #' @name SpatBenfordPattern
 #' @param region_sf Polygon in the `sf` class that defines the boundary for the points to be generated.
 #' @param sample_size Number of points to generate inside the boundary. The default value is 5000 and can be changed.
@@ -113,7 +125,9 @@ spatbenfordtest <- SpatBenfordTest
 #'
 #' @seealso [SpatBenfordTest()]
 #'
-#' @examples #To be done!!!
+#' @examples
+#' sbp<-SpatBenfordPattern(region_sf, 5000)
+#' head(sbp,10)
 #'
 #' @export
 SpatBenfordPattern<-function(region_sf, sample_size=5000){
@@ -148,7 +162,7 @@ SpatBenfordPattern<-function(region_sf, sample_size=5000){
   bpp_sf<-st_as_sf(bpp, coords=c("X", "Y"), crs=st_crs(region_sf), agr="constant")
 
   plot(bpp_sf, key.pos=1, main="Benford Pattern Spatial Points")
-  return(bpp) # poprawić, żeby może na ekranie było jakieś summary/table a nie lista
+  return(bpp) # w przyszłości poprawić, żeby może na ekranie było jakieś summary/table a nie lista
 }
 
 #' @rdname SpatBenfordPattern
