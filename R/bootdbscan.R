@@ -29,7 +29,8 @@
 #' \item{eps }{ value of the `eps` parameter.}
 #' \item{minPts }{ value of the `minPts` parameter.}
 #'
-#' @examples #To be done!!!
+#' @examples
+#' bdb<-bootdbscan(firms_sf, sample_size=1000, times=20, eps=0.1, minPts=5)
 #'
 #' @export
 bootdbscan<-function(data_sf, sample_size, times, eps, minPts, plot=TRUE){
@@ -95,8 +96,8 @@ bootdbscan<-function(data_sf, sample_size, times, eps, minPts, plot=TRUE){
 
   # wykres do sprawdzenia czy o to chodziło, tytuł do sprawdzenia
   if (plot){
-  plot(crds,pch=".", main="Observations with core points (red)")
-  points(crds[DBS$new_cluster==1,],pch=".",col="red")
+    plot(crds,pch=".", main="Observations with core points (red)")
+    points(crds[DBS$new_cluster==1,],pch=".",col="red")
   }
 
   structure(
