@@ -42,5 +42,6 @@ the same flag as their first nearest neighbour.
 }
 \examples{
 bdb<-bootdbscan(firms_sf, sample_size=1000, times=20, eps=0.1, minPts=5)
+bdb
 
 }

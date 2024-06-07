@@ -31,6 +31,7 @@
 #'
 #' @examples
 #' bdb<-bootdbscan(firms_sf, sample_size=1000, times=20, eps=0.1, minPts=5)
+#' bdb
 #'
 #' @export
 bootdbscan<-function(data_sf, sample_size, times, eps, minPts, plot=TRUE){
