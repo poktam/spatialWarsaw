@@ -57,12 +57,12 @@ for large data using random subsamples without losing precision.
 eq<-roa~empl+dummy.prod+dummy.constr+dummy.serv+dist.big.city
 
 # Bootstrapped model estimation - it can take a long while.
-best.model<-BootSpatReg(firms_sf, 5, 1500, eq, "SEM", knn=5)
+bsr<-BootSpatReg(firms_sf, 5, 1500, eq, "SEM", knn=5)
 
 # Result display
-best.model					# full output
-head(rownames(best.model$data.best),10)	# IDs of data used in the best model
-summary(best.model$model.best)	# summary with p-value of the best model
+bsr					# full output
+head(rownames(bsr$data.best),10)	# IDs of data used in the best model
+summary(bsr$model.best)	# summary with p-value of the best model
 
 # for this ouput use ApproxSERoot2() to approximate the standard errors for bigger sample
 # or use SpatPredTess() to predict for out-of-sample points

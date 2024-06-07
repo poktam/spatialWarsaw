@@ -28,7 +28,13 @@ are calculated as: \code{er/(2^0.5)^1}, \code{er/(2^0.5)^2}, \code{er/(2^0.5)^3}
 from an original model for n observations.
 }
 \examples{
-#To be done!!!
+# The input to ApproxSERRoot2() is the object with the estimated model.
+# The first two lines are taken from the BootSpatReg() example.
+eq<-roa~empl+dummy.prod+dummy.constr+dummy.serv+dist.big.city
+bsr<-BootSpatReg(firms_sf, 5, 1500, eq, "SEM", knn=5)
+
+asr<-ApproxSERoot2(bsr$model.best)
+asr
 
 }
 \references{
