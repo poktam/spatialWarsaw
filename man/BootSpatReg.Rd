@@ -52,7 +52,20 @@ for large data using random subsamples without losing precision.
 \code{BootSpatReg()} is a time-efficient, methodologically correct approach to deal with the non-scalability of the spatial weight matrix W.
 }
 \examples{
-#To be done!!!
+# The form of the equation to be estimated:
+# Companies' return on assets (ROA) depends on their size, sector and relative location.
+eq<-roa~empl+dummy.prod+dummy.constr+dummy.serv+dist.big.city
+
+# Bootstrapped model estimation - it can take a long while.
+best.model<-BootSpatReg(firms_sf, 5, 1500, eq, "SEM", knn=5)
+
+# Result display
+best.model					# full output
+head(rownames(best.model$data.best),10)	# IDs of data used in the best model
+summary(best.model$model.best)	# summary with p-value of the best model
+
+# for this ouput use ApproxSERoot2() to approximate the standard errors for bigger sample
+# or use SpatPredTess() to predict for out-of-sample points
 
 }
 \references{
