@@ -30,11 +30,11 @@
 #' # The example below is based on the result of SpatBenfordPattern() function.
 #' sbp<-SpatBenfordPattern(region_sf, 5000)
 #'
-#' SpatBenfordTest(sbp, 5000)
+#' SpatBenfordTest(sbp, 4950)
 #'
 #' # You can directly subset columns with X and Y coordinates from a larger `data.frame` object.
 #' # In this example the result will be the same as above.
-#' SpatBenfordTest(sbp[,1:2], 5000)
+#' SpatBenfordTest(sbp[,1:2], 4950)
 #'
 #' @export
 SpatBenfordTest<-function(data_sf, sample_size, var_name=NULL){
