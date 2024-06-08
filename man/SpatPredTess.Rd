@@ -37,7 +37,26 @@ Spatial predictions are only made for a single new point. If the input specifies
 the predictions are made sequentially, e.g. for 10 new points the algorithm will make 10 prediction runs.
 }
 \examples{
-#To be done!!!
+# sf and spdep packages required
+library(sf)
+library(spdep)
+
+# The input to SpatPredTess() is the object with the estimated model.
+# The first two lines are taken from the BootSpatReg() example.
+eq<-roa~empl+dummy.prod+dummy.constr+dummy.serv+dist.big.city
+bsr<-BootSpatReg(firms_sf, 5, 1500, eq, "SEM", knn=5)
+
+# Coordinates in sf class - observations used only in the best model.
+# Required for knn spatial weighting matrix.
+crds.sf<-st_centroid(st_geometry(firms_sf[rownames(bsr$data.best),]))
+
+# Spatial weight matrix for predictive model: symmetric k nearest neighbours (knn=6) matrix used
+knn.sym.listw<-nb2listw(make.sym.nb(knn2nb(knearneigh(crds.sf, k=6))))
+
+# Prediction using Voronoi tiles
+pred<-SpatPredTess(bsr$model.best, firms_sf[rownames(bsr$data.best),], knn.sym.listw, firms_sf[1:10,], region_sf)
+pred
+
 
 }
 \references{

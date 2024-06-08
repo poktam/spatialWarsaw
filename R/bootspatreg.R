@@ -343,7 +343,27 @@ ApproxSERoot2<-function(model_spatial){
 #' @references
 #' Kopczewska, K. (2023). Spatial bootstrapped microeconometrics: Forecasting for out‐of‐sample geo‐locations in big data. Scandinavian Journal of Statistics.
 #'
-#' @examples #To be done!!!
+#' @examples
+#' # sf and spdep packages required
+#' library(sf)
+#' library(spdep)
+#'
+#' # The input to SpatPredTess() is the object with the estimated model.
+#' # The first two lines are taken from the BootSpatReg() example.
+#' eq<-roa~empl+dummy.prod+dummy.constr+dummy.serv+dist.big.city
+#' bsr<-BootSpatReg(firms_sf, 5, 1500, eq, "SEM", knn=5)
+#'
+#' # Coordinates in sf class - observations used only in the best model.
+#' # Required for knn spatial weighting matrix.
+#' crds.sf<-st_centroid(st_geometry(firms_sf[rownames(bsr$data.best),]))
+#'
+#' # Spatial weight matrix for predictive model: symmetric k nearest neighbours (knn=6) matrix used
+#' knn.sym.listw<-nb2listw(make.sym.nb(knn2nb(knearneigh(crds.sf, k=6))))
+#'
+#' # Prediction using Voronoi tiles
+#' pred<-SpatPredTess(bsr$model.best, firms_sf[rownames(bsr$data.best),], knn.sym.listw, firms_sf[1:10,], region_sf)
+#' pred
+#'
 #'
 #' @export
 SpatPredTess<-function(model_spatial, points_spatial_sf, knnW, points_new_sf, region_sf){
