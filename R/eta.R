@@ -56,9 +56,8 @@ ETA<-function(points_sf, region_sf, sample_size){
   }
 
   # w przypadku gdy oba obiekty są typu sf uzgodnić ich system współrzędnych / projekcję(!!!)
-  # Ew. do sprawdzenia czy warunek st_geometry_type(points_sf,FALSE)=="POINT") nie jest zbyt restrykcyjny
-  # !!! uzupełnić może do inherits(points_sf,c("sf","sfc")) przy innych funkcjach - dodano sfc do warunku
-  if((inherits(points_sf,c("sf","sfc")) && st_geometry_type(points_sf,FALSE)=="POINT")) {
+  #Ew. do sprawdzenia czy warunek st_geometry_type(points_sf,FALSE)=="POINT") nie jest zbyt restrykcyjny
+  if((inherits(points_sf,"sf") && st_geometry_type(points_sf,FALSE)=="POINT")) {
     # to można uprościć (trochę niepotrzebne wyjęcie współrzędnych i ich przerobienie ponownie), ale na razie zostawimy
     crds<-as.data.frame(st_coordinates(points_sf))
     colnames(crds)<-c("X_coord","Y_coord")
