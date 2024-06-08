@@ -45,6 +45,9 @@
 #' Edward Elgar (editors: Aura Reggiani, Laurie Schintler, Danny Czamanski, Roberto Patuelli)
 #'
 #' @examples
+#' # `sf` package required
+#' library(sf)
+#'
 #' # for random point pattern
 #' eta.random<-st_sample(region_sf, 500, type="random")
 #' eta.random<-st_as_sf(eta.random)
@@ -55,6 +58,7 @@
 #' eta.regular<-st_as_sf(eta.regular, crs=4326)
 #' ETA(eta.regular, region_sf, 500)
 #'
+#' # for clustered point pattern
 #' eta.clust<-data.frame(X=rnorm(500, mean=22.8, sd=0.25), Y=rnorm(500, mean=51.2, sd=0.25))
 #' plot(st_geometry(region_sf))
 #' points(eta.clust)
