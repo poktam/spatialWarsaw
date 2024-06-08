@@ -40,7 +40,16 @@
 #' https://www.sciencedirect.com/science/article/pii/S0264837721000156
 #'
 #'
-#' @examples #To be done!!!
+#' @examples
+#' # The form of the equation to be estimated:
+#' # Companies' return on assets (ROA) depends on their size, sector and relative location.
+#' eq<-roa~empl+dummy.prod+dummy.constr+dummy.serv+dist.big.city
+#'
+#' firms2015.sf<-firms_sf[firms_sf$year==2015,]
+#'
+#' # It takes a while to estimate the GWR model
+#' rcGWR<-rastClustGWR(firms2015.sf, eq, region_sf, nc=5, bw=0.05)
+#' rcGWR
 #'
 #' @export
 rastClustGWR<-function(points_sf, eq, region_sf, nrows.raster=50, ncols.raster=50, nc, bw, adaptive=FALSE){
