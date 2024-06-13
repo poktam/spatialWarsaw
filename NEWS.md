@@ -1,6 +1,12 @@
 Revision history for the SpatialWarsaw package
 ----------------------------------------------
 
+## spatialWarsaw 0.9.0
+
+* Added examples to all current functions in the package.
+* Fixed some minor bugs.
+* The package has reached beta version.
+
 ## spatialWarsaw 0.2.2
 
 * Documentation for all functions finished
