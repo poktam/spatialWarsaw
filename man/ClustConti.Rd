@@ -53,7 +53,10 @@ The output of this algorithm is identical to typical DBSCAN, but the input param
 instead of the number of points within the radius minPts and radius eps) - this is to get control over the relative point density and the number of clusters.
 }
 \examples{
-#To be done!!!
+# The following example is on selected data from the firms_sf dataset included in the package
+sub_sf<-firms_sf[1:1000,]
+cc<-ClustConti(sub_sf, clusters=4, noise =0.2, minPts0=30)
+cc
 
 }
 \seealso{

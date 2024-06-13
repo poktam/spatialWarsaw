@@ -37,7 +37,11 @@
 #'
 #' @seealso [ClustDisjoint()], [ssr()]
 #'
-#' @examples #To be done!!!
+#' @examples
+#' # The following example is on selected data from the firms_sf dataset included in the package
+#' sub_sf<-firms_sf[1:1000,]
+#' cc<-ClustConti(sub_sf, clusters=4, noise =0.2, minPts0=30)
+#' cc
 #'
 #' @export
 ClustConti<-function(data_sf, clusters, noise, r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts0=5){
@@ -163,7 +167,11 @@ ClustConti<-function(data_sf, clusters, noise, r_p=0.001, eps_r=10e-16, eps_np=1
 #'
 #' @seealso [ClustConti()], [ssr()]
 #'
-#' @examples #To be done!!!
+#' @examples
+#' # The following example is on selected data from the firms_sf dataset included in the package
+#' sub_sf<-firms_sf[1:1000,]
+#' cd<-ClustConti(sub_sf, clusters=4, noise =0.2, minPts0=30)
+#' cd
 #'
 #' @export
 ClustDisjoint<-function(data_sf, noise=c(0.8, 0.6, 0.4, 0.2), r_p=0.001, eps_r=10e-16, eps_np=10e-3, minPts=5,

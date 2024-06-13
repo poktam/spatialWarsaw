@@ -65,7 +65,10 @@ group 2 (from step 2) or as noise. Clustering stops when there are \code{n-1} gr
 The solution is highly dependent on the number of \code{minPts}, the rule of thumb to set \code{minPts=1/100} of the points works well.
 }
 \examples{
-#To be done!!!
+# The following example is on selected data from the firms_sf dataset included in the package
+sub_sf<-firms_sf[1:1000,]
+cd<-ClustConti(sub_sf, clusters=4, noise =0.2, minPts0=30)
+cd
 
 }
 \seealso{
