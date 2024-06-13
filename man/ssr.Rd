@@ -38,7 +38,25 @@ the econometric model must be the same.
 Function returns a table with a summary of the models estimated in density groups.
 }
 \examples{
-#To be done!!!
+# The following example is on selected data from the firms_sf dataset included in the package
+sub_sf<-firms_sf[1:5000,]
+# One to choose
+# clust<-ClustConti(sub_sf, clusters=4, noise =0.2, minPts0=30)
+clust<-ClustDisjoint(sub_sf, noise=c(0.8, 0.6, 0.4, 0.2), minPts=30)
+
+# Density cluster plot
+sub_sf$cluster<-clust$cluster
+plot(sub_sf["cluster"], key.pos=4, pch=".", cex=2, main="Density clusters")
+
+# SSR models for the binary dependent variable
+# The form of the equation to be estimated:
+eq<-dummy.prod~empl+roa+dist.big.city
+
+my.ssr<-ssr(sub_sf, clust, eq, family=binomial)
+my.ssr
+
+# Output with plot using ssrShowModels() function.
+ssrShowModels(my.ssr, plot=TRUE)
 
 }
 \seealso{
