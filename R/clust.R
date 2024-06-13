@@ -170,7 +170,7 @@ ClustConti<-function(data_sf, clusters, noise, r_p=0.001, eps_r=10e-16, eps_np=1
 #' @examples
 #' # The following example is on selected data from the firms_sf dataset included in the package
 #' sub_sf<-firms_sf[1:1000,]
-#' cd<-ClustConti(sub_sf, clusters=4, noise =0.2, minPts0=30)
+#' cd<-ClustDisjoint(sub_sf, noise=c(0.8, 0.6, 0.4, 0.2), minPts=30)
 #' cd
 #'
 #' @export

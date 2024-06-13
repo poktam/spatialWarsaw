@@ -67,7 +67,7 @@ The solution is highly dependent on the number of \code{minPts}, the rule of thu
 \examples{
 # The following example is on selected data from the firms_sf dataset included in the package
 sub_sf<-firms_sf[1:1000,]
-cd<-ClustConti(sub_sf, clusters=4, noise =0.2, minPts0=30)
+cd<-ClustDisjoint(sub_sf, noise=c(0.8, 0.6, 0.4, 0.2), minPts=30)
 cd
 
 }
